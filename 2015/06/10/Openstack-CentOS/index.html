@@ -1,0 +1,423 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Openstack CentOS镜像制作教程 | Anste</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Anste">
+    
+    <meta name="description" itemprop="description" content="制作openstack使用的CentOS6、CentOS7镜像文件教程">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="elfzhao" />
+    <meta name="twitter:title" content="Openstack CentOS镜像制作教程 | Anste" />
+      
+        <meta name="twitter:description" content="制作openstack使用的CentOS6、CentOS7镜像文件教程" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Anste" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/catman.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/catman.png">
+    
+    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-28065593-1', 'anste.com');  
+ga('send', 'pageview');
+</script>
+
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?395b591d268906c0303cf35973bb61a3";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    <link href='http://fonts.useso.com/css?family=Tangerine:700' rel='stylesheet' type='text/css'>
+<link href='http://fonts.useso.com/css?family=Covered+By+Your+Grace' rel='stylesheet' type='text/css'>
+<link href='http://fonts.useso.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Anste" title="Anste"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Anste">Anste</a></h1>
+				<h2 class="blog-motto">A Next Step To Extreme</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">主页 | Home</a></li>
+					
+						<li><a href="/tags">标签页 | Tags</a></li>
+					
+						<li><a href="/categories">分类 | Categories</a></li>
+					
+						<li><a href="/archives">归档 | Archives</a></li>
+					
+						<li><a href="/about">关于 | About</a></li>
+					
+					<li>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/06/10/Openstack-CentOS/" title="Openstack CentOS镜像制作教程" itemprop="url">Openstack CentOS镜像制作教程</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://www.anste.com" title="Anste">Anste</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-06-10T06:02:05.000Z" itemprop="datePublished">2015-06-10</time>
+    更新日期:<time datetime="2015-06-10T07:02:56.787Z" itemprop="dateModified">2015-06-10</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-_CentOS6"><span class="toc-number">1.</span> <span class="toc-text">1.    CentOS6</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1)_oz安装"><span class="toc-number">1.1.</span> <span class="toc-text">1)    oz安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2)_修改oz-conf"><span class="toc-number">1.2.</span> <span class="toc-text">2)    修改oz.conf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3)_生成ks文件"><span class="toc-number">1.3.</span> <span class="toc-text">3)    生成ks文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4)_生成tdl文件"><span class="toc-number">1.4.</span> <span class="toc-text">4)    生成tdl文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5)_制作centos6-6镜像"><span class="toc-number">1.5.</span> <span class="toc-text">5)    制作centos6.6镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6)_修改镜像"><span class="toc-number">1.6.</span> <span class="toc-text">6)    修改镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7)_yum源配置"><span class="toc-number">1.7.</span> <span class="toc-text">7)    yum源配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8)_cloud-init修改"><span class="toc-number">1.8.</span> <span class="toc-text">8)    cloud.init修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9)_修改grub，将系统日志重定向到openstack_console"><span class="toc-number">1.9.</span> <span class="toc-text">9)    修改grub，将系统日志重定向到openstack console</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10)_其他初始化配置"><span class="toc-number">1.10.</span> <span class="toc-text">10)    其他初始化配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11)_压缩上传镜像"><span class="toc-number">1.11.</span> <span class="toc-text">11)    压缩上传镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12)_CentOS7镜像"><span class="toc-number">1.12.</span> <span class="toc-text">12)    CentOS7镜像</span></a></li></ol></li></ol>
+		</div>
+		
+		<h1 id="1-_CentOS6">1.    CentOS6</h1><p>参考：<a href="http://docs.openstack.org/zh_CN/image-guide/content/centos-image.html" target="_blank" rel="external">http://docs.openstack.org/zh_CN/image-guide/content/centos-image.html</a><br><strong>注意：按照本教程制作的镜像默认是允许root等用户使用密码登陆</strong></p>
+<h2 id="1)_oz安装">1)    oz安装</h2><p>本文档使用192.168.9.100（CentOS6.6）制作各种镜像<br>下载centos6 镜像iso文件<br>添加epel安装源<br>yum install –y oz</p>
+<h2 id="2)_修改oz-conf">2)    修改oz.conf</h2>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="decorator">@salt oz]# cat /etc/oz/oz.cfg</span></span><br><span class="line">[paths]</span><br><span class="line">output_dir = /var/lib/libvirt/images</span><br><span class="line">data_dir = /var/lib/oz</span><br><span class="line">screenshot_dir = /var/lib/oz/screenshots</span><br><span class="line"><span class="comment"># sshprivkey = /etc/oz/id_rsa-icicle-gen</span></span><br><span class="line"></span><br><span class="line">[libvirt]</span><br><span class="line">uri = qemu:///system</span><br><span class="line">image_type = qcow2</span><br><span class="line"><span class="comment"># type = kvm</span></span><br><span class="line"><span class="comment"># bridge_name = virbr0</span></span><br><span class="line"><span class="comment"># cpus = 1</span></span><br><span class="line"><span class="comment"># memory = 1024</span></span><br><span class="line"></span><br><span class="line">[cache]</span><br><span class="line">original_media = yes</span><br><span class="line">modified_media = no</span><br><span class="line">jeos = no</span><br><span class="line"></span><br><span class="line">[icicle]</span><br><span class="line">safe_generation = no</span><br></pre></td></tr></table></figure>
+<h2 id="3)_生成ks文件">3)    生成ks文件</h2><p>vi /etc/oz/centos6.6.ks 写入以下内容<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#version=DEVEL</span></span><br><span class="line"><span class="comment"># Firewall configuration</span></span><br><span class="line">firewall --disabled</span><br><span class="line">repo --name=<span class="string">"centosbase"</span> --baseurl=http://repourl/centos/<span class="number">6</span>/os/x86_64/ <span class="comment">#更改成自己环境里的repo地址或者使用官方repo源</span></span><br><span class="line">repo --name=<span class="string">"centosupdate"</span> --baseurl=http://repourl/centos/<span class="number">6</span>/updates/x86_64/ <span class="comment">#更改成自己环境里的repo地址或者使用官方repo源</span></span><br><span class="line">repo --name=<span class="string">"epel"</span> --baseurl=http://repourl/fedora-epel/<span class="number">6</span>Server/x86_64/ <span class="comment">#更改成自己环境里的repo地址或者使用官方repo源</span></span><br><span class="line">repo --name=<span class="string">"puppetlab"</span> --baseurl=http://repourl/puppetlabs/el/<span class="number">6</span>/products/x86_64/ <span class="comment">#更改成自己环境里的repo地址或者使用官方repo源</span></span><br><span class="line"><span class="comment"># Root password</span></span><br><span class="line">rootpw --iscrypted $<span class="number">1</span>$sNmInJMT$yUNqi7p34UcrNud8N.t3l/</span><br><span class="line"><span class="comment"># System authorization information</span></span><br><span class="line">auth --useshadow --enablemd5</span><br><span class="line"><span class="comment">#use text mode install</span></span><br><span class="line">text</span><br><span class="line"><span class="comment">#firstboot</span></span><br><span class="line">firstboot --disable</span><br><span class="line"><span class="comment"># System keyboard</span></span><br><span class="line">keyboard us</span><br><span class="line"><span class="comment"># System language</span></span><br><span class="line">lang en_US.UTF-<span class="number">8</span></span><br><span class="line"><span class="comment"># SELinux configuration</span></span><br><span class="line">selinux --disabled</span><br><span class="line"><span class="comment"># Installation logging level</span></span><br><span class="line">logging --level=info</span><br><span class="line"><span class="comment"># Reboot after installation</span></span><br><span class="line">reboot</span><br><span class="line"><span class="comment"># System services</span></span><br><span class="line">services --disabled=<span class="string">"iptables,ip6tables,postfix,avahi-daemon,iscsi,iscsid,firstboot,kdump"</span> --enabled=<span class="string">"network,sshd,rsyslog,tuned,acpid,puppet"</span></span><br><span class="line"><span class="comment"># System timezone</span></span><br><span class="line">timezone Asia/Shanghai</span><br><span class="line"><span class="comment"># Network information</span></span><br><span class="line">network  --bootproto=dhcp --device=eth0 --onboot=on</span><br><span class="line"><span class="comment"># System bootloader configuration</span></span><br><span class="line">bootloader --append=<span class="string">"console=ttyS0,115200n8 console=tty0"</span> --location=mbr --driveorder=<span class="string">"sda"</span> --timeout=<span class="number">1</span></span><br><span class="line"><span class="comment"># Clear the Master Boot Record</span></span><br><span class="line">zerombr</span><br><span class="line"><span class="comment"># Partition clearing information</span></span><br><span class="line">clearpart --all</span><br><span class="line"><span class="comment"># Disk partitioning information</span></span><br><span class="line"><span class="comment">#part / --fstype="ext4" --grow --size=1</span></span><br><span class="line">part / --fstype ext4 --size=<span class="number">512</span> --grow</span><br><span class="line"></span><br><span class="line">%packages --nobase --excludedocs</span><br><span class="line">ntpdate</span><br><span class="line">openssh-clients</span><br><span class="line">acpid</span><br><span class="line">iotop</span><br><span class="line">ftp</span><br><span class="line">iptraf</span><br><span class="line">telnet</span><br><span class="line">gcc</span><br><span class="line">automake</span><br><span class="line">autoconf</span><br><span class="line">libtool</span><br><span class="line">gcc-c++</span><br><span class="line">openssl-devel</span><br><span class="line">xinetd</span><br><span class="line">quagga</span><br><span class="line">tmux</span><br><span class="line">puppet</span><br><span class="line">wget</span><br><span class="line">vim</span><br><span class="line">cloud-init</span><br><span class="line">cloud-utils</span><br><span class="line">cloud-utils-growpart</span><br><span class="line">dracut-modules-growroot</span><br><span class="line">%end</span><br><span class="line"></span><br><span class="line">%post</span><br><span class="line"></span><br><span class="line"><span class="comment"># make sure firstboot doesn't start</span></span><br><span class="line">echo <span class="string">"RUN_FIRSTBOOT=NO"</span> &gt; /etc/sysconfig/firstboot</span><br><span class="line"></span><br><span class="line">cat &lt;&lt;EOL &gt;&gt; /etc/rc.local</span><br><span class="line"><span class="keyword">if</span> [ ! -d /root/.ssh ] ; then</span><br><span class="line">    mkdir -p /root/.ssh</span><br><span class="line">    chmod <span class="number">0700</span> /root/.ssh</span><br><span class="line">    restorecon /root/.ssh</span><br><span class="line">fi</span><br><span class="line">EOL</span><br><span class="line"></span><br><span class="line">cat &lt;&lt;EOL &gt;&gt; /etc/ssh/sshd_config</span><br><span class="line">UseDNS no</span><br><span class="line">EOL</span><br><span class="line"></span><br><span class="line"><span class="comment"># grub</span></span><br><span class="line">ln -s /boot/grub/grub.conf /etc/grub.conf</span><br><span class="line"></span><br><span class="line"><span class="comment">#make sure permit ssh password login</span></span><br><span class="line">sed -i <span class="string">'s/PasswordAuthentication no/PasswordAuthentication yes/g'</span> /etc/ssh/sshd_config</span><br><span class="line"></span><br><span class="line"><span class="comment"># allow sudo powers to cloud-user</span></span><br><span class="line">echo -e <span class="string">'centos\tALL=(ALL)\tNOPASSWD: ALL'</span> &gt;&gt; /etc/sudoers</span><br><span class="line"></span><br><span class="line"><span class="comment"># disable zeroconf</span></span><br><span class="line">echo <span class="string">"NOZEROCONF=yes"</span> &gt;&gt; /etc/sysconfig/network</span><br><span class="line"></span><br><span class="line"><span class="comment"># set virtual-guest as default profile for tuned</span></span><br><span class="line">echo <span class="string">"virtual-guest"</span> &gt; /etc/tune-profiles/active-profile</span><br><span class="line"></span><br><span class="line"><span class="comment">#init network config</span></span><br><span class="line"><span class="comment"># set eth0 to recover from dhcp errors</span></span><br><span class="line">cat &gt; /etc/sysconfig/network-scripts/ifcfg-eth0 &lt;&lt; EOF</span><br><span class="line">DEVICE=<span class="string">"eth0"</span></span><br><span class="line">BOOTPROTO=<span class="string">"dhcp"</span></span><br><span class="line">ONBOOT=<span class="string">"yes"</span></span><br><span class="line">TYPE=<span class="string">"Ethernet"</span></span><br><span class="line">USERCTL=<span class="string">"yes"</span></span><br><span class="line">PEERDNS=<span class="string">"yes"</span></span><br><span class="line">IPV6INIT=<span class="string">"no"</span></span><br><span class="line">PERSISTENT_DHCLIENT=<span class="string">"1"</span></span><br><span class="line">EOF</span><br><span class="line"><span class="comment"># prevent udev rules from remapping nics</span></span><br><span class="line">rm -f /etc/udev/rules.d/<span class="number">70</span>-persistent-net.rules</span><br><span class="line"></span><br><span class="line"><span class="comment">#setup getty on ttyS0</span></span><br><span class="line">echo <span class="string">"ttyS0"</span> &gt;&gt; /etc/securetty</span><br><span class="line">cat &lt;&lt;EOF &gt; /etc/init/ttyS0.conf</span><br><span class="line">start on stopped rc RUNLEVEL=[<span class="number">2345</span>]</span><br><span class="line">stop on starting runlevel [<span class="number">016</span>]</span><br><span class="line">respawn</span><br><span class="line">instance /dev/ttyS0</span><br><span class="line"><span class="keyword">exec</span> /sbin/agetty /dev/ttyS0 <span class="number">115200</span> vt100-nav</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># clean up installation logs"</span></span><br><span class="line">yum clean all</span><br><span class="line">rm -rf /var/log/yum.log</span><br><span class="line">rm -rf /var/lib/yum/*</span><br><span class="line">rm -rf /root/install.log</span><br><span class="line">rm -rf /root/install.log.syslog</span><br><span class="line">rm -rf /root/anaconda-ks.cfg</span><br><span class="line">rm -rf /var/log/anaconda*</span><br><span class="line">%end</span><br></pre></td></tr></table></figure></p>
+<h2 id="4)_生成tdl文件">4)    生成tdl文件</h2><p>vi /etc/oz/centos6.6.tdl 更改成以下内容：<br>[root@salt home]# cat /etc/oz/centos6.6.tdl<br>  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">   &lt;name&gt;CentOS_6.6_x86_64&lt;/name&gt;</span><br><span class="line">   &lt;description&gt;CentOS 6.6 x86_64 template&lt;/description&gt;</span><br><span class="line">   &lt;os&gt;</span><br><span class="line">      &lt;name&gt;CentOS-6&lt;/name&gt;</span><br><span class="line">      &lt;version&gt;6&lt;/version&gt;</span><br><span class="line">      &lt;arch&gt;x86_64&lt;/arch&gt;</span><br><span class="line">      &lt;install type='url'&gt;</span><br><span class="line">         &lt;url&gt;http://cobblerURL/cobbler/ks_mirror/CenOS_6.5-x86_64/&lt;/url&gt;</span><br><span class="line">      &lt;/install&gt;</span><br><span class="line">   &lt;/os&gt;</span><br><span class="line">  &lt;disk&gt;</span><br><span class="line">    &lt;size&gt;10&lt;/size&gt;</span><br><span class="line">  &lt;/disk&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="5)_制作centos6-6镜像">5)    制作centos6.6镜像</h2><p>使用root用户执行以下命令<br>oz-install -p -u -d3 -a /etc/oz/centos6.6.ks /etc/oz/centos6.6.tdl<br>执行后，开始自动生成镜像。<br>安装过程可以登录虚拟机所在宿主机使用 virt-manager实时查看新建的kvm虚拟机</p>
+<h2 id="6)_修改镜像">6)    修改镜像</h2><p>使用virt-manager打开生成的qcow2的镜像文件路径为/var/lib/libvirt/images，<br>进入系统（耐心等待）<br>使用root配置临时IP地址192.168.9.13、路由、DNS、SSH等<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ifconfig eth0 <span class="number">192.168</span>.9.13 <span class="number">255.255</span>.255.128 up</span><br><span class="line">route add -net <span class="number">0.0</span>.0.0/<span class="number">0</span> gw <span class="number">192.168</span>.9.1 dev eth0</span><br><span class="line">vi /etc/resolv.conf </span><br><span class="line">nameserver <span class="number">192.168</span>.10.87</span><br><span class="line">vi /etc/ssh/sshd_config</span><br><span class="line">PasswordAuthentication yes  重启sshd</span><br><span class="line">passwd root 配置root默认密码</span><br></pre></td></tr></table></figure></p>
+<h2 id="7)_yum源配置">7)    yum源配置</h2><p>Root ssh登陆192.168.9.100，执行以下命令复制yum 源相关文件<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp /etc/pki/rpm-gpg/RPM-GPG-KEY-* <span class="number">192.168</span>.9.13:/etc/pki/rpm-gpg/</span><br><span class="line">scp /etc/yum.repos.d/*.repo <span class="number">192.168</span>.9.13:/etc/yum.repos.d/</span><br></pre></td></tr></table></figure></p>
+<h2 id="8)_cloud-init修改">8)    cloud.init修改</h2><p>vi /etc/cloud/cloud.init<br>修改以下内容<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">disable_root: <span class="number">0</span> <span class="comment">#是否允许root登陆  1 禁止 0 允许</span></span><br><span class="line">ssh_pwauth:  <span class="number">1</span>  <span class="comment">#是否允许密码登陆  1 允许 0 禁止</span></span><br><span class="line">system_info:</span><br><span class="line">  distro: rhel</span><br><span class="line">  default_user:</span><br><span class="line">    name: centos <span class="comment"># 默认openstack新增用户名</span></span><br><span class="line">  paths:</span><br><span class="line">    cloud_dir: /var/lib/cloud</span><br><span class="line">    templates_dir: /etc/cloud/templates</span><br><span class="line">  ssh_svcname: sshd</span><br></pre></td></tr></table></figure></p>
+<h2 id="9)_修改grub，将系统日志重定向到openstack_console">9)    修改grub，将系统日志重定向到openstack console</h2><p>vi /boot/grub/menu.lst 删除 rhgb quiet并添加console=tty0 console=ttyS0,115200n8</p>
+<h2 id="10)_其他初始化配置">10)    其他初始化配置</h2><p>crontab –e 添加NTP服务同步机制<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span> <span class="number">9</span> * * * /usr/sbin/ntpdate <span class="number">192.168</span>.253.4</span><br></pre></td></tr></table></figure></p>
+<p>变更操作系统时区<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -f /etc/localtime</span><br><span class="line">ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br></pre></td></tr></table></figure></p>
+<p>删除网卡物理信息<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -f /etc/udev/rules.d/<span class="number">70</span>-persistent-net.rules</span><br></pre></td></tr></table></figure></p>
+<p>删除其他临时信息和日志<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">rm -rf /tmp/*</span><br><span class="line">rm -f /var/log/wtmp /var/log/btmp</span><br><span class="line">rm -rf /var/log/yum.log</span><br><span class="line">rm -rf /var/lib/yum/*</span><br><span class="line">rm -rf /root/install.log</span><br><span class="line">rm -rf /root/install.log.syslog</span><br><span class="line">rm -rf /root/anaconda-ks.cfg</span><br><span class="line">rm -rf /var/log/anaconda*</span><br><span class="line">history -c</span><br></pre></td></tr></table></figure></p>
+<p>关闭虚拟机<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutdown -h now</span><br></pre></td></tr></table></figure></p>
+<h2 id="11)_压缩上传镜像">11)    压缩上传镜像</h2><p>root登陆192.168.9.100后执行以下命令压缩镜像<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-img convert -c /var/lib/libvirt/images/CentOS_6.6_x86_64.qcow2 -O qcow2 /home/CentOS_6.6_x86_64.qcow2</span><br></pre></td></tr></table></figure></p>
+<p>压缩完毕后将压缩镜像拷贝到192.168.13.5（openstack Controller节点）<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp /home/CentOS_6.6_x86_64.qcow2 <span class="number">192.168</span>.13.5:/tmp</span><br></pre></td></tr></table></figure></p>
+<p>登陆到192.168.13.5（openstack Controller节点），执行以下命令<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source /root/openrc</span><br><span class="line">glance image-create --name CentOS_6.6_x86_64 --disk-format=qcow2 --container-format=bare --<span class="keyword">is</span>-public=<span class="keyword">True</span> --progress --file /tmp/CentOS_6.6_x86_64.qcow2</span><br></pre></td></tr></table></figure></p>
+<p>至此，centos6.6镜像已经上传到openstack镜像源中。</p>
+<h2 id="12)_CentOS7镜像">12)    CentOS7镜像</h2><p>无相关制作教程，centos7下载官方镜像使用guestfish修改即可<br><a href="http://cloud.centos.org/centos/7/images/" target="_blank" rel="external">http://cloud.centos.org/centos/7/images/</a><br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">guestfish --rw -a CentOS_7_x86_64.qcow2</span><br><span class="line">&gt;&lt;fs&gt; run</span><br><span class="line">&gt;&lt;fs&gt; list-filesystems</span><br><span class="line">/dev/sda1: xfs</span><br><span class="line">&gt;&lt;fs&gt; mount /dev/sda1 /</span><br><span class="line">&gt;&lt;fs&gt; vi /etc/cloud/cloud.cfg</span><br><span class="line">disable_root: <span class="number">0</span></span><br><span class="line">ssh_pwauth:   <span class="number">1</span> </span><br><span class="line"> touch /var/spool/cron/root</span><br><span class="line">&gt;&lt;fs&gt; vi /var/spool/cron/root</span><br><span class="line"><span class="number">0</span> <span class="number">9</span> * * * /usr/sbin/ntpdate <span class="number">192.168</span>.253.4</span><br><span class="line">&gt;&lt;fs&gt; rm /etc/localtime</span><br><span class="line">&gt;&lt;fs&gt; ln /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">&gt;&lt;fs&gt; vi /etc/shadow粘贴到root：后（使用其他centos上用openssl passwd -<span class="number">1</span> <span class="string">"yourpassword"</span> 产生root加密后的密码 ）</span><br><span class="line">&gt;&lt;fs&gt; exit</span><br></pre></td></tr></table></figure></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/linux/">linux</a><a href="/tags/openstack/">openstack</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/openstack/">openstack</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a class="jiathis_button_twitter">Twitter</a>
+    <a class="jiathis_button_evernote">EverNote</a>
+    <a href="http://www.jiathis.com/share?uid=1501277" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+</div>
+<script type="text/javascript" >
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+     ralateuid:{"tsina":"readortravel"},hideMore:false}
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+elfzhao@hotmail.com" charset="utf-8"></script>      
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/06/10/lvs/" title="LVS、Haproxy、OSPF负载均衡技术对比">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  LVS、Haproxy、OSPF负载均衡技术对比</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/06/09/Foreman-Puppet/"  title="部署Foreman+Puppet自动化配置管理系统">
+ <strong>NEXT:</strong><br/> 
+ <span>部署Foreman+Puppet自动化配置管理系统
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread" data-thread-key="" data-title="Openstack CentOS镜像制作教程" data-url=""></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-_CentOS6"><span class="toc-number">1.</span> <span class="toc-text">1.    CentOS6</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1)_oz安装"><span class="toc-number">1.1.</span> <span class="toc-text">1)    oz安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2)_修改oz-conf"><span class="toc-number">1.2.</span> <span class="toc-text">2)    修改oz.conf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3)_生成ks文件"><span class="toc-number">1.3.</span> <span class="toc-text">3)    生成ks文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4)_生成tdl文件"><span class="toc-number">1.4.</span> <span class="toc-text">4)    生成tdl文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5)_制作centos6-6镜像"><span class="toc-number">1.5.</span> <span class="toc-text">5)    制作centos6.6镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6)_修改镜像"><span class="toc-number">1.6.</span> <span class="toc-text">6)    修改镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7)_yum源配置"><span class="toc-number">1.7.</span> <span class="toc-text">7)    yum源配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8)_cloud-init修改"><span class="toc-number">1.8.</span> <span class="toc-text">8)    cloud.init修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9)_修改grub，将系统日志重定向到openstack_console"><span class="toc-number">1.9.</span> <span class="toc-text">9)    修改grub，将系统日志重定向到openstack console</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10)_其他初始化配置"><span class="toc-number">1.10.</span> <span class="toc-text">10)    其他初始化配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11)_压缩上传镜像"><span class="toc-number">1.11.</span> <span class="toc-text">11)    压缩上传镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12)_CentOS7镜像"><span class="toc-number">1.12.</span> <span class="toc-text">12)    CentOS7镜像</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/haproxy/" style="font-size: 10px;">haproxy</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/lvs/" style="font-size: 10px;">lvs</a> <a href="/tags/openstack/" style="font-size: 10px;">openstack</a> <a href="/tags/ospf/" style="font-size: 10px;">ospf</a> <a href="/tags/puppet/" style="font-size: 10px;">puppet</a>
+    </div>
+  </div>
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>2</sup></a></li>
+		
+			<li><a href="/categories/openstack/" title="openstack">openstack<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="commentslist">
+  <p class="asidetitle">最新评论</p>
+  <ul class="ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-time="1" data-show-admin="1" data-excerpt-length="32" data-show-title="1"></ul>
+</div>
+<script type="text/javascript">
+if(typeof duoshuoQuery === 'undefined'){
+  var duoshuoQuery = {short_name:"anste"};
+  (function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	}
+	</script>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://blog.leafh.pw" target="_blank" title="Leaf Hsiao">Leaf's Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<section class="info">
+		<p> 天行健，君子以自强不息；地势坤，君子以厚德载物。 <br/>
+			Stay hungry, stay foolish</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/readortravel" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/elfzhao" target="_blank" title="twitter"></a>
+		
+		
+		
+		<a href="https://www.facebook.com/atlantis2012" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://cn.linkedin.com/in/jameschao2015" target="_blank" title="linkedin"></a>
+        
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/leaf-hsiao/catman" target="_blank" title="Catman">Catman</a> © 2015 
+		
+		<a href="http://www.anste.com" target="_blank" title="Anste">Anste</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="http://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,208-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      m = $('#main'),
+      a = $('#asidepart'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside'),
+      w  = $(window).width();
+  if ( w>1070 ) {
+  	m.addClass('moveMain');
+  	a.css('display', 'none').addClass('fadeIn');
+  	o.css('display', 'block');
+  };
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+  	if ( w>1070 ) {
+  	  ta.css('display', 'block').addClass('fadeIn');
+  	};
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,250-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"anste"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,423 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>部署Foreman+Puppet自动化配置管理系统 | Anste</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Anste">
+    
+    <meta name="description" itemprop="description" content="通过foreman和puppet搭建自动化运维平台">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="elfzhao" />
+    <meta name="twitter:title" content="部署Foreman+Puppet自动化配置管理系统 | Anste" />
+      
+        <meta name="twitter:description" content="通过foreman和puppet搭建自动化运维平台" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Anste" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/catman.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/catman.png">
+    
+    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-28065593-1', 'anste.com');  
+ga('send', 'pageview');
+</script>
+
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?395b591d268906c0303cf35973bb61a3";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    <link href='http://fonts.useso.com/css?family=Tangerine:700' rel='stylesheet' type='text/css'>
+<link href='http://fonts.useso.com/css?family=Covered+By+Your+Grace' rel='stylesheet' type='text/css'>
+<link href='http://fonts.useso.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Anste" title="Anste"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Anste">Anste</a></h1>
+				<h2 class="blog-motto">A Next Step To Extreme</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">主页 | Home</a></li>
+					
+						<li><a href="/tags">标签页 | Tags</a></li>
+					
+						<li><a href="/categories">分类 | Categories</a></li>
+					
+						<li><a href="/archives">归档 | Archives</a></li>
+					
+						<li><a href="/about">关于 | About</a></li>
+					
+					<li>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/06/09/Foreman-Puppet/" title="部署Foreman+Puppet自动化配置管理系统" itemprop="url">部署Foreman+Puppet自动化配置管理系统</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://www.anste.com" title="Anste">Anste</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-06-09T07:17:57.000Z" itemprop="datePublished">2015-06-09</time>
+    更新日期:<time datetime="2015-06-10T06:47:07.843Z" itemprop="dateModified">2015-06-10</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#部署"><span class="toc-number">2.</span> <span class="toc-text">部署</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#实施环境"><span class="toc-number">2.1.</span> <span class="toc-text">实施环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#硬件环境"><span class="toc-number">2.1.1.</span> <span class="toc-text">硬件环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#软件环境"><span class="toc-number">2.1.2.</span> <span class="toc-text">软件环境</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装配置"><span class="toc-number">2.2.</span> <span class="toc-text">安装配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#yum源配置"><span class="toc-number">2.2.1.</span> <span class="toc-text">yum源配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pssh安装"><span class="toc-number">2.2.2.</span> <span class="toc-text">pssh安装</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#puppet+foreman安装"><span class="toc-number">3.</span> <span class="toc-text">puppet+foreman安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#服务器端"><span class="toc-number">3.1.</span> <span class="toc-text">服务器端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装puppet客户端"><span class="toc-number">3.1.1.</span> <span class="toc-text">安装puppet客户端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动服务"><span class="toc-number">3.1.2.</span> <span class="toc-text">启动服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#检查服务"><span class="toc-number">3.1.3.</span> <span class="toc-text">检查服务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#客户端"><span class="toc-number">3.2.</span> <span class="toc-text">客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">3.2.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">3.2.2.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动服务-1"><span class="toc-number">3.2.3.</span> <span class="toc-text">启动服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#检测服务"><span class="toc-number">3.2.4.</span> <span class="toc-text">检测服务</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#日常操作说明"><span class="toc-number">4.</span> <span class="toc-text">日常操作说明</span></a></li></ol>
+		</div>
+		
+		<h1 id="概述">概述</h1><p>Puppet是用于自动化管理服务器的开源软件，主要用来做配置管理，批量推送配置到所有服务器。<br>项目主页：<a href="http://www.puppetlabs.com/" target="_blank" rel="external">http://www.puppetlabs.com/</a><br>foreman 是服务器生命周期管理系统，可以用来做为puppet的前端查看puppet同步信息以及服务器各项物理参数。<br>项目主页：<a href="http://www.theforeman.org" target="_blank" rel="external">http://www.theforeman.org</a><br>Pssh是开源的并行批量SSH工具包，包括pssh、pscp、prsync、pnuke、pslurp等工具。用于弥补puppet命令行的短板。<br>项目主页：<a href="https://code.google.com/p/parallel-ssh/" target="_blank" rel="external">https://code.google.com/p/parallel-ssh/</a></p>
+<h1 id="部署">部署</h1><h2 id="实施环境">实施环境</h2><h3 id="硬件环境">硬件环境</h3><p>IP：192.168.10.91（生产网段）<br>CPU：QEMU Virtual CPU version (cpu64-rhel6) （KVM）<br>内存：4G<br>硬盘：50G</p>
+<p>IP：192.168.10.43（puppet网段）<br>CPU：Intel(R) Xeon(R) CPU           X5670  @ 2.93GHz<br>内存：32G<br>硬盘：300G</p>
+<h3 id="软件环境">软件环境</h3><p>IP：192.168.10.91（生产网段）<br>操作系统：CentOS release 6.4(Final)<br>内核版本：2.6.32-279.19.1.el6.x86_64<br>Ruby版本：1.8.7（1.9版本不兼容）</p>
+<p>IP：192.168.10.43（puppet网段）<br>操作系统：CentOS release 6.4 (Final)<br>内核版本：2.6.32-279.19.1.el6.x86_64<br>Ruby版本：1.8.7（1.9版本不兼容）</p>
+<h2 id="安装配置">安装配置</h2><h3 id="yum源配置">yum源配置</h3>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum –y install http://yum.theforeman.org/releases/latest/el6/x86_64/foreman-release.rpm</span><br><span class="line">yum -y install http://dl.fedoraproject.org/pub/epel/<span class="number">6</span>/x86_64/epel-release-<span class="number">6</span>-<span class="number">8.</span>noarch.rpm</span><br><span class="line">yum –y install http://yum.puppetlabs.com/el/<span class="number">6</span>/products/x86_64/puppetlabs-release-<span class="number">6</span>-<span class="number">7.</span>noarch.rpm</span><br></pre></td></tr></table></figure>
+<p>增加epel、foreman、puppet yum源</p>
+<h3 id="pssh安装">pssh安装</h3>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget   https://parallel-ssh.googlecode.com/files/pssh-<span class="number">2.3</span>.1.tar.gz</span><br><span class="line">tar xvzf pssh-<span class="number">2.3</span>.1.tar.gz</span><br><span class="line">cd pssh-<span class="number">2.3</span>.1</span><br><span class="line">./configure</span><br><span class="line">Make</span><br><span class="line">Make install</span><br></pre></td></tr></table></figure>
+<h1 id="puppet+foreman安装">puppet+foreman安装</h1><h2 id="服务器端">服务器端</h2><p>修改hosts<br>Vi /etc/hosts<br>增加192.168.10.91 puppet.yourdomain.cn （生产网段）<br>使用root执行hostname  –f 查看是否生效<br>生效显示：<br>     puppet.yourdomain.cn （生产网段）<br>异常情况请删除/etc/hosts中localhost部分多余内容，只保留如下：<br>127.0.0.1 localhost<br>::1 localhost</p>
+<h3 id="安装puppet客户端">安装puppet客户端</h3><p>yum –y install puppet （默认安装3.2.4的客户端）<br>安装foreman+puppet server<br>yum –y install foreman-installer<br>service puppet start (启动puppet客户端用来安装foreman和puppet server)<br>ruby /usr/share/foreman-installer/generate_answers.rb<br>按照提示选择默认配置即可。<br>安装完毕后即完成foreman、foreman-proxy、puppet server的安装。<br>Service puppet stop<br>Chkconfig –level 35 puppet off（客户端只用来安装foreman和puppet server，安装完毕后可以关闭）</p>
+<h3 id="启动服务">启动服务</h3><p>修改foreman-proxy配置<br>Vi /etc/foreman-proxy/setting.yaml<br>:trusted_hosts 取消该行注释<br>修改/etc/puppet/autosign.conf<br>*.yourdomain.cn #增加自动签名机制<br>Service foreman-proxy start<br>Service foreman start<br>Service httpd start</p>
+<h3 id="检查服务">检查服务</h3><p>访问<a href="https://192.168.10.43" target="_blank" rel="external">https://192.168.10.43</a> 用户名 admin 密码changme<br>增加foreman smart proxy<br>选择more—configuration—Smart Proxies<br>新增puppet或puppet02，URL为<a href="https://puppet.yourdomain.cn:8443或https://puppet02.yourdomain.cn:8443" target="_blank" rel="external">https://puppet.yourdomain.cn:8443或https://puppet02.yourdomain.cn:8443</a></p>
+<h2 id="客户端">客户端</h2><p>修改etc/hosts<br>vi /etc/hosts（只有puppet节点客户端需要修改）<br>增加192.168.8.249 puppet02.yourdomain.cn<br>     192.168.10.8 cst-bj-1.yourdomain.cn cst-bj-1（其他主机配置类似hosts）</p>
+<h3 id="安装">安装</h3><p>使用root登录192.168.10.43或192.168.10.91<br>Cd pssh<br>pscp –h host.list –o log puppet-2.7.21.tar.gz /root/分发puppet源码包到各节点<br>pscp –h host.list –o log facter-1.X.X.tar.gz /root/ 分发facter源码包到各节点<br>备注：host.list为客户端ip地址表 –o表示日志记录在当前路径log目录下<br>Pssh –h host.list –o log “tar xvzf facter-1.X.X.tar.gz &amp;&amp; cd facter-1.X.X &amp;&amp; ruby install.rb”<br>Pssh –h host.list –o log “tar xvzf puppet-2.7.21.tar.gz &amp;&amp; cd puppet-2.7.21 &amp;&amp; ruby install.rb”</p>
+<h3 id="配置">配置</h3><p>编辑puppetd 客户端启动脚本<br>Vi /etc/init.d/puppetd<br>  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"># puppet        Init script for running the puppet client daemon</span><br><span class="line">#</span><br><span class="line"># Author:       Duane Griffin &lt;d.griffin@psenterprise.com&gt;</span><br><span class="line">#               David Lutterkort &lt;dlutter@redhat.com&gt;</span><br><span class="line">#</span><br><span class="line"># chkconfig: 35 98 02</span><br><span class="line">#</span><br><span class="line"># description: Enables periodic system configuration checks through puppet.</span><br><span class="line"># processname: puppet</span><br><span class="line"># config: /etc/sysconfig/puppet</span><br><span class="line"></span><br><span class="line">PATH=/usr/bin:/sbin:/bin:/usr/sbin</span><br><span class="line">export PATH</span><br><span class="line"></span><br><span class="line">[ -f /etc/sysconfig/puppet ] &amp;&amp; . /etc/sysconfig/puppet</span><br><span class="line">lockfile=$&#123;LOCKFILE-/var/lock/subsys/puppet&#125;</span><br><span class="line">pidfile=$&#123;PIDFILE-/var/lib/puppet/run/agent.pid&#125;</span><br><span class="line">puppetd=$&#123;PUPPETD-/usr/sbin/puppetd&#125;</span><br><span class="line">RETVAL=0</span><br><span class="line"></span><br><span class="line"># Source function library.</span><br><span class="line">. /etc/rc.d/init.d/functions</span><br><span class="line"></span><br><span class="line">PUPPET_OPTS=""</span><br><span class="line">[ -n "$&#123;PUPPET_SERVER&#125;" ] &amp;&amp; PUPPET_OPTS="--server=$&#123;PUPPET_SERVER&#125;"</span><br><span class="line">[ -n "$PUPPET_LOG" ] &amp;&amp; PUPPET_OPTS="$&#123;PUPPET_OPTS&#125; --logdest=$&#123;PUPPET_LOG&#125;"</span><br><span class="line">[ -n "$PUPPET_PORT" ] &amp;&amp; PUPPET_OPTS="$&#123;PUPPET_OPTS&#125; --masterport=$&#123;PUPPET_PORT&#125;"</span><br><span class="line"></span><br><span class="line"># Determine if we can use the -p option to daemon, killproc, and status.</span><br><span class="line"># RHEL &lt; 5 can't.</span><br><span class="line">if status | grep -q -- '-p' 2&gt;/dev/null; then</span><br><span class="line">    daemonopts="--pidfile $pidfile"</span><br><span class="line">    pidopts="-p $pidfile"</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"># Figure out if the system just booted. Let's assume</span><br><span class="line"># boot doesn't take longer than 5 minutes</span><br><span class="line">## Not used for now</span><br><span class="line">##[ -n "$INIT_VERSION" ] &amp;&amp; PUPPET_OPTS="$&#123;PUPPET_OPTS&#125; --fullrun"</span><br><span class="line"></span><br><span class="line">start() &#123;</span><br><span class="line">    echo -n $"Starting puppet: "</span><br><span class="line">    daemon $daemonopts $puppetd $&#123;PUPPET_OPTS&#125; $&#123;PUPPET_EXTRA_OPTS&#125;</span><br><span class="line">    RETVAL=$?</span><br><span class="line">    echo</span><br><span class="line">        [ $RETVAL = 0 ] &amp;&amp; touch $&#123;lockfile&#125;</span><br><span class="line">        return $RETVAL</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">stop() &#123;</span><br><span class="line">    echo -n $"Stopping puppet: "</span><br><span class="line">    killproc $pidopts $puppetd</span><br><span class="line">    RETVAL=$?</span><br><span class="line">    echo</span><br><span class="line">    [ $RETVAL = 0 ] &amp;&amp; rm -f $&#123;lockfile&#125; $&#123;pidfile&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">reload() &#123;</span><br><span class="line">    echo -n $"Restarting puppet: "</span><br><span class="line">    killproc $pidopts $puppetd -HUP</span><br><span class="line">    RETVAL=$?</span><br><span class="line">    echo</span><br><span class="line">    return $RETVAL</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">restart() &#123;</span><br><span class="line">    stop</span><br><span class="line">    start</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">rh_status() &#123;</span><br><span class="line">    status $pidopts $puppetd</span><br><span class="line">    RETVAL=$?</span><br><span class="line">    return $RETVAL</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">rh_status_q() &#123;</span><br><span class="line">    rh_status &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">genconfig() &#123;</span><br><span class="line">    echo -n $"Generate configuration puppet: "</span><br><span class="line">    $puppetd $&#123;PUPPET_OPTS&#125; $&#123;PUPPET_EXTRA_OPTS&#125; --genconfig</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">case "$1" in</span><br><span class="line">    start)</span><br><span class="line">        start</span><br><span class="line">    ;;</span><br><span class="line">    stop)</span><br><span class="line">        stop</span><br><span class="line">    ;;</span><br><span class="line">    restart)</span><br><span class="line">        restart</span><br><span class="line">    ;;</span><br><span class="line">    reload|force-reload)</span><br><span class="line">        reload</span><br><span class="line">    ;;</span><br><span class="line">    condrestart|try-restart)</span><br><span class="line">        rh_status_q || exit 0</span><br><span class="line">        restart</span><br><span class="line">    ;;</span><br><span class="line">    status)</span><br><span class="line">        rh_status</span><br><span class="line">    ;;</span><br><span class="line">    once)</span><br><span class="line">        shift</span><br><span class="line">        $puppetd -o $&#123;PUPPET_OPTS&#125; $&#123;PUPPET_EXTRA_OPTS&#125; $@</span><br><span class="line">        ;;</span><br><span class="line">    genconfig)</span><br><span class="line">        genconfig</span><br><span class="line">    ;;</span><br><span class="line">    *)</span><br><span class="line">        echo $"Usage: $0 &#123;start|stop|status|restart|reload|force-reload|condrestart|once|genconfig&#125;"</span><br><span class="line">        exit 1</span><br><span class="line">esac</span><br><span class="line"></span><br><span class="line">exit $RETVAL</span><br></pre></td></tr></table></figure></p>
+<p>chmod +x /etc/init.d/puppetd<br>编辑vi /etc/sysconfig/puppet<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># The puppetmaster server</span></span><br><span class="line">PUPPET_SERVER=puppet02.yourdomain.cn（或puppet.yourdomain.cn）</span><br><span class="line"></span><br><span class="line"><span class="comment"># If you wish to specify the port to connect to do so here</span></span><br><span class="line">PUPPET_PORT=<span class="number">8140</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Where to log to. Specify syslog to send log messages to the system log.</span></span><br><span class="line">PUPPET_LOG=/var/log/puppet/puppet.log</span><br><span class="line"></span><br><span class="line"><span class="comment"># You may specify other parameters to the puppet client here</span></span><br><span class="line"><span class="comment">#PUPPET_EXTRA_OPTS=--waitforcert=500</span></span><br></pre></td></tr></table></figure></p>
+<p>编辑 vi /etc/puppet/puppet.conf<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[agent]</span><br><span class="line">server=puppet02.yourdomain.cn（或puppet.yourdomain.cn）</span><br><span class="line">listen=true</span><br><span class="line">report=true</span><br><span class="line">runinterval=<span class="number">1800</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="启动服务-1">启动服务</h3><p>使用root登录192.168.10.43或192.168.10.91<br>cd pssh<br>Pssh –h host.list –P –o log “service puppetd start”<br>查看返回结果或日志显示success即说明服务全部启动</p>
+<h3 id="检测服务">检测服务</h3><p>puppet网段客户端：<br>Pssh –h host.list –P –o log “puppetd –test –server puppet02.yourdomain.cn”<br>生产网段客户端：<br>Pssh –h host.list –P –o log “puppetd -t”<br>            查看返回结果或日志显示success</p>
+<h1 id="日常操作说明">日常操作说明</h1><p>证书删除<br>服务器端执行puppet cert  list查看等待签名的客户端请求<br>服务器端执行puppet cert  list—all查看所有已签名的客户端<br>服务器端执行puppet cert clean test.yourdomain.cn删除已签名的客户端<br>客户端直接rm –rf /etc/puppet/ssl目录即可删除客户端证书<br>客户端执行puppetd –test –server puppet02.yourdomain.cn即可生成新证书并自动服务器签名<br>Module路径<br>Puppet 3.2.4版module默认路径位于/etc/puppet/environments/production/modules/下</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/linux/">linux</a><a href="/tags/puppet/">puppet</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Linux/">Linux</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a class="jiathis_button_twitter">Twitter</a>
+    <a class="jiathis_button_evernote">EverNote</a>
+    <a href="http://www.jiathis.com/share?uid=1501277" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+</div>
+<script type="text/javascript" >
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+     ralateuid:{"tsina":"readortravel"},hideMore:false}
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+elfzhao@hotmail.com" charset="utf-8"></script>      
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/06/10/Openstack-CentOS/" title="Openstack CentOS镜像制作教程">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Openstack CentOS镜像制作教程</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/06/09/hello-world/"  title="Hello World">
+ <strong>NEXT:</strong><br/> 
+ <span>Hello World
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread" data-thread-key="" data-title="部署Foreman+Puppet自动化配置管理系统" data-url=""></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#部署"><span class="toc-number">2.</span> <span class="toc-text">部署</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#实施环境"><span class="toc-number">2.1.</span> <span class="toc-text">实施环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#硬件环境"><span class="toc-number">2.1.1.</span> <span class="toc-text">硬件环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#软件环境"><span class="toc-number">2.1.2.</span> <span class="toc-text">软件环境</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装配置"><span class="toc-number">2.2.</span> <span class="toc-text">安装配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#yum源配置"><span class="toc-number">2.2.1.</span> <span class="toc-text">yum源配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pssh安装"><span class="toc-number">2.2.2.</span> <span class="toc-text">pssh安装</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#puppet+foreman安装"><span class="toc-number">3.</span> <span class="toc-text">puppet+foreman安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#服务器端"><span class="toc-number">3.1.</span> <span class="toc-text">服务器端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装puppet客户端"><span class="toc-number">3.1.1.</span> <span class="toc-text">安装puppet客户端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动服务"><span class="toc-number">3.1.2.</span> <span class="toc-text">启动服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#检查服务"><span class="toc-number">3.1.3.</span> <span class="toc-text">检查服务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#客户端"><span class="toc-number">3.2.</span> <span class="toc-text">客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">3.2.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">3.2.2.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动服务-1"><span class="toc-number">3.2.3.</span> <span class="toc-text">启动服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#检测服务"><span class="toc-number">3.2.4.</span> <span class="toc-text">检测服务</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#日常操作说明"><span class="toc-number">4.</span> <span class="toc-text">日常操作说明</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/haproxy/" style="font-size: 10px;">haproxy</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/lvs/" style="font-size: 10px;">lvs</a> <a href="/tags/openstack/" style="font-size: 10px;">openstack</a> <a href="/tags/ospf/" style="font-size: 10px;">ospf</a> <a href="/tags/puppet/" style="font-size: 10px;">puppet</a>
+    </div>
+  </div>
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>2</sup></a></li>
+		
+			<li><a href="/categories/openstack/" title="openstack">openstack<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="commentslist">
+  <p class="asidetitle">最新评论</p>
+  <ul class="ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-time="1" data-show-admin="1" data-excerpt-length="32" data-show-title="1"></ul>
+</div>
+<script type="text/javascript">
+if(typeof duoshuoQuery === 'undefined'){
+  var duoshuoQuery = {short_name:"anste"};
+  (function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	}
+	</script>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://blog.leafh.pw" target="_blank" title="Leaf Hsiao">Leaf's Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<section class="info">
+		<p> 天行健，君子以自强不息；地势坤，君子以厚德载物。 <br/>
+			Stay hungry, stay foolish</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/readortravel" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/elfzhao" target="_blank" title="twitter"></a>
+		
+		
+		
+		<a href="https://www.facebook.com/atlantis2012" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://cn.linkedin.com/in/jameschao2015" target="_blank" title="linkedin"></a>
+        
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/leaf-hsiao/catman" target="_blank" title="Catman">Catman</a> © 2015 
+		
+		<a href="http://www.anste.com" target="_blank" title="Anste">Anste</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="http://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,208-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      m = $('#main'),
+      a = $('#asidepart'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside'),
+      w  = $(window).width();
+  if ( w>1070 ) {
+  	m.addClass('moveMain');
+  	a.css('display', 'none').addClass('fadeIn');
+  	o.css('display', 'block');
+  };
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+  	if ( w>1070 ) {
+  	  ta.css('display', 'block').addClass('fadeIn');
+  	};
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,250-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"anste"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+
+
+  </body>
+</html>

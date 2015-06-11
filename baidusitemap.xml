@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    
+  <url>
+    <loc>http://www.anste.com/2015/06/10/Openstack-CentOS/</loc>
+    <lastmod>2015-06-10T07:02:56.787Z</lastmod>
+    <data>
+        <display>
+        <title>Openstack CentOS镜像制作教程</title>
+        <pubTime>2015-06-10T06:02:05.000Z</pubTime>
+        
+        <tag>linux </tag>
+         
+        <tag>openstack </tag>
+         
+         
+           
+             
+              <breadCrumb title="openstack" url="http://www.anste.com/categories/openstack/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.anste.com/2015/06/10/lvs/</loc>
+    <lastmod>2015-06-10T06:48:44.408Z</lastmod>
+    <data>
+        <display>
+        <title>LVS、Haproxy、OSPF负载均衡技术对比</title>
+        <pubTime>2015-06-10T06:48:44.408Z</pubTime>
+        
+        <tag>haproxy </tag>
+         
+        <tag>lvs </tag>
+         
+        <tag>ospf </tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="http://www.anste.com/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.anste.com/2015/06/09/Foreman-Puppet/</loc>
+    <lastmod>2015-06-10T06:47:07.843Z</lastmod>
+    <data>
+        <display>
+        <title>部署Foreman+Puppet自动化配置管理系统</title>
+        <pubTime>2015-06-09T07:17:57.000Z</pubTime>
+        
+        <tag>linux </tag>
+         
+        <tag>puppet </tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="http://www.anste.com/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+    
+    
+  <url>
+    <loc>http://www.anste.com/2015/06/09/hello-world/</loc>
+    <lastmod>2015-06-08T12:21:32.000Z</lastmod>
+    <data>
+        <display>
+        <title>Hello World</title>
+        <pubTime>2015-06-09T02:12:19.911Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+</urlset>
