@@ -5,7 +5,7 @@
   <subtitle><![CDATA[A Next Step To Extreme]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.anste.com//"/>
-  <updated>2015-06-11T07:44:30.570Z</updated>
+  <updated>2015-06-11T08:08:27.034Z</updated>
   <id>http://www.anste.com//</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[openstack-Windows2012]]></title>
+    <title><![CDATA[openstack windows2012镜像文件制作教程]]></title>
     <link href="http://www.anste.com/2015/06/11/openstack-Windows2012/"/>
     <id>http://www.anste.com/2015/06/11/openstack-Windows2012/</id>
     <published>2015-06-11T07:34:40.000Z</published>
-    <updated>2015-06-11T07:44:30.570Z</updated>
+    <updated>2015-06-11T08:08:27.034Z</updated>
     <content type="html"><![CDATA[<h1 id="Windows2012">Windows2012</h1><p>参考：<a href="http://docs.openstack.org/zh_CN/image-guide/content/windows-image.html" target="_blank" rel="external">http://docs.openstack.org/zh_CN/image-guide/content/windows-image.html</a></p>
 <h2 id="安装windows2012">安装windows2012</h2><p>下载windows 2012镜像iso文件和virtio驱动文件到镜像制作主机192.168.9.100（CentOS6.6）<br>本文档版本：Windows2012_Standard_R2_x86_64.iso<br>本文档版本：virtio-win-drivers-20120712-1.iso<br>存放在/home目录下<br>在192.168.9.100上运行以下命令<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">virt-install --connect qemu:///system \</span><br><span class="line">  --name windows2012 --ram <span class="number">2048</span> --vcpus <span class="number">2</span> \</span><br><span class="line">  --network network=default,model=virtio \</span><br><span class="line">  --disk path=/home/windows2012.qcow2,format=qcow2,device=disk,bus=virtio \</span><br><span class="line">  --cdrom /home/Windows2012_Standard_R2_x86_64.iso \</span><br><span class="line">  --disk path=/home/virtio-win-drivers-<span class="number">20120712</span>-<span class="number">1.</span>iso,device=cdrom \</span><br><span class="line">  --vnc --os-type windows --os-variant win2k8</span><br></pre></td></tr></table></figure></p>
 <p>进入virt-manager开始安装windows 2012<br>选择自定义 仅安装windows，会提示找不到硬盘，加载virtio驱动即可<br>硬盘驱动路径virtio-win-drivers-20120712-1.iso\STORAGE\SERVER_2008_R2\AMD64<br>网卡驱动路径virtio-win-drivers-20120712-1.iso\NETWORK\SERVER_2008_R2\AMD64<br>administrator 密码Test@test.cn<br>安装完毕后，以administrator用户登录如果提示网卡找不到，请重新安装网卡驱动</p>
