@@ -5,7 +5,7 @@
   <subtitle><![CDATA[A Next Step To Extreme]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.anste.com//"/>
-  <updated>2015-06-10T06:48:44.408Z</updated>
+  <updated>2015-06-11T07:44:30.570Z</updated>
   <id>http://www.anste.com//</id>
   
   <author>
@@ -14,6 +14,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[openstack-Windows2012]]></title>
+    <link href="http://www.anste.com/2015/06/11/openstack-Windows2012/"/>
+    <id>http://www.anste.com/2015/06/11/openstack-Windows2012/</id>
+    <published>2015-06-11T07:34:40.000Z</published>
+    <updated>2015-06-11T07:44:30.570Z</updated>
+    <content type="html"><![CDATA[<h1 id="Windows2012">Windows2012</h1><p>参考：<a href="http://docs.openstack.org/zh_CN/image-guide/content/windows-image.html" target="_blank" rel="external">http://docs.openstack.org/zh_CN/image-guide/content/windows-image.html</a></p>
+<h2 id="安装windows2012">安装windows2012</h2><p>下载windows 2012镜像iso文件和virtio驱动文件到镜像制作主机192.168.9.100（CentOS6.6）<br>本文档版本：Windows2012_Standard_R2_x86_64.iso<br>本文档版本：virtio-win-drivers-20120712-1.iso<br>存放在/home目录下<br>在192.168.9.100上运行以下命令<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">virt-install --connect qemu:///system \</span><br><span class="line">  --name windows2012 --ram <span class="number">2048</span> --vcpus <span class="number">2</span> \</span><br><span class="line">  --network network=default,model=virtio \</span><br><span class="line">  --disk path=/home/windows2012.qcow2,format=qcow2,device=disk,bus=virtio \</span><br><span class="line">  --cdrom /home/Windows2012_Standard_R2_x86_64.iso \</span><br><span class="line">  --disk path=/home/virtio-win-drivers-<span class="number">20120712</span>-<span class="number">1.</span>iso,device=cdrom \</span><br><span class="line">  --vnc --os-type windows --os-variant win2k8</span><br></pre></td></tr></table></figure></p>
+<p>进入virt-manager开始安装windows 2012<br>选择自定义 仅安装windows，会提示找不到硬盘，加载virtio驱动即可<br>硬盘驱动路径virtio-win-drivers-20120712-1.iso\STORAGE\SERVER_2008_R2\AMD64<br>网卡驱动路径virtio-win-drivers-20120712-1.iso\NETWORK\SERVER_2008_R2\AMD64<br>administrator 密码Test@test.cn<br>安装完毕后，以administrator用户登录如果提示网卡找不到，请重新安装网卡驱动</p>
+<h2 id="安装cloudbaseinit程序">安装cloudbaseinit程序</h2><p>下载<a href="https://www.cloudbase.it/downloads/CloudbaseInitSetup_x64.msi" target="_blank" rel="external">https://www.cloudbase.it/downloads/CloudbaseInitSetup_x64.msi</a><br>在configuration options窗口，修改以下设置：（cloudbaseinit版本不同，选项略有不同，一般使用默认配置即可）<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">用户名： Administrator</span><br><span class="line"></span><br><span class="line">网卡：Red Hat VirtIO Ethernet Adapter</span><br><span class="line"></span><br><span class="line">日志输出串口：COM1</span><br><span class="line"></span><br><span class="line">当安装完成后，在Complete the Cloudbase-Init Setup Wizard 窗口，选择Run Sysprep和Shutdown 复选框，然后点击Finish。</span><br></pre></td></tr></table></figure></p>
+<p>等待虚机关闭。</p>
+<h2 id="压缩镜像：">压缩镜像：</h2><p>qemu-img convert -c /var/lib/libvirt/images/windows2012.qcow2 -O qcow2 /home/Windows2012STD_R2.qcow2<br>scp /home/Windows2012STD_R2.qcow2 192.168.13.5:/tmp   (192.168.13.5是openstack glance所在服务器)<br>登陆到192.168.13.5（openstack Controller节点），执行以下命令<br>source /root/openrc<br>glance image-create —name Windows2012STD_R2 —disk-format=qcow2 —container-format=bare —is-public=True —progress —file /tmp/ Windows2012STD_R2.qcow2<br>至此，windows2012镜像已经上传到openstack镜像源中。</p>
+<h2 id="注意事项">注意事项</h2><p>1.新建instances成功后会提示配置管理员密码，此时可以随便设置自己的管理员密码<br>2.resize windows虚拟机会比较慢，耐心等待</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[制作openstack windows2012镜像文件教程]]>
+    
+    </summary>
+    
+      <category term="openstack" scheme="http://www.anste.com/tags/openstack/"/>
+    
+      <category term="windows" scheme="http://www.anste.com/tags/windows/"/>
+    
+      <category term="openstack" scheme="http://www.anste.com/categories/openstack/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[LVS、Haproxy、OSPF负载均衡技术对比]]></title>
