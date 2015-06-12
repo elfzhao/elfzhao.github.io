@@ -1,1 +1,2 @@
 User-agent: *
+Sitemap: http://www.anste.com/sitemap.xml
