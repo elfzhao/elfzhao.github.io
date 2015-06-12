@@ -2,10 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     
-    
   <url>
     <loc>http://www.anste.com/2015/06/12/openstack-mirrors/</loc>
-    <lastmod>2015-06-12T01:18:22.356Z</lastmod>
+    <lastmod>2015-06-12T04:59:23.281Z</lastmod>
     <data>
         <display>
         <title>openstack常用镜像文件下载地址</title>
@@ -22,6 +21,7 @@
     </data>
     </url>
 
+    
     
   <url>
     <loc>http://www.anste.com/2015/06/12/openstack-ubuntu/</loc>

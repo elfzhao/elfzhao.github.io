@@ -5,7 +5,7 @@
   <subtitle><![CDATA[A Next Step To Extreme]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.anste.com//"/>
-  <updated>2015-06-12T01:18:22.356Z</updated>
+  <updated>2015-06-12T04:59:23.281Z</updated>
   <id>http://www.anste.com//</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.anste.com/2015/06/12/openstack-mirrors/"/>
     <id>http://www.anste.com/2015/06/12/openstack-mirrors/</id>
     <published>2015-06-12T01:04:56.000Z</published>
-    <updated>2015-06-12T01:18:22.356Z</updated>
+    <updated>2015-06-12T04:59:23.281Z</updated>
     <content type="html"><![CDATA[<p>参考：<a href="https://www.rdoproject.org/Image_resources" target="_blank" rel="external">https://www.rdoproject.org/Image_resources</a><br>      <a href="http://thornelabs.net/2014/06/01/where-to-find-openstack-cloud-images.html" target="_blank" rel="external">http://thornelabs.net/2014/06/01/where-to-find-openstack-cloud-images.html</a></p>
 <h1 id="Fedora">Fedora</h1><p>Fedora 22: <a href="https://getfedora.org/cloud/download/" target="_blank" rel="external">https://getfedora.org/cloud/download/</a><br>Fedora 20 32bit:<a href="http://cloud.fedoraproject.org/fedora-20.i386.qcow2" target="_blank" rel="external">http://cloud.fedoraproject.org/fedora-20.i386.qcow2</a><br>Fedora 20 64bit:<a href="http://cloud.fedoraproject.org/fedora-20.x86_64.qcow2" target="_blank" rel="external">http://cloud.fedoraproject.org/fedora-20.x86_64.qcow2</a><br>Fedora 19 32bit:<a href="http://cloud.fedoraproject.org/fedora-19.i386.qcow2" target="_blank" rel="external">http://cloud.fedoraproject.org/fedora-19.i386.qcow2</a><br>Fedora 19 64bit:<a href="http://cloud.fedoraproject.org/fedora-19.x86_64.qcow2" target="_blank" rel="external">http://cloud.fedoraproject.org/fedora-19.x86_64.qcow2</a></p>
 <h1 id="CentOS">CentOS</h1><p>CentOS 7:<a href="http://cloud.centos.org/centos/7/images/" target="_blank" rel="external">http://cloud.centos.org/centos/7/images/</a><br>CentOS 6:<a href="http://cloud.centos.org/centos/6/images/" target="_blank" rel="external">http://cloud.centos.org/centos/6/images/</a></p>
@@ -30,7 +30,7 @@
 <h1 id="CirrOS">CirrOS</h1><p>CirrOS:<a href="http://download.cirros-cloud.net/" target="_blank" rel="external">http://download.cirros-cloud.net/</a></p>
 <h1 id="Debian">Debian</h1><p>Debian:<a href="http://thornelabs.net/2014/04/07/create-a-kvm-based-debian-7-openstack-cloud-image.html" target="_blank" rel="external">http://thornelabs.net/2014/04/07/create-a-kvm-based-debian-7-openstack-cloud-image.html</a></p>
 <h1 id="SUSE">SUSE</h1><p>SUSE官方没有提供镜像下载，但是提供了镜像制作工具。下载地址：<a href="https://susestudio.com/" target="_blank" rel="external">https://susestudio.com/</a></p>
-<h1 id="FressBSD">FressBSD</h1><p>FreeBSD官方没有提供镜像下载，制作工具下载地址：<a href="http://pellaeon.github.io/bsd-cloudinit/" target="_blank" rel="external">http://pellaeon.github.io/bsd-cloudinit/</a><br>FreeBSD 10.0镜像制作教程：<a href="https://raymii.org/s/tutorials/FreeBSD_10.0-release_Openstack_Image.html" target="_blank" rel="external">https://raymii.org/s/tutorials/FreeBSD_10.0-release_Openstack_Image.html</a><br>FreeBSD 9.X镜像制作教程：<a href="http://fosskb.wordpress.com/2013/07/24/bundling-freebsd-9-image-for-openstack/" target="_blank" rel="external">http://fosskb.wordpress.com/2013/07/24/bundling-freebsd-9-image-for-openstack/</a><br>FreeBSD镜像制作教程：<a href="http://cssoss.wordpress.com/2011/11/28/bundling-freebsd-image-for-openstack/" target="_blank" rel="external">http://cssoss.wordpress.com/2011/11/28/bundling-freebsd-image-for-openstack/</a></p>
+<h1 id="FreeBSD">FreeBSD</h1><p>FreeBSD官方没有提供镜像下载，制作工具下载地址：<a href="http://pellaeon.github.io/bsd-cloudinit/" target="_blank" rel="external">http://pellaeon.github.io/bsd-cloudinit/</a><br>FreeBSD 10.0镜像制作教程：<a href="https://raymii.org/s/tutorials/FreeBSD_10.0-release_Openstack_Image.html" target="_blank" rel="external">https://raymii.org/s/tutorials/FreeBSD_10.0-release_Openstack_Image.html</a><br>FreeBSD 9.X镜像制作教程：<a href="http://fosskb.wordpress.com/2013/07/24/bundling-freebsd-9-image-for-openstack/" target="_blank" rel="external">http://fosskb.wordpress.com/2013/07/24/bundling-freebsd-9-image-for-openstack/</a><br>FreeBSD镜像制作教程：<a href="http://cssoss.wordpress.com/2011/11/28/bundling-freebsd-image-for-openstack/" target="_blank" rel="external">http://cssoss.wordpress.com/2011/11/28/bundling-freebsd-image-for-openstack/</a></p>
 ]]></content>
     <summary type="html">
     <![CDATA[openstack常用镜像文件下载地址]]>
