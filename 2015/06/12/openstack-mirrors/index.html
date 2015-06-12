@@ -4,20 +4,20 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>openstack windows2012镜像文件制作教程 | Anste</title>
+    <title>openstack常用镜像文件下载地址 | Anste</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Anste">
     
-    <meta name="description" itemprop="description" content="制作openstack windows2012镜像文件教程">
+    <meta name="description" itemprop="description" content="openstack常用镜像文件下载地址">
     
     
     
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="elfzhao" />
-    <meta name="twitter:title" content="openstack windows2012镜像文件制作教程 | Anste" />
+    <meta name="twitter:title" content="openstack常用镜像文件下载地址 | Anste" />
       
-        <meta name="twitter:description" content="制作openstack windows2012镜像文件教程" />
+        <meta name="twitter:description" content="openstack常用镜像文件下载地址" />
       
     
     
@@ -100,15 +100,15 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/06/11/openstack-Windows2012/" title="openstack windows2012镜像文件制作教程" itemprop="url">openstack windows2012镜像文件制作教程</a>
+      <a href="/2015/06/12/openstack-mirrors/" title="openstack常用镜像文件下载地址" itemprop="url">openstack常用镜像文件下载地址</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://www.anste.com" title="Anste">Anste</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-06-11T07:34:40.000Z" itemprop="datePublished">2015-06-11</time>
-    更新日期:<time datetime="2015-06-11T08:08:27.034Z" itemprop="dateModified">2015-06-11</time>
+    <time datetime="2015-06-12T01:04:56.000Z" itemprop="datePublished">2015-06-12</time>
+    更新日期:<time datetime="2015-06-12T01:18:22.356Z" itemprop="dateModified">2015-06-12</time>
     
   </p>
 </header>
@@ -117,23 +117,26 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Windows2012"><span class="toc-number">1.</span> <span class="toc-text">Windows2012</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装windows2012"><span class="toc-number">1.1.</span> <span class="toc-text">安装windows2012</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装cloudbaseinit程序"><span class="toc-number">1.2.</span> <span class="toc-text">安装cloudbaseinit程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#压缩镜像："><span class="toc-number">1.3.</span> <span class="toc-text">压缩镜像：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注意事项"><span class="toc-number">1.4.</span> <span class="toc-text">注意事项</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Fedora"><span class="toc-number">1.</span> <span class="toc-text">Fedora</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CentOS"><span class="toc-number">2.</span> <span class="toc-text">CentOS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Ubuntu"><span class="toc-number">3.</span> <span class="toc-text">Ubuntu</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RHEL"><span class="toc-number">4.</span> <span class="toc-text">RHEL</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Windows"><span class="toc-number">5.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CirrOS"><span class="toc-number">6.</span> <span class="toc-text">CirrOS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Debian"><span class="toc-number">7.</span> <span class="toc-text">Debian</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SUSE"><span class="toc-number">8.</span> <span class="toc-text">SUSE</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FressBSD"><span class="toc-number">9.</span> <span class="toc-text">FressBSD</span></a></li></ol>
 		</div>
 		
-		<h1 id="Windows2012">Windows2012</h1><p>参考：<a href="http://docs.openstack.org/zh_CN/image-guide/content/windows-image.html" target="_blank" rel="external">http://docs.openstack.org/zh_CN/image-guide/content/windows-image.html</a></p>
-<h2 id="安装windows2012">安装windows2012</h2><p>下载windows 2012镜像iso文件和virtio驱动文件到镜像制作主机192.168.9.100（CentOS6.6）<br>本文档版本：Windows2012_Standard_R2_x86_64.iso<br>本文档版本：virtio-win-drivers-20120712-1.iso<br>存放在/home目录下<br>在192.168.9.100上运行以下命令<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">virt-install --connect qemu:///system \</span><br><span class="line">  --name windows2012 --ram <span class="number">2048</span> --vcpus <span class="number">2</span> \</span><br><span class="line">  --network network=default,model=virtio \</span><br><span class="line">  --disk path=/home/windows2012.qcow2,format=qcow2,device=disk,bus=virtio \</span><br><span class="line">  --cdrom /home/Windows2012_Standard_R2_x86_64.iso \</span><br><span class="line">  --disk path=/home/virtio-win-drivers-<span class="number">20120712</span>-<span class="number">1.</span>iso,device=cdrom \</span><br><span class="line">  --vnc --os-type windows --os-variant win2k8</span><br></pre></td></tr></table></figure></p>
-<p>进入virt-manager开始安装windows 2012<br>选择自定义 仅安装windows，会提示找不到硬盘，加载virtio驱动即可<br>硬盘驱动路径virtio-win-drivers-20120712-1.iso\STORAGE\SERVER_2008_R2\AMD64<br>网卡驱动路径virtio-win-drivers-20120712-1.iso\NETWORK\SERVER_2008_R2\AMD64<br>administrator 密码Test@test.cn<br>安装完毕后，以administrator用户登录如果提示网卡找不到，请重新安装网卡驱动</p>
-<h2 id="安装cloudbaseinit程序">安装cloudbaseinit程序</h2><p>下载<a href="https://www.cloudbase.it/downloads/CloudbaseInitSetup_x64.msi" target="_blank" rel="external">https://www.cloudbase.it/downloads/CloudbaseInitSetup_x64.msi</a><br>在configuration options窗口，修改以下设置：（cloudbaseinit版本不同，选项略有不同，一般使用默认配置即可）<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">用户名： Administrator</span><br><span class="line"></span><br><span class="line">网卡：Red Hat VirtIO Ethernet Adapter</span><br><span class="line"></span><br><span class="line">日志输出串口：COM1</span><br><span class="line"></span><br><span class="line">当安装完成后，在Complete the Cloudbase-Init Setup Wizard 窗口，选择Run Sysprep和Shutdown 复选框，然后点击Finish。</span><br></pre></td></tr></table></figure></p>
-<p>等待虚机关闭。</p>
-<h2 id="压缩镜像：">压缩镜像：</h2><p>qemu-img convert -c /var/lib/libvirt/images/windows2012.qcow2 -O qcow2 /home/Windows2012STD_R2.qcow2<br>scp /home/Windows2012STD_R2.qcow2 192.168.13.5:/tmp   (192.168.13.5是openstack glance所在服务器)<br>登陆到192.168.13.5（openstack Controller节点），执行以下命令<br>source /root/openrc<br>glance image-create —name Windows2012STD_R2 —disk-format=qcow2 —container-format=bare —is-public=True —progress —file /tmp/ Windows2012STD_R2.qcow2<br>至此，windows2012镜像已经上传到openstack镜像源中。</p>
-<h2 id="注意事项">注意事项</h2><p>1.新建instances成功后会提示配置管理员密码，此时可以随便设置自己的管理员密码<br>2.resize windows虚拟机会比较慢，耐心等待</p>
+		<p>参考：<a href="https://www.rdoproject.org/Image_resources" target="_blank" rel="external">https://www.rdoproject.org/Image_resources</a><br>      <a href="http://thornelabs.net/2014/06/01/where-to-find-openstack-cloud-images.html" target="_blank" rel="external">http://thornelabs.net/2014/06/01/where-to-find-openstack-cloud-images.html</a></p>
+<h1 id="Fedora">Fedora</h1><p>Fedora 22: <a href="https://getfedora.org/cloud/download/" target="_blank" rel="external">https://getfedora.org/cloud/download/</a><br>Fedora 20 32bit:<a href="http://cloud.fedoraproject.org/fedora-20.i386.qcow2" target="_blank" rel="external">http://cloud.fedoraproject.org/fedora-20.i386.qcow2</a><br>Fedora 20 64bit:<a href="http://cloud.fedoraproject.org/fedora-20.x86_64.qcow2" target="_blank" rel="external">http://cloud.fedoraproject.org/fedora-20.x86_64.qcow2</a><br>Fedora 19 32bit:<a href="http://cloud.fedoraproject.org/fedora-19.i386.qcow2" target="_blank" rel="external">http://cloud.fedoraproject.org/fedora-19.i386.qcow2</a><br>Fedora 19 64bit:<a href="http://cloud.fedoraproject.org/fedora-19.x86_64.qcow2" target="_blank" rel="external">http://cloud.fedoraproject.org/fedora-19.x86_64.qcow2</a></p>
+<h1 id="CentOS">CentOS</h1><p>CentOS 7:<a href="http://cloud.centos.org/centos/7/images/" target="_blank" rel="external">http://cloud.centos.org/centos/7/images/</a><br>CentOS 6:<a href="http://cloud.centos.org/centos/6/images/" target="_blank" rel="external">http://cloud.centos.org/centos/6/images/</a></p>
+<h1 id="Ubuntu">Ubuntu</h1><p>Ubuntu:<a href="https://cloud-images.ubuntu.com/" target="_blank" rel="external">https://cloud-images.ubuntu.com/</a></p>
+<h1 id="RHEL">RHEL</h1><p>RHEL 7:<a href="https://access.redhat.com/downloads/content/69/ver=/rhel---7/7.0/x86_64/product-downloads" target="_blank" rel="external">https://access.redhat.com/downloads/content/69/ver=/rhel---7/7.0/x86_64/product-downloads</a><br>RHEL 6:<a href="https://rhn.redhat.com/rhn/software/channel/downloads/Download.do?cid=16952" target="_blank" rel="external">https://rhn.redhat.com/rhn/software/channel/downloads/Download.do?cid=16952</a></p>
+<h1 id="Windows">Windows</h1><p>Windows Server 2012:<a href="http://www.cloudbase.it/ws2012/" target="_blank" rel="external">http://www.cloudbase.it/ws2012/</a><br>Windows 7镜像制作教程：<a href="http://cloud-ninja.org/2014/05/14/running-windows-7-guests-on-openstack-icehouse/" target="_blank" rel="external">http://cloud-ninja.org/2014/05/14/running-windows-7-guests-on-openstack-icehouse/</a></p>
+<h1 id="CirrOS">CirrOS</h1><p>CirrOS:<a href="http://download.cirros-cloud.net/" target="_blank" rel="external">http://download.cirros-cloud.net/</a></p>
+<h1 id="Debian">Debian</h1><p>Debian:<a href="http://thornelabs.net/2014/04/07/create-a-kvm-based-debian-7-openstack-cloud-image.html" target="_blank" rel="external">http://thornelabs.net/2014/04/07/create-a-kvm-based-debian-7-openstack-cloud-image.html</a></p>
+<h1 id="SUSE">SUSE</h1><p>SUSE官方没有提供镜像下载，但是提供了镜像制作工具。下载地址：<a href="https://susestudio.com/" target="_blank" rel="external">https://susestudio.com/</a></p>
+<h1 id="FressBSD">FressBSD</h1><p>FreeBSD官方没有提供镜像下载，制作工具下载地址：<a href="http://pellaeon.github.io/bsd-cloudinit/" target="_blank" rel="external">http://pellaeon.github.io/bsd-cloudinit/</a><br>FreeBSD 10.0镜像制作教程：<a href="https://raymii.org/s/tutorials/FreeBSD_10.0-release_Openstack_Image.html" target="_blank" rel="external">https://raymii.org/s/tutorials/FreeBSD_10.0-release_Openstack_Image.html</a><br>FreeBSD 9.X镜像制作教程：<a href="http://fosskb.wordpress.com/2013/07/24/bundling-freebsd-9-image-for-openstack/" target="_blank" rel="external">http://fosskb.wordpress.com/2013/07/24/bundling-freebsd-9-image-for-openstack/</a><br>FreeBSD镜像制作教程：<a href="http://cssoss.wordpress.com/2011/11/28/bundling-freebsd-image-for-openstack/" target="_blank" rel="external">http://cssoss.wordpress.com/2011/11/28/bundling-freebsd-image-for-openstack/</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/openstack/">openstack</a><a href="/tags/windows/">windows</a>
+  <span></span> <a href="/tags/openstack/">openstack</a>
   </div>
 
 
@@ -174,19 +177,11 @@ elfzhao@hotmail.com" charset="utf-8"></script>
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/06/12/openstack-ubuntu/" title="制作openstack ubuntu镜像文件">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  制作openstack ubuntu镜像文件</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/06/10/lvs/"  title="LVS、Haproxy、OSPF负载均衡技术对比">
+<a href="/2015/06/12/openstack-ubuntu/"  title="制作openstack ubuntu镜像文件">
  <strong>NEXT:</strong><br/> 
- <span>LVS、Haproxy、OSPF负载均衡技术对比
+ <span>制作openstack ubuntu镜像文件
 </span>
 </a>
 </div>
@@ -195,7 +190,7 @@ elfzhao@hotmail.com" charset="utf-8"></script>
 
 	
 <section class="comment">
-	<div class="ds-thread" data-thread-key="2015/06/11/openstack-Windows2012/" data-title="openstack windows2012镜像文件制作教程" data-url="http://www.anste.com/2015/06/11/openstack-Windows2012/"></div>
+	<div class="ds-thread" data-thread-key="2015/06/12/openstack-mirrors/" data-title="openstack常用镜像文件下载地址" data-url="http://www.anste.com/2015/06/12/openstack-mirrors/"></div>
 </section>
 
 </div>  
@@ -203,7 +198,7 @@ elfzhao@hotmail.com" charset="utf-8"></script>
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Windows2012"><span class="toc-number">1.</span> <span class="toc-text">Windows2012</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装windows2012"><span class="toc-number">1.1.</span> <span class="toc-text">安装windows2012</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装cloudbaseinit程序"><span class="toc-number">1.2.</span> <span class="toc-text">安装cloudbaseinit程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#压缩镜像："><span class="toc-number">1.3.</span> <span class="toc-text">压缩镜像：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注意事项"><span class="toc-number">1.4.</span> <span class="toc-text">注意事项</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Fedora"><span class="toc-number">1.</span> <span class="toc-text">Fedora</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CentOS"><span class="toc-number">2.</span> <span class="toc-text">CentOS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Ubuntu"><span class="toc-number">3.</span> <span class="toc-text">Ubuntu</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RHEL"><span class="toc-number">4.</span> <span class="toc-text">RHEL</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Windows"><span class="toc-number">5.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CirrOS"><span class="toc-number">6.</span> <span class="toc-text">CirrOS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Debian"><span class="toc-number">7.</span> <span class="toc-text">Debian</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SUSE"><span class="toc-number">8.</span> <span class="toc-text">SUSE</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FressBSD"><span class="toc-number">9.</span> <span class="toc-text">FressBSD</span></a></li></ol>
   </div>
 
 <div id="asidepart">

@@ -4,20 +4,20 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>openstack windows2012镜像文件制作教程 | Anste</title>
+    <title>制作openstack ubuntu镜像文件 | Anste</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Anste">
     
-    <meta name="description" itemprop="description" content="制作openstack windows2012镜像文件教程">
+    <meta name="description" itemprop="description" content="定制化制作openstack ubuntu镜像文件">
     
     
     
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="elfzhao" />
-    <meta name="twitter:title" content="openstack windows2012镜像文件制作教程 | Anste" />
+    <meta name="twitter:title" content="制作openstack ubuntu镜像文件 | Anste" />
       
-        <meta name="twitter:description" content="制作openstack windows2012镜像文件教程" />
+        <meta name="twitter:description" content="定制化制作openstack ubuntu镜像文件" />
       
     
     
@@ -100,15 +100,15 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/06/11/openstack-Windows2012/" title="openstack windows2012镜像文件制作教程" itemprop="url">openstack windows2012镜像文件制作教程</a>
+      <a href="/2015/06/12/openstack-ubuntu/" title="制作openstack ubuntu镜像文件" itemprop="url">制作openstack ubuntu镜像文件</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://www.anste.com" title="Anste">Anste</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-06-11T07:34:40.000Z" itemprop="datePublished">2015-06-11</time>
-    更新日期:<time datetime="2015-06-11T08:08:27.034Z" itemprop="dateModified">2015-06-11</time>
+    <time datetime="2015-06-12T00:52:45.000Z" itemprop="datePublished">2015-06-12</time>
+    更新日期:<time datetime="2015-06-12T01:04:36.051Z" itemprop="dateModified">2015-06-12</time>
     
   </p>
 </header>
@@ -117,23 +117,20 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Windows2012"><span class="toc-number">1.</span> <span class="toc-text">Windows2012</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装windows2012"><span class="toc-number">1.1.</span> <span class="toc-text">安装windows2012</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装cloudbaseinit程序"><span class="toc-number">1.2.</span> <span class="toc-text">安装cloudbaseinit程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#压缩镜像："><span class="toc-number">1.3.</span> <span class="toc-text">压缩镜像：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注意事项"><span class="toc-number">1.4.</span> <span class="toc-text">注意事项</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#开启密码登陆"><span class="toc-number">1.</span> <span class="toc-text">开启密码登陆</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#!/bin/sh"><span class="toc-number">2.</span> <span class="toc-text">!/bin/sh</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#修改官方镜像文件"><span class="toc-number">3.</span> <span class="toc-text">修改官方镜像文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#上传镜像"><span class="toc-number">4.</span> <span class="toc-text">上传镜像</span></a></li></ol>
 		</div>
 		
-		<h1 id="Windows2012">Windows2012</h1><p>参考：<a href="http://docs.openstack.org/zh_CN/image-guide/content/windows-image.html" target="_blank" rel="external">http://docs.openstack.org/zh_CN/image-guide/content/windows-image.html</a></p>
-<h2 id="安装windows2012">安装windows2012</h2><p>下载windows 2012镜像iso文件和virtio驱动文件到镜像制作主机192.168.9.100（CentOS6.6）<br>本文档版本：Windows2012_Standard_R2_x86_64.iso<br>本文档版本：virtio-win-drivers-20120712-1.iso<br>存放在/home目录下<br>在192.168.9.100上运行以下命令<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">virt-install --connect qemu:///system \</span><br><span class="line">  --name windows2012 --ram <span class="number">2048</span> --vcpus <span class="number">2</span> \</span><br><span class="line">  --network network=default,model=virtio \</span><br><span class="line">  --disk path=/home/windows2012.qcow2,format=qcow2,device=disk,bus=virtio \</span><br><span class="line">  --cdrom /home/Windows2012_Standard_R2_x86_64.iso \</span><br><span class="line">  --disk path=/home/virtio-win-drivers-<span class="number">20120712</span>-<span class="number">1.</span>iso,device=cdrom \</span><br><span class="line">  --vnc --os-type windows --os-variant win2k8</span><br></pre></td></tr></table></figure></p>
-<p>进入virt-manager开始安装windows 2012<br>选择自定义 仅安装windows，会提示找不到硬盘，加载virtio驱动即可<br>硬盘驱动路径virtio-win-drivers-20120712-1.iso\STORAGE\SERVER_2008_R2\AMD64<br>网卡驱动路径virtio-win-drivers-20120712-1.iso\NETWORK\SERVER_2008_R2\AMD64<br>administrator 密码Test@test.cn<br>安装完毕后，以administrator用户登录如果提示网卡找不到，请重新安装网卡驱动</p>
-<h2 id="安装cloudbaseinit程序">安装cloudbaseinit程序</h2><p>下载<a href="https://www.cloudbase.it/downloads/CloudbaseInitSetup_x64.msi" target="_blank" rel="external">https://www.cloudbase.it/downloads/CloudbaseInitSetup_x64.msi</a><br>在configuration options窗口，修改以下设置：（cloudbaseinit版本不同，选项略有不同，一般使用默认配置即可）<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">用户名： Administrator</span><br><span class="line"></span><br><span class="line">网卡：Red Hat VirtIO Ethernet Adapter</span><br><span class="line"></span><br><span class="line">日志输出串口：COM1</span><br><span class="line"></span><br><span class="line">当安装完成后，在Complete the Cloudbase-Init Setup Wizard 窗口，选择Run Sysprep和Shutdown 复选框，然后点击Finish。</span><br></pre></td></tr></table></figure></p>
-<p>等待虚机关闭。</p>
-<h2 id="压缩镜像：">压缩镜像：</h2><p>qemu-img convert -c /var/lib/libvirt/images/windows2012.qcow2 -O qcow2 /home/Windows2012STD_R2.qcow2<br>scp /home/Windows2012STD_R2.qcow2 192.168.13.5:/tmp   (192.168.13.5是openstack glance所在服务器)<br>登陆到192.168.13.5（openstack Controller节点），执行以下命令<br>source /root/openrc<br>glance image-create —name Windows2012STD_R2 —disk-format=qcow2 —container-format=bare —is-public=True —progress —file /tmp/ Windows2012STD_R2.qcow2<br>至此，windows2012镜像已经上传到openstack镜像源中。</p>
-<h2 id="注意事项">注意事项</h2><p>1.新建instances成功后会提示配置管理员密码，此时可以随便设置自己的管理员密码<br>2.resize windows虚拟机会比较慢，耐心等待</p>
-  
+		<p>openstack官方教程不对，暂时只修改ubuntu官方openstack镜像文件</p>
+<h1 id="开启密码登陆">开启密码登陆</h1><p>创建instance时在【post-creation】中写入以下内容后即可，ssh用户名ubuntu 密码Test@test.cn</p>
+<h1 id="!/bin/sh">!/bin/sh</h1><p>passwd ubuntu&lt;&lt;EOF<br>Test@test.cn<br>Test@test.cn<br>EOF<br>sed -i ‘s/PasswordAuthentication no/PasswordAuthentication yes/g’ /etc/ssh/sshd_config<br>service ssh restart</p>
+<h1 id="修改官方镜像文件">修改官方镜像文件</h1><p>下载地址：<a href="https://cloud-images.ubuntu.com/trusty/current/" target="_blank" rel="external">https://cloud-images.ubuntu.com/trusty/current/</a><br>使用CentOS 6.6作为镜像制作系统，安装guestfish工具<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">guestfish --rw -a trusty-server-cloudimg-amd64-disk1.img</span><br><span class="line">&gt;&lt;fs&gt; run</span><br><span class="line">&gt;&lt;fs&gt; list-filesystems</span><br><span class="line">/dev/sda1: xfs</span><br><span class="line">&gt;&lt;fs&gt; mount /dev/sda1 /</span><br><span class="line">&gt;&lt;fs&gt; vi /etc/cloud/cloud.cfg</span><br><span class="line">disable_root:  false <span class="comment">#是否开启root用户登陆  true 关闭  false 开启</span></span><br><span class="line">ssh_pwauth:   true <span class="comment">#是否开启密码登陆  true 开启  false 关闭</span></span><br><span class="line"></span><br><span class="line">default_user:</span><br><span class="line">     name: ubuntu  <span class="comment">#默认创建用户名称</span></span><br><span class="line">     lock_passwd: <span class="keyword">False</span> <span class="comment">#是否锁定</span></span><br><span class="line">&gt;&lt;fs&gt; vi /etc/shadow</span><br><span class="line">粘贴加密后的密码到root：后（在CentOS6.6使用python -c <span class="string">'import crypt; print crypt.crypt("Test@test.cn", "$6$random_salt")'</span>加密后的密码 ）  <span class="comment">#配置root密码</span></span><br><span class="line">&gt;&lt;fs&gt; cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime   <span class="comment">#变更时区</span></span><br><span class="line">&gt;&lt;fs&gt; vi /etc/crontab  <span class="comment">#配置NTP</span></span><br><span class="line"><span class="number">0</span>  <span class="number">9</span>    * * *   root    /usr/sbin/ntpdate <span class="number">192.168</span>.253.4  <span class="comment">#自行替换成自己网络的NTP</span></span><br><span class="line">&gt;&lt;fs&gt; exit</span><br></pre></td></tr></table></figure></p>
+<h1 id="上传镜像">上传镜像</h1>  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp /home/trusty-server-cloudimg-amd64-disk1.img 192.168.13.5:/tmp  #192.168.13.5&#20026;openstack glance&#26381;&#21153;&#22120;&#65292;&#21363;openstack Controller&#10;&#30331;&#38470;192.168.13.5&#10;source /root/openrc&#10;glance image-create --name Ubuntu_amd64 --disk-format=qcow2 --container-format=bare --is-public=True --progress --file /tmp/trusty-server-cloudimg-amd64-disk1.img</span><br></pre></td></tr></table></figure>  
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/openstack/">openstack</a><a href="/tags/windows/">windows</a>
+  <span></span> <a href="/tags/openstack/">openstack</a><a href="/tags/ubuntu/">ubuntu</a>
   </div>
 
 
@@ -175,18 +172,18 @@ elfzhao@hotmail.com" charset="utf-8"></script>
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/06/12/openstack-ubuntu/" title="制作openstack ubuntu镜像文件">
+ <a href="/2015/06/12/openstack-mirrors/" title="openstack常用镜像文件下载地址">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  制作openstack ubuntu镜像文件</span>
+  openstack常用镜像文件下载地址</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/06/10/lvs/"  title="LVS、Haproxy、OSPF负载均衡技术对比">
+<a href="/2015/06/11/openstack-Windows2012/"  title="openstack windows2012镜像文件制作教程">
  <strong>NEXT:</strong><br/> 
- <span>LVS、Haproxy、OSPF负载均衡技术对比
+ <span>openstack windows2012镜像文件制作教程
 </span>
 </a>
 </div>
@@ -195,7 +192,7 @@ elfzhao@hotmail.com" charset="utf-8"></script>
 
 	
 <section class="comment">
-	<div class="ds-thread" data-thread-key="2015/06/11/openstack-Windows2012/" data-title="openstack windows2012镜像文件制作教程" data-url="http://www.anste.com/2015/06/11/openstack-Windows2012/"></div>
+	<div class="ds-thread" data-thread-key="2015/06/12/openstack-ubuntu/" data-title="制作openstack ubuntu镜像文件" data-url="http://www.anste.com/2015/06/12/openstack-ubuntu/"></div>
 </section>
 
 </div>  
@@ -203,7 +200,7 @@ elfzhao@hotmail.com" charset="utf-8"></script>
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Windows2012"><span class="toc-number">1.</span> <span class="toc-text">Windows2012</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装windows2012"><span class="toc-number">1.1.</span> <span class="toc-text">安装windows2012</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装cloudbaseinit程序"><span class="toc-number">1.2.</span> <span class="toc-text">安装cloudbaseinit程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#压缩镜像："><span class="toc-number">1.3.</span> <span class="toc-text">压缩镜像：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注意事项"><span class="toc-number">1.4.</span> <span class="toc-text">注意事项</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#开启密码登陆"><span class="toc-number">1.</span> <span class="toc-text">开启密码登陆</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#!/bin/sh"><span class="toc-number">2.</span> <span class="toc-text">!/bin/sh</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#修改官方镜像文件"><span class="toc-number">3.</span> <span class="toc-text">修改官方镜像文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#上传镜像"><span class="toc-number">4.</span> <span class="toc-text">上传镜像</span></a></li></ol>
   </div>
 
 <div id="asidepart">

@@ -5,7 +5,7 @@
   <subtitle><![CDATA[A Next Step To Extreme]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.anste.com//"/>
-  <updated>2015-06-11T08:08:27.034Z</updated>
+  <updated>2015-06-12T01:18:22.356Z</updated>
   <id>http://www.anste.com//</id>
   
   <author>
@@ -14,6 +14,58 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[openstack常用镜像文件下载地址]]></title>
+    <link href="http://www.anste.com/2015/06/12/openstack-mirrors/"/>
+    <id>http://www.anste.com/2015/06/12/openstack-mirrors/</id>
+    <published>2015-06-12T01:04:56.000Z</published>
+    <updated>2015-06-12T01:18:22.356Z</updated>
+    <content type="html"><![CDATA[<p>参考：<a href="https://www.rdoproject.org/Image_resources" target="_blank" rel="external">https://www.rdoproject.org/Image_resources</a><br>      <a href="http://thornelabs.net/2014/06/01/where-to-find-openstack-cloud-images.html" target="_blank" rel="external">http://thornelabs.net/2014/06/01/where-to-find-openstack-cloud-images.html</a></p>
+<h1 id="Fedora">Fedora</h1><p>Fedora 22: <a href="https://getfedora.org/cloud/download/" target="_blank" rel="external">https://getfedora.org/cloud/download/</a><br>Fedora 20 32bit:<a href="http://cloud.fedoraproject.org/fedora-20.i386.qcow2" target="_blank" rel="external">http://cloud.fedoraproject.org/fedora-20.i386.qcow2</a><br>Fedora 20 64bit:<a href="http://cloud.fedoraproject.org/fedora-20.x86_64.qcow2" target="_blank" rel="external">http://cloud.fedoraproject.org/fedora-20.x86_64.qcow2</a><br>Fedora 19 32bit:<a href="http://cloud.fedoraproject.org/fedora-19.i386.qcow2" target="_blank" rel="external">http://cloud.fedoraproject.org/fedora-19.i386.qcow2</a><br>Fedora 19 64bit:<a href="http://cloud.fedoraproject.org/fedora-19.x86_64.qcow2" target="_blank" rel="external">http://cloud.fedoraproject.org/fedora-19.x86_64.qcow2</a></p>
+<h1 id="CentOS">CentOS</h1><p>CentOS 7:<a href="http://cloud.centos.org/centos/7/images/" target="_blank" rel="external">http://cloud.centos.org/centos/7/images/</a><br>CentOS 6:<a href="http://cloud.centos.org/centos/6/images/" target="_blank" rel="external">http://cloud.centos.org/centos/6/images/</a></p>
+<h1 id="Ubuntu">Ubuntu</h1><p>Ubuntu:<a href="https://cloud-images.ubuntu.com/" target="_blank" rel="external">https://cloud-images.ubuntu.com/</a></p>
+<h1 id="RHEL">RHEL</h1><p>RHEL 7:<a href="https://access.redhat.com/downloads/content/69/ver=/rhel---7/7.0/x86_64/product-downloads" target="_blank" rel="external">https://access.redhat.com/downloads/content/69/ver=/rhel---7/7.0/x86_64/product-downloads</a><br>RHEL 6:<a href="https://rhn.redhat.com/rhn/software/channel/downloads/Download.do?cid=16952" target="_blank" rel="external">https://rhn.redhat.com/rhn/software/channel/downloads/Download.do?cid=16952</a></p>
+<h1 id="Windows">Windows</h1><p>Windows Server 2012:<a href="http://www.cloudbase.it/ws2012/" target="_blank" rel="external">http://www.cloudbase.it/ws2012/</a><br>Windows 7镜像制作教程：<a href="http://cloud-ninja.org/2014/05/14/running-windows-7-guests-on-openstack-icehouse/" target="_blank" rel="external">http://cloud-ninja.org/2014/05/14/running-windows-7-guests-on-openstack-icehouse/</a></p>
+<h1 id="CirrOS">CirrOS</h1><p>CirrOS:<a href="http://download.cirros-cloud.net/" target="_blank" rel="external">http://download.cirros-cloud.net/</a></p>
+<h1 id="Debian">Debian</h1><p>Debian:<a href="http://thornelabs.net/2014/04/07/create-a-kvm-based-debian-7-openstack-cloud-image.html" target="_blank" rel="external">http://thornelabs.net/2014/04/07/create-a-kvm-based-debian-7-openstack-cloud-image.html</a></p>
+<h1 id="SUSE">SUSE</h1><p>SUSE官方没有提供镜像下载，但是提供了镜像制作工具。下载地址：<a href="https://susestudio.com/" target="_blank" rel="external">https://susestudio.com/</a></p>
+<h1 id="FressBSD">FressBSD</h1><p>FreeBSD官方没有提供镜像下载，制作工具下载地址：<a href="http://pellaeon.github.io/bsd-cloudinit/" target="_blank" rel="external">http://pellaeon.github.io/bsd-cloudinit/</a><br>FreeBSD 10.0镜像制作教程：<a href="https://raymii.org/s/tutorials/FreeBSD_10.0-release_Openstack_Image.html" target="_blank" rel="external">https://raymii.org/s/tutorials/FreeBSD_10.0-release_Openstack_Image.html</a><br>FreeBSD 9.X镜像制作教程：<a href="http://fosskb.wordpress.com/2013/07/24/bundling-freebsd-9-image-for-openstack/" target="_blank" rel="external">http://fosskb.wordpress.com/2013/07/24/bundling-freebsd-9-image-for-openstack/</a><br>FreeBSD镜像制作教程：<a href="http://cssoss.wordpress.com/2011/11/28/bundling-freebsd-image-for-openstack/" target="_blank" rel="external">http://cssoss.wordpress.com/2011/11/28/bundling-freebsd-image-for-openstack/</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[openstack常用镜像文件下载地址]]>
+    
+    </summary>
+    
+      <category term="openstack" scheme="http://www.anste.com/tags/openstack/"/>
+    
+      <category term="openstack" scheme="http://www.anste.com/categories/openstack/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[制作openstack ubuntu镜像文件]]></title>
+    <link href="http://www.anste.com/2015/06/12/openstack-ubuntu/"/>
+    <id>http://www.anste.com/2015/06/12/openstack-ubuntu/</id>
+    <published>2015-06-12T00:52:45.000Z</published>
+    <updated>2015-06-12T01:04:36.051Z</updated>
+    <content type="html"><![CDATA[<p>openstack官方教程不对，暂时只修改ubuntu官方openstack镜像文件</p>
+<h1 id="开启密码登陆">开启密码登陆</h1><p>创建instance时在【post-creation】中写入以下内容后即可，ssh用户名ubuntu 密码Test@test.cn</p>
+<h1 id="!/bin/sh">!/bin/sh</h1><p>passwd ubuntu&lt;&lt;EOF<br>Test@test.cn<br>Test@test.cn<br>EOF<br>sed -i ‘s/PasswordAuthentication no/PasswordAuthentication yes/g’ /etc/ssh/sshd_config<br>service ssh restart</p>
+<h1 id="修改官方镜像文件">修改官方镜像文件</h1><p>下载地址：<a href="https://cloud-images.ubuntu.com/trusty/current/" target="_blank" rel="external">https://cloud-images.ubuntu.com/trusty/current/</a><br>使用CentOS 6.6作为镜像制作系统，安装guestfish工具<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">guestfish --rw -a trusty-server-cloudimg-amd64-disk1.img</span><br><span class="line">&gt;&lt;fs&gt; run</span><br><span class="line">&gt;&lt;fs&gt; list-filesystems</span><br><span class="line">/dev/sda1: xfs</span><br><span class="line">&gt;&lt;fs&gt; mount /dev/sda1 /</span><br><span class="line">&gt;&lt;fs&gt; vi /etc/cloud/cloud.cfg</span><br><span class="line">disable_root:  false <span class="comment">#是否开启root用户登陆  true 关闭  false 开启</span></span><br><span class="line">ssh_pwauth:   true <span class="comment">#是否开启密码登陆  true 开启  false 关闭</span></span><br><span class="line"></span><br><span class="line">default_user:</span><br><span class="line">     name: ubuntu  <span class="comment">#默认创建用户名称</span></span><br><span class="line">     lock_passwd: <span class="keyword">False</span> <span class="comment">#是否锁定</span></span><br><span class="line">&gt;&lt;fs&gt; vi /etc/shadow</span><br><span class="line">粘贴加密后的密码到root：后（在CentOS6.6使用python -c <span class="string">'import crypt; print crypt.crypt("Test@test.cn", "$6$random_salt")'</span>加密后的密码 ）  <span class="comment">#配置root密码</span></span><br><span class="line">&gt;&lt;fs&gt; cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime   <span class="comment">#变更时区</span></span><br><span class="line">&gt;&lt;fs&gt; vi /etc/crontab  <span class="comment">#配置NTP</span></span><br><span class="line"><span class="number">0</span>  <span class="number">9</span>    * * *   root    /usr/sbin/ntpdate <span class="number">192.168</span>.253.4  <span class="comment">#自行替换成自己网络的NTP</span></span><br><span class="line">&gt;&lt;fs&gt; exit</span><br></pre></td></tr></table></figure></p>
+<h1 id="上传镜像">上传镜像</h1>  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp /home/trusty-server-cloudimg-amd64-disk1.img 192.168.13.5:/tmp  #192.168.13.5&#20026;openstack glance&#26381;&#21153;&#22120;&#65292;&#21363;openstack Controller&#10;&#30331;&#38470;192.168.13.5&#10;source /root/openrc&#10;glance image-create --name Ubuntu_amd64 --disk-format=qcow2 --container-format=bare --is-public=True --progress --file /tmp/trusty-server-cloudimg-amd64-disk1.img</span><br></pre></td></tr></table></figure>]]></content>
+    <summary type="html">
+    <![CDATA[定制化制作openstack ubuntu镜像文件]]>
+    
+    </summary>
+    
+      <category term="openstack" scheme="http://www.anste.com/tags/openstack/"/>
+    
+      <category term="ubuntu" scheme="http://www.anste.com/tags/ubuntu/"/>
+    
+      <category term="openstack" scheme="http://www.anste.com/categories/openstack/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[openstack windows2012镜像文件制作教程]]></title>
