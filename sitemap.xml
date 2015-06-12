@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.anste.com/2015/06/12/fuel-openstack/</loc>
+    <lastmod>2015-06-12T07:14:08.100Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.anste.com/2015/06/12/openstack-mirrors/</loc>
     <lastmod>2015-06-12T04:59:23.281Z</lastmod>
   </url>
