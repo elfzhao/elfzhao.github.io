@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.anste.com/about/index.html</loc>
+    <lastmod>2015-06-12T01:23:46.597Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.anste.com/2015/06/12/openstack-mirrors/</loc>
     <lastmod>2015-06-12T01:18:22.356Z</lastmod>
   </url>
@@ -29,11 +34,6 @@
   <url>
     <loc>http://www.anste.com/2015/06/09/Foreman-Puppet/</loc>
     <lastmod>2015-06-10T06:47:07.843Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.anste.com/about/index.html</loc>
-    <lastmod>2015-06-09T04:37:45.933Z</lastmod>
   </url>
   
   <url>
