@@ -3,30 +3,8 @@
 
     
   <url>
-    <loc>http://www.anste.com/2015/06/15/ip-sla/</loc>
-    <lastmod>2015-06-15T01:54:55.232Z</lastmod>
-    <data>
-        <display>
-        <title>Juniper、cisco通过ip sla实现浮动路由自动切换</title>
-        <pubTime>2015-06-15T01:43:21.000Z</pubTime>
-        
-        <tag>cisco </tag>
-         
-        <tag>juniper </tag>
-         
-         
-           
-             
-              <breadCrumb title="network" url="http://www.anste.com/categories/network/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.anste.com/2015/06/12/fuel-openstack/</loc>
-    <lastmod>2015-06-15T01:08:50.174Z</lastmod>
+    <lastmod>2015-06-15T09:38:15.401Z</lastmod>
     <data>
         <display>
         <title>通过fuel 6.0部署openstack juno版本图文教程</title>
@@ -42,6 +20,50 @@
            
              
               <breadCrumb title="openstack" url="http://www.anste.com/categories/openstack/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.anste.com/2015/06/15/virtualbox-bridge/</loc>
+    <lastmod>2015-06-15T09:35:36.134Z</lastmod>
+    <data>
+        <display>
+        <title>virtualbox-bridge图文教程</title>
+        <pubTime>2015-06-15T09:32:40.000Z</pubTime>
+        
+        <tag>virtualbox </tag>
+         
+        <tag>windows </tag>
+         
+         
+           
+             
+              <breadCrumb title="windows" url="http://www.anste.com/categories/windows/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.anste.com/2015/06/15/ip-sla/</loc>
+    <lastmod>2015-06-15T01:54:55.232Z</lastmod>
+    <data>
+        <display>
+        <title>Juniper、cisco通过ip sla实现浮动路由自动切换</title>
+        <pubTime>2015-06-15T01:43:21.000Z</pubTime>
+        
+        <tag>cisco </tag>
+         
+        <tag>juniper </tag>
+         
+         
+           
+             
+              <breadCrumb title="network" url="http://www.anste.com/categories/network/"/>
           
         </display>
     </data>
