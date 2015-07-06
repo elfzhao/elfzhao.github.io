@@ -1,0 +1,488 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>【转载】Ceph常用运维命令 | Anste</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Anste">
+    
+    <meta name="description" itemprop="description" content="Ceph常用运维命令">
+    
+    
+    
+    <meta name="keywords" content="ceph,openstack">
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="elfzhao" />
+    <meta name="twitter:title" content="【转载】Ceph常用运维命令 | Anste" />
+      
+        <meta name="twitter:description" content="Ceph常用运维命令" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Anste" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/catman.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/catman.png">
+    
+    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-28065593-1', 'anste.com');  
+ga('send', 'pageview');
+</script>
+
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?395b591d268906c0303cf35973bb61a3";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    <link href='http://fonts.useso.com/css?family=Tangerine:700' rel='stylesheet' type='text/css'>
+<link href='http://fonts.useso.com/css?family=Covered+By+Your+Grace' rel='stylesheet' type='text/css'>
+<link href='http://fonts.useso.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Anste" title="Anste"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Anste">Anste</a></h1>
+				<h2 class="blog-motto">A Next Step To Extreme</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">主页 | Home</a></li>
+					
+						<li><a href="/tags">标签页 | Tags</a></li>
+					
+						<li><a href="/categories">分类 | Categories</a></li>
+					
+						<li><a href="/archives">归档 | Archives</a></li>
+					
+						<li><a href="/about">关于 | About</a></li>
+					
+					<li>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/07/06/Ceph/" title="【转载】Ceph常用运维命令" itemprop="url">【转载】Ceph常用运维命令</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://www.anste.com" title="Anste">Anste</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-07-06T03:42:18.000Z" itemprop="datePublished">2015-07-06</time>
+    更新日期:<time datetime="2015-07-06T04:03:20.912Z" itemprop="dateModified">2015-07-06</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、集群"><span class="toc-number">1.</span> <span class="toc-text">一、集群</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、启动一个ceph_进程"><span class="toc-number">1.1.</span> <span class="toc-text">1、启动一个ceph 进程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、查看机器的监控状态"><span class="toc-number">1.2.</span> <span class="toc-text">2、查看机器的监控状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、查看ceph的实时运行状态"><span class="toc-number">1.3.</span> <span class="toc-text">3、查看ceph的实时运行状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、检查信息状态信息"><span class="toc-number">1.4.</span> <span class="toc-text">4、检查信息状态信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、查看ceph存储空间"><span class="toc-number">1.5.</span> <span class="toc-text">5、查看ceph存储空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6、删除一个节点的所有的ceph数据包"><span class="toc-number">1.6.</span> <span class="toc-text">6、删除一个节点的所有的ceph数据包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7、ceph创建用户"><span class="toc-number">1.7.</span> <span class="toc-text">7、ceph创建用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8、osd创建key"><span class="toc-number">1.8.</span> <span class="toc-text">8、osd创建key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9、mds创建key"><span class="toc-number">1.9.</span> <span class="toc-text">9、mds创建key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10、查看ceph集群中的认证用户及相关的key"><span class="toc-number">1.10.</span> <span class="toc-text">10、查看ceph集群中的认证用户及相关的key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11、删除集群中的一个认证用户"><span class="toc-number">1.11.</span> <span class="toc-text">11、删除集群中的一个认证用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12、查看集群的详细配置"><span class="toc-number">1.12.</span> <span class="toc-text">12、查看集群的详细配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13、查看集群健康状态细节"><span class="toc-number">1.13.</span> <span class="toc-text">13、查看集群健康状态细节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14、查看ceph_log日志所在的目录"><span class="toc-number">1.14.</span> <span class="toc-text">14、查看ceph log日志所在的目录</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、mon"><span class="toc-number">2.</span> <span class="toc-text">二、mon</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、查看mon的状态信息"><span class="toc-number">2.1.</span> <span class="toc-text">1、查看mon的状态信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、查看mon的选举状态"><span class="toc-number">2.2.</span> <span class="toc-text">2、查看mon的选举状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、查看mon的映射信息"><span class="toc-number">2.3.</span> <span class="toc-text">3、查看mon的映射信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、删除一个mon节点"><span class="toc-number">2.4.</span> <span class="toc-text">4、删除一个mon节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、获得mon_map"><span class="toc-number">2.5.</span> <span class="toc-text">5、获得mon map</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6、查看上面获得的map"><span class="toc-number">2.6.</span> <span class="toc-text">6、查看上面获得的map</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7、把上面的mon_map注入新加入的节点"><span class="toc-number">2.7.</span> <span class="toc-text">7、把上面的mon map注入新加入的节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8、查看mon的amin_socket"><span class="toc-number">2.8.</span> <span class="toc-text">8、查看mon的amin socket</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9、查看mon的详细状态"><span class="toc-number">2.9.</span> <span class="toc-text">9、查看mon的详细状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10、删除一个mon节点"><span class="toc-number">2.10.</span> <span class="toc-text">10、删除一个mon节点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、msd"><span class="toc-number">3.</span> <span class="toc-text">三、msd</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、查看msd状态"><span class="toc-number">3.1.</span> <span class="toc-text">1、查看msd状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、查看msd的映射信息"><span class="toc-number">3.2.</span> <span class="toc-text">2、查看msd的映射信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、删除一个mds节点"><span class="toc-number">3.3.</span> <span class="toc-text">3、删除一个mds节点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、osd"><span class="toc-number">4.</span> <span class="toc-text">四、osd</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、查看ceph_osd运行状态"><span class="toc-number">4.1.</span> <span class="toc-text">1、查看ceph osd运行状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、查看osd映射信息"><span class="toc-number">4.2.</span> <span class="toc-text">2、查看osd映射信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、查看osd的目录树"><span class="toc-number">4.3.</span> <span class="toc-text">3、查看osd的目录树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、down掉一个osd硬盘"><span class="toc-number">4.4.</span> <span class="toc-text">4、down掉一个osd硬盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、在集群中删除一个osd硬盘"><span class="toc-number">4.5.</span> <span class="toc-text">5、在集群中删除一个osd硬盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6、在集群中删除一个osd_硬盘_crush_map"><span class="toc-number">4.6.</span> <span class="toc-text">6、在集群中删除一个osd 硬盘 crush map</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7、在集群中删除一个osd的host节点"><span class="toc-number">4.7.</span> <span class="toc-text">7、在集群中删除一个osd的host节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8、设置最大的osd的个数"><span class="toc-number">4.8.</span> <span class="toc-text">8、设置最大的osd的个数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9、设置osd_crush的权重为1-0"><span class="toc-number">4.9.</span> <span class="toc-text">9、设置osd crush的权重为1.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10、设置osd的权重"><span class="toc-number">4.10.</span> <span class="toc-text">10、设置osd的权重</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11、把一个osd节点逐出集群"><span class="toc-number">4.11.</span> <span class="toc-text">11、把一个osd节点逐出集群</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12、把逐出的osd加入集群"><span class="toc-number">4.12.</span> <span class="toc-text">12、把逐出的osd加入集群</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13、暂停osd"><span class="toc-number">4.13.</span> <span class="toc-text">13、暂停osd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14、再次开启osd"><span class="toc-number">4.14.</span> <span class="toc-text">14、再次开启osd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15、查看一个集群osd-2参数的配置"><span class="toc-number">4.15.</span> <span class="toc-text">15、查看一个集群osd.2参数的配置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、PG组"><span class="toc-number">5.</span> <span class="toc-text">五、PG组</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、查看pg组的映射信息"><span class="toc-number">5.1.</span> <span class="toc-text">1、查看pg组的映射信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、查看一个PG的map"><span class="toc-number">5.2.</span> <span class="toc-text">2、查看一个PG的map</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、查看PG状态"><span class="toc-number">5.3.</span> <span class="toc-text">3、查看PG状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、查询一个pg的详细信息"><span class="toc-number">5.4.</span> <span class="toc-text">4、查询一个pg的详细信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、查看pg中stuck的状态"><span class="toc-number">5.5.</span> <span class="toc-text">5、查看pg中stuck的状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6、显示一个集群中的所有的pg统计"><span class="toc-number">5.6.</span> <span class="toc-text">6、显示一个集群中的所有的pg统计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7、恢复一个丢失的pg"><span class="toc-number">5.7.</span> <span class="toc-text">7、恢复一个丢失的pg</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8、显示非正常状态的pg"><span class="toc-number">5.8.</span> <span class="toc-text">8、显示非正常状态的pg</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、pool"><span class="toc-number">6.</span> <span class="toc-text">六、pool</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、查看ceph集群中的pool数量"><span class="toc-number">6.1.</span> <span class="toc-text">1、查看ceph集群中的pool数量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、在ceph集群中创建一个pool"><span class="toc-number">6.2.</span> <span class="toc-text">2、在ceph集群中创建一个pool</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、为一个ceph_pool配置配额"><span class="toc-number">6.3.</span> <span class="toc-text">3、为一个ceph pool配置配额</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、在集群中删除一个pool"><span class="toc-number">6.4.</span> <span class="toc-text">4、在集群中删除一个pool</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、显示集群中pool的详细信息"><span class="toc-number">6.5.</span> <span class="toc-text">5、显示集群中pool的详细信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6、给一个pool创建一个快照"><span class="toc-number">6.6.</span> <span class="toc-text">6、给一个pool创建一个快照</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7、删除pool的快照"><span class="toc-number">6.7.</span> <span class="toc-text">7、删除pool的快照</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8、查看data池的pg数量"><span class="toc-number">6.8.</span> <span class="toc-text">8、查看data池的pg数量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9、设置data池的最大存储空间为100T（默认是1T)"><span class="toc-number">6.9.</span> <span class="toc-text">9、设置data池的最大存储空间为100T（默认是1T)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10、设置data池的副本数是3"><span class="toc-number">6.10.</span> <span class="toc-text">10、设置data池的副本数是3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11、设置data池能接受写操作的最小副本为2"><span class="toc-number">6.11.</span> <span class="toc-text">11、设置data池能接受写操作的最小副本为2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12、查看集群中所有pool的副本尺寸"><span class="toc-number">6.12.</span> <span class="toc-text">12、查看集群中所有pool的副本尺寸</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13、设置一个pool的pg数量"><span class="toc-number">6.13.</span> <span class="toc-text">13、设置一个pool的pg数量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14、设置一个pool的pgp数量"><span class="toc-number">6.14.</span> <span class="toc-text">14、设置一个pool的pgp数量</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#七、rados和rbd指令"><span class="toc-number">7.</span> <span class="toc-text">七、rados和rbd指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、rados命令使用方法"><span class="toc-number">7.1.</span> <span class="toc-text">1、rados命令使用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#（1）、查看ceph集群中pool数量"><span class="toc-number">7.1.1.</span> <span class="toc-text">（1）、查看ceph集群中pool数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（2）、查看ceph集群中pool容量及利用情况"><span class="toc-number">7.1.2.</span> <span class="toc-text">（2）、查看ceph集群中pool容量及利用情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（3）、创建一个pool"><span class="toc-number">7.1.3.</span> <span class="toc-text">（3）、创建一个pool</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（4）、查看ceph_pool中的ceph_object"><span class="toc-number">7.1.4.</span> <span class="toc-text">（4）、查看ceph pool中的ceph object</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（5）、创建一个对象object"><span class="toc-number">7.1.5.</span> <span class="toc-text">（5）、创建一个对象object</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（6）、删除一个对象"><span class="toc-number">7.1.6.</span> <span class="toc-text">（6）、删除一个对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、rbd命令的用法"><span class="toc-number">7.2.</span> <span class="toc-text">2、rbd命令的用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#（1）、查看ceph中一个pool里的所有镜像"><span class="toc-number">7.2.1.</span> <span class="toc-text">（1）、查看ceph中一个pool里的所有镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（2）、查看ceph_pool中一个镜像的信息"><span class="toc-number">7.2.2.</span> <span class="toc-text">（2）、查看ceph pool中一个镜像的信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（3）、在test池中创建镜像"><span class="toc-number">7.2.3.</span> <span class="toc-text">（3）、在test池中创建镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（4）、删除一个镜像"><span class="toc-number">7.2.4.</span> <span class="toc-text">（4）、删除一个镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（5）、调整一个镜像的尺寸"><span class="toc-number">7.2.5.</span> <span class="toc-text">（5）、调整一个镜像的尺寸</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（6）、给一个镜像创建一个快照"><span class="toc-number">7.2.6.</span> <span class="toc-text">（6）、给一个镜像创建一个快照</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（7）、查看一个镜像文件的快照"><span class="toc-number">7.2.7.</span> <span class="toc-text">（7）、查看一个镜像文件的快照</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（8）、删除一个镜像文件的一个快照快照"><span class="toc-number">7.2.8.</span> <span class="toc-text">（8）、删除一个镜像文件的一个快照快照</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（9）删除一个镜像文件的所有快照"><span class="toc-number">7.2.9.</span> <span class="toc-text">（9）删除一个镜像文件的所有快照</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（10）、把ceph_pool中的一个镜像导出"><span class="toc-number">7.2.10.</span> <span class="toc-text">（10）、把ceph pool中的一个镜像导出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（11）、把一个镜像导入ceph中"><span class="toc-number">7.2.11.</span> <span class="toc-text">（11）、把一个镜像导入ceph中</span></a></li></ol></li></ol></li></ol>
+		</div>
+		
+		<p>转自：<a href="http://zhanguo1110.blog.51cto.com/5750817/1543032" target="_blank" rel="external">http://zhanguo1110.blog.51cto.com/5750817/1543032</a></p>
+<h1 id="一、集群">一、集群</h1><h2 id="1、启动一个ceph_进程">1、启动一个ceph 进程</h2><p>启动mon进程<br>service ceph start  mon.node1<br>启动msd进程<br>service ceph start mds.node1<br>启动osd进程<br> service ceph start osd.0</p>
+<h2 id="2、查看机器的监控状态">2、查看机器的监控状态</h2><p>[root@client ~]# ceph health<br>HEALTH_OK</p>
+<h2 id="3、查看ceph的实时运行状态">3、查看ceph的实时运行状态</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@client ~]# ceph -w&#10;    cluster be1756f2-54f7-4d8f-8790-820c82721f17&#10;     health HEALTH_OK&#10;     monmap e2: 3 mons at &#123;node1=10.240.240.211:6789/0,node2=10.240.240.212:6789/0,node3=10.240.240.213:6789/0&#125;, election epoch 294, quorum 0,1,2 node1,node2,node3&#10;     mdsmap e95: 1/1/1 up &#123;0=node2=up:active&#125;, 1 up:standby&#10;     osdmap e88: 3 osds: 3 up, 3 in&#10;      pgmap v1164: 448 pgs, 4 pools, 10003 MB data, 2520 objects&#10;            23617 MB used, 37792 MB / 61410 MB avail&#10;                 448 active+clean&#10;2014-06-30 00:48:28.756948 mon.0 [INF] pgmap v1163: 448 pgs: 448 active+clean; 10003 MB data, 23617 MB used, 37792 MB / 61410 MB avail</span><br></pre></td></tr></table></figure>
+<h2 id="4、检查信息状态信息">4、检查信息状态信息</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@client ~]# ceph -s&#10;    cluster be1756f2-54f7-4d8f-8790-820c82721f17&#10;     health HEALTH_OK&#10;     monmap e2: 3 mons at &#123;node1=10.240.240.211:6789/0,node2=10.240.240.212:6789/0,node3=10.240.240.213:6789/0&#125;, election epoch 294, quorum 0,1,2 node1,node2,node3&#10;     mdsmap e95: 1/1/1 up &#123;0=node2=up:active&#125;, 1 up:standby&#10;     osdmap e88: 3 osds: 3 up, 3 in&#10;      pgmap v1164: 448 pgs, 4 pools, 10003 MB data, 2520 objects&#10;            23617 MB used, 37792 MB / 61410 MB avail&#10;                 448 active+clean&#10;[root@client ~]#</span><br></pre></td></tr></table></figure>
+<h2 id="5、查看ceph存储空间">5、查看ceph存储空间</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@client ~]# ceph df&#10;GLOBAL:&#10;    SIZE       AVAIL      RAW USED     %RAW USED &#10;    61410M     37792M     23617M       38.46     &#10;POOLS:&#10;    NAME         ID     USED       %USED     OBJECTS &#10;    data         0      10000M     16.28     2500    &#10;    metadata     1      3354k      0         20      &#10;    rbd          2      0          0         0       &#10;    jiayuan      3      0          0         0       &#10;[root@client ~]#</span><br></pre></td></tr></table></figure>
+<h2 id="6、删除一个节点的所有的ceph数据包">6、删除一个节点的所有的ceph数据包</h2><p>[root@node1 ~]# ceph-deploy purge node1<br>[root@node1 ~]# ceph-deploy purgedata node1</p>
+<h2 id="7、ceph创建用户">7、ceph创建用户</h2><p>为ceph创建一个admin用户并为admin用户创建一个密钥，把密钥保存到/etc/ceph目录下：<br>ceph auth get-or-create client.admin mds ‘allow’ osd ‘allow <em>‘ mon ‘allow </em>‘ &gt; /etc/ceph/ceph.client.admin.keyring<br>或<br>ceph auth get-or-create client.admin mds ‘allow’ osd ‘allow <em>‘ mon ‘allow </em>‘ -o /etc/ceph/ceph.client.admin.keyring</p>
+<h2 id="8、osd创建key">8、osd创建key</h2><p>为osd.0创建一个用户并创建一个key<br>ceph auth get-or-create osd.0 mon ‘allow rwx’ osd ‘allow *’ -o /var/lib/ceph/osd/ceph-0/keyring</p>
+<h2 id="9、mds创建key">9、mds创建key</h2><p>为mds.node1创建一个用户并创建一个key<br>ceph auth get-or-create mds.node1 mon ‘allow rwx’ osd ‘allow <em>‘ mds ‘allow </em>‘ -o /var/lib/ceph/mds/ceph-node1/keyring</p>
+<h2 id="10、查看ceph集群中的认证用户及相关的key">10、查看ceph集群中的认证用户及相关的key</h2><p>ceph auth list</p>
+<h2 id="11、删除集群中的一个认证用户">11、删除集群中的一个认证用户</h2><p>ceph auth del osd.0</p>
+<h2 id="12、查看集群的详细配置">12、查看集群的详细配置</h2><p>[root@node1 ~]# ceph daemon mon.node1 config show | more</p>
+<h2 id="13、查看集群健康状态细节">13、查看集群健康状态细节</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@admin ~]# ceph health detail&#10;HEALTH_WARN 12 pgs down; 12 pgs peering; 12 pgs stuck inactive; 12 pgs stuck unclean&#10;pg 3.3b is stuck inactive since forever, current state down+peering, last acting [1,2]&#10;pg 3.36 is stuck inactive since forever, current state down+peering, last acting [1,2]&#10;pg 3.79 is stuck inactive since forever, current state down+peering, last acting [1,0]&#10;pg 3.5 is stuck inactive since forever, current state down+peering, last acting [1,2]&#10;pg 3.30 is stuck inactive since forever, current state down+peering, last acting [1,2]&#10;pg 3.1a is stuck inactive since forever, current state down+peering, last acting [1,0]&#10;pg 3.2d is stuck inactive since forever, current state down+peering, last acting [1,0]&#10;pg 3.16 is stuck inactive since forever, current state down+peering, last acting [1,2]</span><br></pre></td></tr></table></figure>
+<h2 id="14、查看ceph_log日志所在的目录">14、查看ceph log日志所在的目录</h2><p>[root@node1 ~]# ceph-conf —name mon.node1 —show-config-value log_file<br>/var/log/ceph/ceph-mon.node1.log</p>
+<h1 id="二、mon">二、mon</h1><h2 id="1、查看mon的状态信息">1、查看mon的状态信息</h2><p>[root@client ~]# ceph mon stat<br>e2: 3 mons at {node1=10.240.240.211:6789/0,node2=10.240.240.212:6789/0,node3=10.240.240.213:6789/0}, election epoch 294, quorum 0,1,2 node1,node2,node3</p>
+<h2 id="2、查看mon的选举状态">2、查看mon的选举状态</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@client ~]# ceph quorum_status&#10;&#123;&#34;election_epoch&#34;:294,&#34;quorum&#34;:[0,1,2],&#34;quorum_names&#34;:[&#34;node1&#34;,&#34;node2&#34;,&#34;node3&#34;],&#34;quorum_leader_name&#34;:&#34;node1&#34;,&#34;monmap&#34;:&#123;&#34;epoch&#34;:2,&#34;fsid&#34;:&#34;be1756f2-54f7-4d8f-8790-820c82721f17&#34;,&#34;modified&#34;:&#34;2014-06-26 18:43:51.671106&#34;,&#34;created&#34;:&#34;0.000000&#34;,&#34;mons&#34;:[&#123;&#34;rank&#34;:0,&#34;name&#34;:&#34;node1&#34;,&#34;addr&#34;:&#34;10.240.240.211:6789\/0&#34;&#125;,&#123;&#34;rank&#34;:1,&#34;name&#34;:&#34;node2&#34;,&#34;addr&#34;:&#34;10.240.240.212:6789\/0&#34;&#125;,&#123;&#34;rank&#34;:2,&#34;name&#34;:&#34;node3&#34;,&#34;addr&#34;:&#34;10.240.240.213:6789\/0&#34;&#125;]&#125;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3、查看mon的映射信息">3、查看mon的映射信息</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@client ~]# ceph mon dump&#10;dumped monmap epoch 2&#10;epoch 2&#10;fsid be1756f2-54f7-4d8f-8790-820c82721f17&#10;last_changed 2014-06-26 18:43:51.671106&#10;created 0.000000&#10;0: 10.240.240.211:6789/0 mon.node1&#10;1: 10.240.240.212:6789/0 mon.node2&#10;2: 10.240.240.213:6789/0 mon.node3</span><br></pre></td></tr></table></figure>
+<h2 id="4、删除一个mon节点">4、删除一个mon节点</h2><p>[root@node1 ~]# ceph mon remove node1<br>removed mon.node1 at 10.39.101.1:6789/0, there are now 3 monitors<br>2014-07-07 18:11:04.974188 7f4d16bfd700  0 monclient: hunting for new mon</p>
+<h2 id="5、获得mon_map">5、获得mon map</h2><p>获得一个正在运行的mon map，并保存在1.txt文件中<br>[root@node3 ~]# ceph mon getmap -o 1.txt<br>got monmap epoch 6</p>
+<h2 id="6、查看上面获得的map">6、查看上面获得的map</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node3 ~]#  monmaptool --print 1.txt &#10;monmaptool: monmap file 1.txt&#10;epoch 6&#10;fsid 92552333-a0a8-41b8-8b45-c93a8730525e&#10;last_changed 2014-07-07 18:22:51.927205&#10;created 0.000000&#10;0: 10.39.101.1:6789/0 mon.node1&#10;1: 10.39.101.2:6789/0 mon.node2&#10;2: 10.39.101.3:6789/0 mon.node3&#10;[root@node3 ~]#</span><br></pre></td></tr></table></figure>
+<h2 id="7、把上面的mon_map注入新加入的节点">7、把上面的mon map注入新加入的节点</h2><p>ceph-mon -i node4 —inject-monmap 1.txt</p>
+<h2 id="8、查看mon的amin_socket">8、查看mon的amin socket</h2><p>root@node1 ~]# ceph-conf —name mon.node1 —show-config-value admin_socket<br>/var/run/ceph/ceph-mon.node1.asok </p>
+<h2 id="9、查看mon的详细状态">9、查看mon的详细状态</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node1 ~]# ceph daemon mon.node1  mon_status &#10;&#123; &#34;name&#34;: &#34;node1&#34;,&#10;  &#34;rank&#34;: 0,&#10;  &#34;state&#34;: &#34;leader&#34;,&#10;  &#34;election_epoch&#34;: 96,&#10;  &#34;quorum&#34;: [&#10;        0,&#10;        1,&#10;        2],&#10;  &#34;outside_quorum&#34;: [],&#10;  &#34;extra_probe_peers&#34;: [&#10;        &#34;10.39.101.4:6789\/0&#34;],&#10;  &#34;sync_provider&#34;: [],&#10;  &#34;monmap&#34;: &#123; &#34;epoch&#34;: 6,&#10;      &#34;fsid&#34;: &#34;92552333-a0a8-41b8-8b45-c93a8730525e&#34;,&#10;      &#34;modified&#34;: &#34;2014-07-07 18:22:51.927205&#34;,&#10;      &#34;created&#34;: &#34;0.000000&#34;,&#10;      &#34;mons&#34;: [&#10;            &#123; &#34;rank&#34;: 0,&#10;              &#34;name&#34;: &#34;node1&#34;,&#10;              &#34;addr&#34;: &#34;10.39.101.1:6789\/0&#34;&#125;,&#10;            &#123; &#34;rank&#34;: 1,&#10;              &#34;name&#34;: &#34;node2&#34;,&#10;              &#34;addr&#34;: &#34;10.39.101.2:6789\/0&#34;&#125;,&#10;            &#123; &#34;rank&#34;: 2,&#10;              &#34;name&#34;: &#34;node3&#34;,&#10;              &#34;addr&#34;: &#34;10.39.101.3:6789\/0&#34;&#125;]&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="10、删除一个mon节点">10、删除一个mon节点</h2><p>[root@os-node1 ~]# ceph mon remove os-node1<br>removed mon.os-node1 at 10.40.10.64:6789/0, there are now 3 monitors</p>
+<h1 id="三、msd">三、msd</h1><h2 id="1、查看msd状态">1、查看msd状态</h2><p>[root@client ~]# ceph mds stat<br>e95: 1/1/1 up {0=node2=up:active}, 1 up:standby</p>
+<h2 id="2、查看msd的映射信息">2、查看msd的映射信息</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@client ~]# ceph mds dump&#10;dumped mdsmap epoch 95&#10;epoch   95&#10;flags   0&#10;created 2014-06-26 18:41:57.686801&#10;modified        2014-06-30 00:24:11.749967&#10;tableserver     0&#10;root    0&#10;session_timeout 60&#10;session_autoclose       300&#10;max_file_size   1099511627776&#10;last_failure    84&#10;last_failure_osd_epoch  81&#10;compat  compat=&#123;&#125;,rocompat=&#123;&#125;,incompat=&#123;1=base v0.20,2=client writeable ranges,3=default file layouts on dirs,4=dir inode in separate object,5=mds uses versioned encoding,6=dirfrag is stored in omap&#125;&#10;max_mds 1&#10;in      0&#10;up      &#123;0=5015&#125;&#10;failed&#10;stopped&#10;data_pools      0&#10;metadata_pool   1&#10;inline_data     disabled&#10;5015:   10.240.240.212:6808/3032 &#39;node2&#39; mds.0.12 up:active seq 30&#10;5012:   10.240.240.211:6807/3459 &#39;node1&#39; mds.-1.0 up:standby seq 38</span><br></pre></td></tr></table></figure>
+<h2 id="3、删除一个mds节点">3、删除一个mds节点</h2><p>[root@node1 ~]# ceph  mds rm 0 mds.node1<br> mds gid 0 dne</p>
+<h1 id="四、osd">四、osd</h1><h2 id="1、查看ceph_osd运行状态">1、查看ceph osd运行状态</h2><p>[root@client ~]# ceph osd stat<br>     osdmap e88: 3 osds: 3 up, 3 in</p>
+<h2 id="2、查看osd映射信息">2、查看osd映射信息</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@client ~]# ceph osd dump&#10;epoch 88&#10;fsid be1756f2-54f7-4d8f-8790-820c82721f17&#10;created 2014-06-26 18:41:57.687442&#10;modified 2014-06-30 00:46:27.179793&#10;flags &#10;pool 0 &#39;data&#39; replicated size 2 min_size 1 crush_ruleset 0 object_hash rjenkins pg_num 64 pgp_num 64 last_change 1 owner 0 flags hashpspool crash_replay_interval 45 stripe_width 0&#10;pool 1 &#39;metadata&#39; replicated size 2 min_size 1 crush_ruleset 0 object_hash rjenkins pg_num 64 pgp_num 64 last_change 1 owner 0 flags hashpspool stripe_width 0&#10;pool 2 &#39;rbd&#39; replicated size 2 min_size 1 crush_ruleset 0 object_hash rjenkins pg_num 64 pgp_num 64 last_change 1 owner 0 flags hashpspool stripe_width 0&#10;pool 3 &#39;jiayuan&#39; replicated size 2 min_size 1 crush_ruleset 0 object_hash rjenkins pg_num 256 pgp_num 256 last_change 73 owner 0 flags hashpspool stripe_width 0&#10;max_osd 3&#10;osd.0 up   in  weight 1 up_from 65 up_thru 75 down_at 64 last_clean_interval [53,55) 10.240.240.211:6800/3089 10.240.240.211:6801/3089 10.240.240.211:6802/3089 10.240.240.211:6803/3089 exists,up 8a24ad16-a483-4bac-a56a-6ed44ab74ff0&#10;osd.1 up   in  weight 1 up_from 59 up_thru 74 down_at 58 last_clean_interval [31,55) 10.240.240.212:6800/2696 10.240.240.212:6801/2696 10.240.240.212:6802/2696 10.240.240.212:6803/2696 exists,up 8619c083-0273-4203-ba57-4b1dabb89339&#10;osd.2 up   in  weight 1 up_from 62 up_thru 74 down_at 61 last_clean_interval [39,55) 10.240.240.213:6800/2662 10.240.240.213:6801/2662 10.240.240.213:6802/2662 10.240.240.213:6803/2662 exists,up f8107c04-35d7-4fb8-8c82-09eb885f0e58&#10;[root@client ~]#</span><br></pre></td></tr></table></figure>
+<h2 id="3、查看osd的目录树">3、查看osd的目录树</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@client ~]# ceph osd tree&#10;# id    weight  type name       up/down reweight&#10;-1      3       root default&#10;-2      1               host node1&#10;0       1                       osd.0   up      1&#10;-3      1               host node2&#10;1       1                       osd.1   up      1&#10;-4      1               host node3&#10;2       1                       osd.2   up      1</span><br></pre></td></tr></table></figure>
+<h2 id="4、down掉一个osd硬盘">4、down掉一个osd硬盘</h2><p>[root@node1 ~]# ceph osd down 0   #down掉osd.0节点</p>
+<h2 id="5、在集群中删除一个osd硬盘">5、在集群中删除一个osd硬盘</h2><p>[root@node4 ~]# ceph osd rm 0<br>removed osd.0</p>
+<h2 id="6、在集群中删除一个osd_硬盘_crush_map">6、在集群中删除一个osd 硬盘 crush map</h2><p>[root@node1 ~]# ceph osd crush rm osd.0</p>
+<h2 id="7、在集群中删除一个osd的host节点">7、在集群中删除一个osd的host节点</h2><p>[root@node1 ~]# ceph osd crush rm node1<br>removed item id -2 name ‘node1’ from crush map</p>
+<p>查看最大osd的个数<br>[root@node1 ~]# ceph osd getmaxosd<br>max_osd = 4 in epoch 514           #默认最大是4个osd节点</p>
+<h2 id="8、设置最大的osd的个数">8、设置最大的osd的个数</h2><p>（当扩大osd节点的时候必须扩大这个值）<br>[root@node1 ~]# ceph osd setmaxosd 10</p>
+<h2 id="9、设置osd_crush的权重为1-0">9、设置osd crush的权重为1.0</h2><p>ceph osd crush set {id} {weight} [{loc1} [{loc2} …]]<br>例如：<br>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@admin ~]# ceph osd crush set 3 3.0 host=node4&#10;set item id 3 name &#39;osd.3&#39; weight 3 at location &#123;host=node4&#125; to crush map&#10;[root@admin ~]# ceph osd tree&#10;# id    weight  type name       up/down reweight&#10;-1      6       root default&#10;-2      1               host node1&#10;0       1                       osd.0   up      1&#10;-3      1               host node2&#10;1       1                       osd.1   up      1&#10;-4      1               host node3&#10;2       1                       osd.2   up      1&#10;-5      3               host node4&#10;3       3                       osd.3   up      0.5</span><br></pre></td></tr></table></figure></p>
+<p>或者用下面的方式<br>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@admin ~]# ceph osd crush reweight osd.3 1.0&#10;reweighted item id 3 name &#39;osd.3&#39; to 1 in crush map&#10;[root@admin ~]# ceph osd tree&#10;# id    weight  type name       up/down reweight&#10;-1      4       root default&#10;-2      1               host node1&#10;0       1                       osd.0   up      1&#10;-3      1               host node2&#10;1       1                       osd.1   up      1&#10;-4      1               host node3&#10;2       1                       osd.2   up      1&#10;-5      1               host node4&#10;3       1                       osd.3   up      0.5</span><br></pre></td></tr></table></figure></p>
+<h2 id="10、设置osd的权重">10、设置osd的权重</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@admin ~]# ceph osd reweight 3 0.5&#10;reweighted osd.3 to 0.5 (8327682)&#10;[root@admin ~]# ceph osd tree&#10;# id    weight  type name       up/down reweight&#10;-1      4       root default&#10;-2      1               host node1&#10;0       1                       osd.0   up      1&#10;-3      1               host node2&#10;1       1                       osd.1   up      1&#10;-4      1               host node3&#10;2       1                       osd.2   up      1&#10;-5      1               host node4&#10;3       1                       osd.3   up      0.5</span><br></pre></td></tr></table></figure>
+<h2 id="11、把一个osd节点逐出集群">11、把一个osd节点逐出集群</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@admin ~]# ceph osd out osd.3&#10;marked out osd.3.  &#10;[root@admin ~]# ceph osd tree&#10;# id    weight  type name       up/down reweight&#10;-1      4       root default&#10;-2      1               host node1&#10;0       1                       osd.0   up      1&#10;-3      1               host node2&#10;1       1                       osd.1   up      1&#10;-4      1               host node3&#10;2       1                       osd.2   up      1&#10;-5      1               host node4&#10;3       1                       osd.3   up      0      # osd.3&#30340;reweight&#21464;&#20026;0&#20102;&#23601;&#19981;&#20877;&#20998;&#37197;&#25968;&#25454;&#65292;&#20294;&#26159;&#35774;&#22791;&#36824;&#26159;&#23384;&#27963;&#30340;</span><br></pre></td></tr></table></figure>
+<h2 id="12、把逐出的osd加入集群">12、把逐出的osd加入集群</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@admin ~]# ceph osd in osd.3&#10;marked in osd.3. &#10;[root@admin ~]# ceph osd tree&#10;# id    weight  type name       up/down reweight&#10;-1      4       root default&#10;-2      1               host node1&#10;0       1                       osd.0   up      1&#10;-3      1               host node2&#10;1       1                       osd.1   up      1&#10;-4      1               host node3&#10;2       1                       osd.2   up      1&#10;-5      1               host node4&#10;3       1                       osd.3   up      1</span><br></pre></td></tr></table></figure>
+<h2 id="13、暂停osd">13、暂停osd</h2><p> （暂停后整个集群不再接收数据）<br>[root@admin ~]# ceph osd pause<br>set pauserd,pausewr      </p>
+<h2 id="14、再次开启osd">14、再次开启osd</h2><p> （开启后再次接收数据）<br>[root@admin ~]# ceph osd unpause<br>unset pauserd,pausewr</p>
+<h2 id="15、查看一个集群osd-2参数的配置">15、查看一个集群osd.2参数的配置</h2><p>ceph —admin-daemon /var/run/ceph/ceph-osd.2.asok config show | less</p>
+<h1 id="五、PG组">五、PG组</h1><h2 id="1、查看pg组的映射信息">1、查看pg组的映射信息</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@client ~]# ceph pg dump&#10;dumped all in format plain&#10;version 1164&#10;stamp 2014-06-30 00:48:29.754714&#10;last_osdmap_epoch 88&#10;last_pg_scan 73&#10;full_ratio 0.95&#10;nearfull_ratio 0.85&#10;pg_stat objects mip     degr    unf     bytes   log     disklog state   state_stamp     v       reported       up      up_primary      acting  acting_primary  last_scrub      scrub_stamp     last_deep_scrudeep_scrub_stamp&#10;0.3f    39      0       0       0       163577856       128     128     active+clean    2014-06-30 00:30:59.193479     52&#39;128  88:242  [0,2]   0       [0,2]   0       44&#39;25   2014-06-29 22:25:25.282347    0&#39;0      2014-06-26 19:52:08.521434&#10;3.3c    0       0       0       0       0       0       0       active+clean    2014-06-30 00:15:38.675465     0&#39;0     88:21   [2,1]   2       [2,1]   2       0&#39;0     2014-06-30 00:15:04.295637      0&#39;0   2014-06-30 00:15:04.295637&#10;2.3c    0       0       0       0       0       0       0       active+clean    2014-06-30 00:10:48.583702     0&#39;0     88:46   [2,1]   2       [2,1]   2       0&#39;0     2014-06-29 22:29:13.701625      0&#39;0   2014-06-26 19:52:08.845944&#10;1.3f    2       0       0       0       452     2       2       active+clean    2014-06-30 00:10:48.596050     16&#39;2    88:66   [2,1]   2       [2,1]   2       16&#39;2    2014-06-29 22:28:03.570074      0&#39;0   2014-06-26 19:52:08.655292&#10;0.3e    31      0       0       0       130023424       130     130     active+clean    2014-06-30 00:26:22.803186     52&#39;130  88:304  [2,0]   2       [2,0]   2       44&#39;59   2014-06-29 22:26:41.317403    0&#39;0      2014-06-26 19:52:08.518978&#10;3.3d    0       0       0       0       0       0       0       active+clean    2014-06-30 00:16:57.548803     0&#39;0     88:20   [0,2]   0       [0,2]   0       0&#39;0     2014-06-30 00:15:19.101314      0&#39;0   2014-06-30 00:15:19.101314&#10;2.3f    0       0       0       0       0       0       0       active+clean    2014-06-30 00:10:58.750476     0&#39;0     88:106  [0,2]   0       [0,2]   0       0&#39;0     2014-06-29 22:27:44.604084      0&#39;0   2014-06-26 19:52:08.864240&#10;1.3c    1       0       0       0       0       1       1       active+clean    2014-06-30 00:10:48.939358     16&#39;1    88:66   [1,2]   1       [1,2]   1       16&#39;1    2014-06-29 22:27:35.991845      0&#39;0   2014-06-26 19:52:08.646470&#10;0.3d    34      0       0       0       142606336       149     149     active+clean    2014-06-30 00:23:57.348657     52&#39;149  88:300  [0,2]   0       [0,2]   0       44&#39;57   2014-06-29 22:25:24.279912    0&#39;0      2014-06-26 19:52:08.514526&#10;3.3e    0       0       0       0       0       0       0       active+clean    2014-06-30 00:15:39.554742     0&#39;0     88:21   [2,1]   2       [2,1]   2       0&#39;0     2014-06-30 00:15:04.296812      0&#39;0   2014-06-30 00:15:04.296812&#10;2.3e    0       0       0       0       0       0       0       active+clean    2014-06-30 00:10:48.592171     0&#39;0     88:46   [2,1]   2       [2,1]   2       0&#39;0     2014-06-29 22:29:14.702209      0&#39;0   2014-06-26 19:52:08.855382&#10;1.3d    0       0       0       0       0       0       0       active+clean    2014-06-30 00:10:48.938971     0&#39;0     88:58   [1,2]   1       [1,2]   1       0&#39;0     2014-06-29 22:27:36.971820      0&#39;0   2014-06-26 19:52:08.650070&#10;0.3c    41      0       0       0       171966464       157     157     active+clean    2014-06-30 00:24:55.751252     52&#39;157  88:385  [1,0]   1       [1,0]   1       44&#39;41   2014-06-29 22:26:34.829858    0&#39;0      2014-06-26 19:52:08.513798&#10;3.3f    0       0       0       0       0       0       0       active+clean    2014-06-30 00:17:08.416756     0&#39;0     88:20   [0,1]   0       [0,1]   0       0&#39;0     2014-06-30 00:15:19.406120      0&#39;0   2014-06-30 00:15:19.406120&#10;2.39    0       0       0       0       0       0       0       active+clean    2014-06-30 00:10:58.784789     0&#39;0     88:71   [2,0]   2       [2,0]   2       0&#39;0     2014-06-29 22:29:10.673549      0&#39;0   2014-06-26 19:52:08.834644&#10;1.3a    0       0       0       0       0       0       0       active+clean    2014-06-30 00:10:58.738782     0&#39;0     88:106  [0,2]   0       [0,2]   0       0&#39;0     2014-06-29 22:26:29.457318      0&#39;0   2014-06-26 19:52:08.642018&#10;0.3b    37      0       0       0       155189248       137     137     active+clean    2014-06-30 00:28:45.021993     52&#39;137  88:278  [0,2]   0       [0,2]   0       44&#39;40   2014-06-29 22:25:22.275783    0&#39;0      2014-06-26 19:52:08.510502&#10;3.38    0       0       0       0       0       0       0       active+clean    2014-06-30 00:16:13.222339     0&#39;0     88:21   [1,0]   1       [1,0]   1       0&#39;0     2014-06-30 00:15:05.446639      0&#39;0   2014-06-30 00:15:05.446639&#10;2.38    0       0       0       0       0       0       0       active+clean    2014-06-30 00:10:58.783103     0&#39;0     88:71   [2,0]   2       [2,0]   2       0&#39;0     2014-06-29 22:29:06.688363      0&#39;0   2014-06-26 19:52:08.827342&#10;1.3b    0       0       0       0       0       0       0       active+clean    2014-06-30 00:10:58.857283     0&#39;0     88:78   [1,0]   1       [1,0]   1       0&#39;0     2014-06-29 22:27:30.017050      0&#39;0   2014-06-26 19:52:08.644820&#10;0.3a    40      0       0       0       167772160       149     149     active+clean    2014-06-30 00:28:47.002342     52&#39;149  88:288  [0,2]   0       [0,2]   0       44&#39;46   2014-06-29 22:25:21.273679    0&#39;0      2014-06-26 19:52:08.508654&#10;3.39    0       0       0       0       0       0       0       active+clean    2014-06-30 00:16:13.255056     0&#39;0     88:21   [1,0]   1       [1,0]   1       0&#39;0     2014-06-30 00:15:05.447461      0&#39;0   2014-06-30 00:15:05.447461&#10;2.3b    0       0       0       0       0       0       0       active+clean    2014-06-30 00:10:48.935872     0&#39;0     88:57   [1,2]   1       [1,2]   1       0&#39;0     2014-06-29 22:28:35.095977      0&#39;0   2014-06-26 19:52:08.844571&#10;1.38    0       0       0       0       0       0       0       active+clean    2014-06-30 00:10:48.597540     0&#39;0     88:46   [2,1]   2       [2,1]   2       0&#39;0     2014-06-29 22:28:01.519137      0&#39;0   2014-06-26 19:52:08.633781&#10;0.39    48      0       0       0       201326592       164     164     active+clean    2014-06-30 00:25:30.757843     52&#39;164  88:432  [1,0]   1       [1,0]   1       44&#39;32   2014-06-29 22:26:33.823947    0&#39;0      2014-06-26 19:52:08.504628&#10;&#19979;&#38754;&#37096;&#20998;&#30465;&#30053;</span><br></pre></td></tr></table></figure>
+<h2 id="2、查看一个PG的map">2、查看一个PG的map</h2><p>[root@client ~]# ceph pg map 0.3f<br>osdmap e88 pg 0.3f (0.3f) -&gt; up [0,2] acting [0,2]   #其中的[0,2]代表存储在osd.0、osd.2节点，osd.0代表主副本的存储位置</p>
+<h2 id="3、查看PG状态">3、查看PG状态</h2><p>[root@client ~]# ceph pg stat<br>v1164: 448 pgs: 448 active+clean; 10003 MB data, 23617 MB used, 37792 MB / 61410 MB avail</p>
+<h2 id="4、查询一个pg的详细信息">4、查询一个pg的详细信息</h2><p>[root@client ~]# ceph pg  0.26 query</p>
+<h2 id="5、查看pg中stuck的状态">5、查看pg中stuck的状态</h2><p>[root@client ~]# ceph pg dump_stuck unclean<br>ok<br>[root@client ~]# ceph pg dump_stuck inactive<br>ok<br>[root@client ~]# ceph pg dump_stuck stale<br>ok</p>
+<h2 id="6、显示一个集群中的所有的pg统计">6、显示一个集群中的所有的pg统计</h2><p>ceph pg dump —format plain</p>
+<h2 id="7、恢复一个丢失的pg">7、恢复一个丢失的pg</h2><p>ceph pg {pg-id} mark_unfound_lost revert</p>
+<h2 id="8、显示非正常状态的pg">8、显示非正常状态的pg</h2><p>ceph pg dump_stuck inactive|unclean|stale</p>
+<h1 id="六、pool">六、pool</h1><h2 id="1、查看ceph集群中的pool数量">1、查看ceph集群中的pool数量</h2><p>[root@admin ~]# ceph osd lspools<br>0 data,1 metadata,2 rbd,</p>
+<h2 id="2、在ceph集群中创建一个pool">2、在ceph集群中创建一个pool</h2><p>ceph osd pool create jiayuan 100            #这里的100指的是PG组</p>
+<h2 id="3、为一个ceph_pool配置配额">3、为一个ceph pool配置配额</h2><p>ceph osd pool set-quota data max_objects 10000</p>
+<h2 id="4、在集群中删除一个pool">4、在集群中删除一个pool</h2><p>ceph osd pool delete jiayuan  jiayuan  —yes-i-really-really-mean-it  #集群名字需要重复两次</p>
+<h2 id="5、显示集群中pool的详细信息">5、显示集群中pool的详细信息</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@admin ~]# rados df&#10;pool name       category                 KB      objects       clones     degraded      unfound           rd        rd KB           wr        wr KB&#10;data            -                  475764704       116155            0            0           0            0            0       116379    475764704&#10;metadata        -                       5606           21            0            0           0            0            0          314         5833&#10;rbd             -                          0            0            0            0           0            0            0            0            0&#10;  total used       955852448       116176&#10;  total avail      639497596&#10;  total space     1595350044&#10;[root@admin ~]#</span><br></pre></td></tr></table></figure>
+<h2 id="6、给一个pool创建一个快照">6、给一个pool创建一个快照</h2><p>[root@admin ~]# ceph osd pool mksnap data   date-snap<br>created pool data snap date-snap</p>
+<h2 id="7、删除pool的快照">7、删除pool的快照</h2><p>[root@admin ~]# ceph osd pool rmsnap data date-snap<br>removed pool data snap date-snap</p>
+<h2 id="8、查看data池的pg数量">8、查看data池的pg数量</h2><p>[root@admin ~]# ceph osd pool get data pg_num<br>pg_num: 64</p>
+<h2 id="9、设置data池的最大存储空间为100T（默认是1T)">9、设置data池的最大存储空间为100T（默认是1T)</h2><p>[root@admin ~]# ceph osd pool set data target_max_bytes 100000000000000<br>set pool 0 target_max_bytes to 100000000000000</p>
+<h2 id="10、设置data池的副本数是3">10、设置data池的副本数是3</h2><p>[root@admin ~]# ceph osd pool set data size 3<br>set pool 0 size to 3</p>
+<h2 id="11、设置data池能接受写操作的最小副本为2">11、设置data池能接受写操作的最小副本为2</h2><p>[root@admin ~]# ceph osd pool set data min_size 2<br>set pool 0 min_size to 2</p>
+<h2 id="12、查看集群中所有pool的副本尺寸">12、查看集群中所有pool的副本尺寸</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@admin mycephfs]# ceph osd dump | grep &#39;replicated size&#39;&#10;pool 0 &#39;data&#39; replicated size 3 min_size 2 crush_ruleset 0 object_hash rjenkins pg_num 64 pgp_num 64 last_change 26 owner 0 flags hashpspool crash_replay_interval 45 target_bytes 100000000000000 stripe_width 0&#10;pool 1 &#39;metadata&#39; replicated size 2 min_size 1 crush_ruleset 0 object_hash rjenkins pg_num 64 pgp_num 64 last_change 1 owner 0 flags hashpspool stripe_width 0&#10;pool 2 &#39;rbd&#39; replicated size 2 min_size 1 crush_ruleset 0 object_hash rjenkins pg_num 64 pgp_num 64 last_change 1 owner 0 flags hashpspool stripe_width 0</span><br></pre></td></tr></table></figure>
+<h2 id="13、设置一个pool的pg数量">13、设置一个pool的pg数量</h2><p>[root@admin ~]# ceph osd pool set data pg_num 100<br>set pool 0 pg_num to 100</p>
+<h2 id="14、设置一个pool的pgp数量">14、设置一个pool的pgp数量</h2><p>[root@admin ~]# ceph osd pool set data pgp_num 100<br>set pool 0 pgp_num to 100</p>
+<h1 id="七、rados和rbd指令">七、rados和rbd指令</h1><h2 id="1、rados命令使用方法">1、rados命令使用方法</h2><h3 id="（1）、查看ceph集群中pool数量">（1）、查看ceph集群中pool数量</h3><p> （只是查看pool)<br>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node-44 ~]# rados lspools&#10;data&#10;metadata&#10;rbd&#10;images&#10;volumes&#10;.rgw.root&#10;compute&#10;.rgw.control&#10;.rgw&#10;.rgw.gc&#10;.users.uid</span><br></pre></td></tr></table></figure></p>
+<h3 id="（2）、查看ceph集群中pool容量及利用情况">（2）、查看ceph集群中pool容量及利用情况</h3>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node-44 ~]# rados df &#10;pool name       category                 KB      objects       clones     degraded      unfound           rd        rd KB           wr        wr KB&#10;.rgw            -                          0            0            0            0           0            0            0            0            0&#10;.rgw.control    -                          0            8            0            0           0            0            0            0            0&#10;.rgw.gc         -                          0           32            0            0           0        57172        57172        38136            0&#10;.rgw.root       -                          1            4            0            0           0           75           46           10           10&#10;.users.uid      -                          1            1            0            0           0            0            0            2            1&#10;compute         -                   67430708        16506            0            0           0       398128     75927848      1174683    222082706&#10;data            -                          0            0            0            0           0            0            0            0            0&#10;images          -                  250069744        30683            0            0           0        50881    195328724        65025    388375482&#10;metadata        -                          0            0            0            0           0            0            0            0            0&#10;rbd             -                          0            0            0            0           0            0            0            0            0&#10;volumes         -                   79123929        19707            0            0           0      2575693     63437000      1592456    163812172&#10;  total used       799318844        66941&#10;  total avail    11306053720&#10;  total space    12105372564&#10;[root@node-44 ~]#</span><br></pre></td></tr></table></figure>
+<h3 id="（3）、创建一个pool">（3）、创建一个pool</h3><p>[root@node-44 ~]#rados mkpool test</p>
+<h3 id="（4）、查看ceph_pool中的ceph_object">（4）、查看ceph pool中的ceph object</h3><p> （这里的object是以块形式存储的）<br>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node-44 ~]# rados ls -p volumes | more&#10;rbd_data.348f21ba7021.0000000000000866&#10;rbd_data.32562ae8944a.0000000000000c79&#10;rbd_data.589c2ae8944a.00000000000031ba&#10;rbd_data.58c9151ff76b.00000000000029af&#10;rbd_data.58c9151ff76b.0000000000002c19&#10;rbd_data.58c9151ff76b.0000000000000a5a&#10;rbd_data.58c9151ff76b.0000000000001c69&#10;rbd_data.58c9151ff76b.000000000000281d&#10;rbd_data.58c9151ff76b.0000000000002de1&#10;rbd_data.58c9151ff76b.0000000000002dae</span><br></pre></td></tr></table></figure></p>
+<h3 id="（5）、创建一个对象object">（5）、创建一个对象object</h3><p>[root@admin-node ~]# rados create test-object -p test<br>[root@admin-node ~]# rados -p test ls<br>test-object</p>
+<h3 id="（6）、删除一个对象">（6）、删除一个对象</h3><p>[root@admin-node ~]# rados rm test-object-1 -p test</p>
+<h2 id="2、rbd命令的用法">2、rbd命令的用法</h2><h3 id="（1）、查看ceph中一个pool里的所有镜像">（1）、查看ceph中一个pool里的所有镜像</h3>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node-44 ~]# rbd ls images&#10;2014-05-24 17:17:37.043659 7f14caa6e700  0 -- :/1025604 &#62;&#62; 10.49.101.9:6789/0 pipe(0x6c5400 sd=3 :0 s=1 pgs=0 cs=0 l=1 c=0x6c5660).fault&#10;2182d9ac-52f4-4f5d-99a1-ab3ceacbf0b9&#10;34e1a475-5b11-410c-b4c4-69b5f780f03c&#10;476a9f3b-4608-4ffd-90ea-8750e804f46e&#10;60eae8bf-dd23-40c5-ba02-266d5b942767&#10;72e16e93-1fa5-4e11-8497-15bd904eeffe&#10;74cb427c-cee9-47d0-b467-af217a67e60a&#10;8f181a53-520b-4e22-af7c-de59e8ccca78&#10;9867a580-22fe-4ed0-a1a8-120b8e8d18f4&#10;ac6f4dae-4b81-476d-9e83-ad92ff25fb13&#10;d20206d7-ff31-4dce-b59a-a622b0ea3af6&#10;&#10;[root@node-44 ~]# rbd ls volumes&#10;2014-05-24 17:22:18.649929 7f9e98733700  0 -- :/1010725 &#62;&#62; 10.49.101.9:6789/0 pipe(0x96a400 sd=3 :0 s=1 pgs=0 cs=0 l=1 c=0x96a660).fault&#10;volume-0788fc6c-0dd4-4339-bad4-e9d78bd5365c&#10;volume-0898c5b4-4072-4cae-affc-ec59c2375c51&#10;volume-2a1fb287-5666-4095-8f0b-6481695824e2&#10;volume-35c6aad4-8ea4-4b8d-95c7-7c3a8e8758c5&#10;volume-814494cc-5ae6-4094-9d06-d844fdf485c4&#10;volume-8a6fb0db-35a9-4b3b-9ace-fb647c2918ea&#10;volume-8c108991-9b03-4308-b979-51378bba2ed1&#10;volume-8cf3d206-2cce-4579-91c5-77bcb4a8a3f8&#10;volume-91fc075c-8bd1-41dc-b5ef-844f23df177d&#10;volume-b1263d8b-0a12-4b51-84e5-74434c0e73aa&#10;volume-b84fad5d-16ee-4343-8630-88f265409feb&#10;volume-c03a2eb1-06a3-4d79-98e5-7c62210751c3&#10;volume-c17bf6c0-80ba-47d9-862d-1b9e9a48231e&#10;volume-c32bca55-7ec0-47ce-a87e-a883da4b4ccd&#10;volume-df8961ef-11d6-4dae-96ee-f2df8eb4a08c&#10;volume-f1c38695-81f8-44fd-9af0-458cddf103a3</span><br></pre></td></tr></table></figure>
+<h3 id="（2）、查看ceph_pool中一个镜像的信息">（2）、查看ceph pool中一个镜像的信息</h3>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node-44 ~]# rbd info -p images --image 74cb427c-cee9-47d0-b467-af217a67e60a&#10;rbd image &#39;74cb427c-cee9-47d0-b467-af217a67e60a&#39;:&#10;        size 1048 MB in 131 objects&#10;        order 23 (8192 KB objects)&#10;        block_name_prefix: rbd_data.95c7783fc0d0&#10;        format: 2&#10;        features: layering</span><br></pre></td></tr></table></figure>
+<h3 id="（3）、在test池中创建镜像">（3）、在test池中创建镜像</h3>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node-44 ~]# rbd create -p test --size 10000 zhanguo&#10;[root@node-44 ~]# rbd -p test info zhanguo    #&#26597;&#30475;&#26032;&#24314;&#30340;&#38236;&#20687;&#30340;&#20449;&#24687;&#10;rbd image &#39;zhanguo&#39;:&#10;        size 10000 MB in 2500 objects&#10;        order 22 (4096 KB objects)&#10;        block_name_prefix: rb.0.127d2.2ae8944a&#10;        format: 1&#10;[root@node-44 ~]#</span><br></pre></td></tr></table></figure>
+<h3 id="（4）、删除一个镜像">（4）、删除一个镜像</h3><p>[root@node-44 ~]# rbd rm  -p test  lizhanguo<br>Removing image: 100% complete…done.</p>
+<h3 id="（5）、调整一个镜像的尺寸">（5）、调整一个镜像的尺寸</h3>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node-44 ~]# rbd resize -p test --size 20000 zhanguo&#10;Resizing image: 100% complete...done.&#10;[root@node-44 ~]# rbd -p test info zhanguo   #&#35843;&#25972;&#21518;&#30340;&#38236;&#20687;&#22823;&#23567;&#10;rbd image &#39;zhanguo&#39;:&#10;        size 20000 MB in 5000 objects&#10;        order 22 (4096 KB objects)&#10;        block_name_prefix: rb.0.127d2.2ae8944a&#10;        format: 1&#10;[root@node-44 ~]#</span><br></pre></td></tr></table></figure>
+<h3 id="（6）、给一个镜像创建一个快照">（6）、给一个镜像创建一个快照</h3>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node-44 ~]# rbd  snap create  test/zhanguo@zhanguo123  #&#27744;/&#38236;&#20687;@&#24555;&#29031;&#10;[root@node-44 ~]# rbd   snap ls  -p test zhanguo&#10;SNAPID NAME           SIZE &#10;     2 zhanguo123 20000 MB &#10;[root@node-44 ~]# &#10;[root@node-44 ~]# rbd info test/zhanguo@zhanguo123&#10;rbd image &#39;zhanguo&#39;:&#10;        size 20000 MB in 5000 objects&#10;        order 22 (4096 KB objects)&#10;        block_name_prefix: rb.0.127d2.2ae8944a&#10;        format: 1&#10;        protected: False&#10;[root@node-44 ~]#</span><br></pre></td></tr></table></figure>
+<h3 id="（7）、查看一个镜像文件的快照">（7）、查看一个镜像文件的快照</h3><p>[root@os-node101 ~]# rbd snap ls  -p volumes volume-7687988d-16ef-4814-8a2c-3fbd85e928e4<br>SNAPID NAME                                               SIZE<br>     5 snapshot-ee7862aa-825e-4004-9587-879d60430a12 102400 MB </p>
+<h3 id="（8）、删除一个镜像文件的一个快照快照">（8）、删除一个镜像文件的一个快照快照</h3><pre><code>快照所在的池/        快照所在的镜像文件           <span class="decorator">@ 快照</span>
+</code></pre>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@os-node101 ~]# rbd snap rm volumes/volume-7687988d-16ef-4814-8a2c-3fbd85e928e4@snapshot-ee7862aa-825e-4004-9587-879d60430a12&#10;rbd: snapshot &#39;snapshot-60586eba-b0be-4885-81ab-010757e50efb&#39; is protected from removal.&#10;2014-08-18 19:23:42.099301 7fd0245ef760 -1 librbd: removing snapshot from header failed: (16) Device or resource busy&#10;&#19978;&#38754;&#19981;&#33021;&#21024;&#38500;&#26174;&#31034;&#30340;&#25253;&#38169;&#20449;&#24687;&#26159;&#27492;&#24555;&#29031;&#22791;&#20889;&#20445;&#25252;&#20102;&#65292;&#19979;&#38754;&#21629;&#20196;&#26159;&#21024;&#38500;&#20889;&#20445;&#25252;&#21518;&#20877;&#36827;&#34892;&#21024;&#38500;&#12290;&#10;[root@os-node101 ~]# rbd snap unprotect volumes/volume-7687988d-16ef-4814-8a2c-3fbd85e928e4@snapshot-ee7862aa-825e-4004-9587-879d60430a12&#10;[root@os-node101 ~]# rbd snap rm volumes/volume-7687988d-16ef-4814-8a2c-3fbd85e928e4@snapshot-ee7862aa-825e-4004-9587-879d60430a12</span><br></pre></td></tr></table></figure>
+<h3 id="（9）删除一个镜像文件的所有快照">（9）删除一个镜像文件的所有快照</h3><p>[root@os-node101 ~]# rbd snap purge  -p volumes volume-7687988d-16ef-4814-8a2c-3fbd85e928e4<br>Removing all snapshots: 100% complete…done.</p>
+<h3 id="（10）、把ceph_pool中的一个镜像导出">（10）、把ceph pool中的一个镜像导出</h3><p>导出镜像<br>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node-44 ~]# rbd export -p images --image 74cb427c-cee9-47d0-b467-af217a67e60a /root/aaa.img&#10;2014-05-24 17:16:15.197695 7ffb47a9a700  0 -- :/1020493 &#62;&#62; 10.49.101.9:6789/0 pipe(0x1368400 sd=3 :0 s=1 pgs=0 cs=0 l=1 c=0x1368660).fault&#10;Exporting image: 100% complete...done.</span><br></pre></td></tr></table></figure></p>
+<p>导出云硬盘<br>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node-44 ~]# rbd export -p volumes --image volume-470fee37-b950-4eef-a595-d7def334a5d6 /var/lib/glance/ceph-pool/volumes/Message-JiaoBenJi-10.40.212.24&#10;2014-05-24 17:28:18.940402 7f14ad39f700  0 -- :/1032237 &#62;&#62; 10.49.101.9:6789/0 pipe(0x260a400 sd=3 :0 s=1 pgs=0 cs=0 l=1 c=0x260a660).fault&#10;Exporting image: 100% complete...done.</span><br></pre></td></tr></table></figure></p>
+<h3 id="（11）、把一个镜像导入ceph中">（11）、把一个镜像导入ceph中</h3><p>（但是直接导入是不能用的，因为没有经过openstack,openstack是看不到的）<br>[root@node-44 ~]# rbd import /root/aaa.img -p images —image 74cb427c-cee9-47d0-b467-af217a67e60a<br>Importing image: 100% complete…done.</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/ceph/">ceph</a><a href="/tags/openstack/">openstack</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/openstack/">openstack</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a class="jiathis_button_twitter">Twitter</a>
+    <a class="jiathis_button_evernote">EverNote</a>
+    <a href="http://www.jiathis.com/share?uid=1501277" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+</div>
+<script type="text/javascript" >
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+     ralateuid:{"tsina":"readortravel"},hideMore:false}
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+elfzhao@hotmail.com" charset="utf-8"></script>      
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/06/15/virtualbox-bridge/"  title="virtualbox-bridge图文教程">
+ <strong>NEXT:</strong><br/> 
+ <span>virtualbox-bridge图文教程
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread" data-thread-key="2015/07/06/Ceph/" data-title="【转载】Ceph常用运维命令" data-url="http://www.anste.com/2015/07/06/Ceph/"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、集群"><span class="toc-number">1.</span> <span class="toc-text">一、集群</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、启动一个ceph_进程"><span class="toc-number">1.1.</span> <span class="toc-text">1、启动一个ceph 进程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、查看机器的监控状态"><span class="toc-number">1.2.</span> <span class="toc-text">2、查看机器的监控状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、查看ceph的实时运行状态"><span class="toc-number">1.3.</span> <span class="toc-text">3、查看ceph的实时运行状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、检查信息状态信息"><span class="toc-number">1.4.</span> <span class="toc-text">4、检查信息状态信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、查看ceph存储空间"><span class="toc-number">1.5.</span> <span class="toc-text">5、查看ceph存储空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6、删除一个节点的所有的ceph数据包"><span class="toc-number">1.6.</span> <span class="toc-text">6、删除一个节点的所有的ceph数据包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7、ceph创建用户"><span class="toc-number">1.7.</span> <span class="toc-text">7、ceph创建用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8、osd创建key"><span class="toc-number">1.8.</span> <span class="toc-text">8、osd创建key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9、mds创建key"><span class="toc-number">1.9.</span> <span class="toc-text">9、mds创建key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10、查看ceph集群中的认证用户及相关的key"><span class="toc-number">1.10.</span> <span class="toc-text">10、查看ceph集群中的认证用户及相关的key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11、删除集群中的一个认证用户"><span class="toc-number">1.11.</span> <span class="toc-text">11、删除集群中的一个认证用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12、查看集群的详细配置"><span class="toc-number">1.12.</span> <span class="toc-text">12、查看集群的详细配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13、查看集群健康状态细节"><span class="toc-number">1.13.</span> <span class="toc-text">13、查看集群健康状态细节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14、查看ceph_log日志所在的目录"><span class="toc-number">1.14.</span> <span class="toc-text">14、查看ceph log日志所在的目录</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、mon"><span class="toc-number">2.</span> <span class="toc-text">二、mon</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、查看mon的状态信息"><span class="toc-number">2.1.</span> <span class="toc-text">1、查看mon的状态信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、查看mon的选举状态"><span class="toc-number">2.2.</span> <span class="toc-text">2、查看mon的选举状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、查看mon的映射信息"><span class="toc-number">2.3.</span> <span class="toc-text">3、查看mon的映射信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、删除一个mon节点"><span class="toc-number">2.4.</span> <span class="toc-text">4、删除一个mon节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、获得mon_map"><span class="toc-number">2.5.</span> <span class="toc-text">5、获得mon map</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6、查看上面获得的map"><span class="toc-number">2.6.</span> <span class="toc-text">6、查看上面获得的map</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7、把上面的mon_map注入新加入的节点"><span class="toc-number">2.7.</span> <span class="toc-text">7、把上面的mon map注入新加入的节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8、查看mon的amin_socket"><span class="toc-number">2.8.</span> <span class="toc-text">8、查看mon的amin socket</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9、查看mon的详细状态"><span class="toc-number">2.9.</span> <span class="toc-text">9、查看mon的详细状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10、删除一个mon节点"><span class="toc-number">2.10.</span> <span class="toc-text">10、删除一个mon节点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、msd"><span class="toc-number">3.</span> <span class="toc-text">三、msd</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、查看msd状态"><span class="toc-number">3.1.</span> <span class="toc-text">1、查看msd状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、查看msd的映射信息"><span class="toc-number">3.2.</span> <span class="toc-text">2、查看msd的映射信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、删除一个mds节点"><span class="toc-number">3.3.</span> <span class="toc-text">3、删除一个mds节点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、osd"><span class="toc-number">4.</span> <span class="toc-text">四、osd</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、查看ceph_osd运行状态"><span class="toc-number">4.1.</span> <span class="toc-text">1、查看ceph osd运行状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、查看osd映射信息"><span class="toc-number">4.2.</span> <span class="toc-text">2、查看osd映射信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、查看osd的目录树"><span class="toc-number">4.3.</span> <span class="toc-text">3、查看osd的目录树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、down掉一个osd硬盘"><span class="toc-number">4.4.</span> <span class="toc-text">4、down掉一个osd硬盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、在集群中删除一个osd硬盘"><span class="toc-number">4.5.</span> <span class="toc-text">5、在集群中删除一个osd硬盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6、在集群中删除一个osd_硬盘_crush_map"><span class="toc-number">4.6.</span> <span class="toc-text">6、在集群中删除一个osd 硬盘 crush map</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7、在集群中删除一个osd的host节点"><span class="toc-number">4.7.</span> <span class="toc-text">7、在集群中删除一个osd的host节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8、设置最大的osd的个数"><span class="toc-number">4.8.</span> <span class="toc-text">8、设置最大的osd的个数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9、设置osd_crush的权重为1-0"><span class="toc-number">4.9.</span> <span class="toc-text">9、设置osd crush的权重为1.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10、设置osd的权重"><span class="toc-number">4.10.</span> <span class="toc-text">10、设置osd的权重</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11、把一个osd节点逐出集群"><span class="toc-number">4.11.</span> <span class="toc-text">11、把一个osd节点逐出集群</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12、把逐出的osd加入集群"><span class="toc-number">4.12.</span> <span class="toc-text">12、把逐出的osd加入集群</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13、暂停osd"><span class="toc-number">4.13.</span> <span class="toc-text">13、暂停osd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14、再次开启osd"><span class="toc-number">4.14.</span> <span class="toc-text">14、再次开启osd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15、查看一个集群osd-2参数的配置"><span class="toc-number">4.15.</span> <span class="toc-text">15、查看一个集群osd.2参数的配置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、PG组"><span class="toc-number">5.</span> <span class="toc-text">五、PG组</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、查看pg组的映射信息"><span class="toc-number">5.1.</span> <span class="toc-text">1、查看pg组的映射信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、查看一个PG的map"><span class="toc-number">5.2.</span> <span class="toc-text">2、查看一个PG的map</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、查看PG状态"><span class="toc-number">5.3.</span> <span class="toc-text">3、查看PG状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、查询一个pg的详细信息"><span class="toc-number">5.4.</span> <span class="toc-text">4、查询一个pg的详细信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、查看pg中stuck的状态"><span class="toc-number">5.5.</span> <span class="toc-text">5、查看pg中stuck的状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6、显示一个集群中的所有的pg统计"><span class="toc-number">5.6.</span> <span class="toc-text">6、显示一个集群中的所有的pg统计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7、恢复一个丢失的pg"><span class="toc-number">5.7.</span> <span class="toc-text">7、恢复一个丢失的pg</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8、显示非正常状态的pg"><span class="toc-number">5.8.</span> <span class="toc-text">8、显示非正常状态的pg</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、pool"><span class="toc-number">6.</span> <span class="toc-text">六、pool</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、查看ceph集群中的pool数量"><span class="toc-number">6.1.</span> <span class="toc-text">1、查看ceph集群中的pool数量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、在ceph集群中创建一个pool"><span class="toc-number">6.2.</span> <span class="toc-text">2、在ceph集群中创建一个pool</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、为一个ceph_pool配置配额"><span class="toc-number">6.3.</span> <span class="toc-text">3、为一个ceph pool配置配额</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、在集群中删除一个pool"><span class="toc-number">6.4.</span> <span class="toc-text">4、在集群中删除一个pool</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、显示集群中pool的详细信息"><span class="toc-number">6.5.</span> <span class="toc-text">5、显示集群中pool的详细信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6、给一个pool创建一个快照"><span class="toc-number">6.6.</span> <span class="toc-text">6、给一个pool创建一个快照</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7、删除pool的快照"><span class="toc-number">6.7.</span> <span class="toc-text">7、删除pool的快照</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8、查看data池的pg数量"><span class="toc-number">6.8.</span> <span class="toc-text">8、查看data池的pg数量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9、设置data池的最大存储空间为100T（默认是1T)"><span class="toc-number">6.9.</span> <span class="toc-text">9、设置data池的最大存储空间为100T（默认是1T)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10、设置data池的副本数是3"><span class="toc-number">6.10.</span> <span class="toc-text">10、设置data池的副本数是3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11、设置data池能接受写操作的最小副本为2"><span class="toc-number">6.11.</span> <span class="toc-text">11、设置data池能接受写操作的最小副本为2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12、查看集群中所有pool的副本尺寸"><span class="toc-number">6.12.</span> <span class="toc-text">12、查看集群中所有pool的副本尺寸</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13、设置一个pool的pg数量"><span class="toc-number">6.13.</span> <span class="toc-text">13、设置一个pool的pg数量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14、设置一个pool的pgp数量"><span class="toc-number">6.14.</span> <span class="toc-text">14、设置一个pool的pgp数量</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#七、rados和rbd指令"><span class="toc-number">7.</span> <span class="toc-text">七、rados和rbd指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、rados命令使用方法"><span class="toc-number">7.1.</span> <span class="toc-text">1、rados命令使用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#（1）、查看ceph集群中pool数量"><span class="toc-number">7.1.1.</span> <span class="toc-text">（1）、查看ceph集群中pool数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（2）、查看ceph集群中pool容量及利用情况"><span class="toc-number">7.1.2.</span> <span class="toc-text">（2）、查看ceph集群中pool容量及利用情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（3）、创建一个pool"><span class="toc-number">7.1.3.</span> <span class="toc-text">（3）、创建一个pool</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（4）、查看ceph_pool中的ceph_object"><span class="toc-number">7.1.4.</span> <span class="toc-text">（4）、查看ceph pool中的ceph object</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（5）、创建一个对象object"><span class="toc-number">7.1.5.</span> <span class="toc-text">（5）、创建一个对象object</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（6）、删除一个对象"><span class="toc-number">7.1.6.</span> <span class="toc-text">（6）、删除一个对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、rbd命令的用法"><span class="toc-number">7.2.</span> <span class="toc-text">2、rbd命令的用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#（1）、查看ceph中一个pool里的所有镜像"><span class="toc-number">7.2.1.</span> <span class="toc-text">（1）、查看ceph中一个pool里的所有镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（2）、查看ceph_pool中一个镜像的信息"><span class="toc-number">7.2.2.</span> <span class="toc-text">（2）、查看ceph pool中一个镜像的信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（3）、在test池中创建镜像"><span class="toc-number">7.2.3.</span> <span class="toc-text">（3）、在test池中创建镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（4）、删除一个镜像"><span class="toc-number">7.2.4.</span> <span class="toc-text">（4）、删除一个镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（5）、调整一个镜像的尺寸"><span class="toc-number">7.2.5.</span> <span class="toc-text">（5）、调整一个镜像的尺寸</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（6）、给一个镜像创建一个快照"><span class="toc-number">7.2.6.</span> <span class="toc-text">（6）、给一个镜像创建一个快照</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（7）、查看一个镜像文件的快照"><span class="toc-number">7.2.7.</span> <span class="toc-text">（7）、查看一个镜像文件的快照</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（8）、删除一个镜像文件的一个快照快照"><span class="toc-number">7.2.8.</span> <span class="toc-text">（8）、删除一个镜像文件的一个快照快照</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（9）删除一个镜像文件的所有快照"><span class="toc-number">7.2.9.</span> <span class="toc-text">（9）删除一个镜像文件的所有快照</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（10）、把ceph_pool中的一个镜像导出"><span class="toc-number">7.2.10.</span> <span class="toc-text">（10）、把ceph pool中的一个镜像导出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（11）、把一个镜像导入ceph中"><span class="toc-number">7.2.11.</span> <span class="toc-text">（11）、把一个镜像导入ceph中</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/ceph/" style="font-size: 10px;">ceph</a> <a href="/tags/cisco/" style="font-size: 10px;">cisco</a> <a href="/tags/fuel/" style="font-size: 10px;">fuel</a> <a href="/tags/haproxy/" style="font-size: 10px;">haproxy</a> <a href="/tags/juniper/" style="font-size: 10px;">juniper</a> <a href="/tags/juno/" style="font-size: 10px;">juno</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/lvs/" style="font-size: 10px;">lvs</a> <a href="/tags/openstack/" style="font-size: 20px;">openstack</a> <a href="/tags/ospf/" style="font-size: 10px;">ospf</a> <a href="/tags/puppet/" style="font-size: 10px;">puppet</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a> <a href="/tags/windows/" style="font-size: 15px;">windows</a>
+    </div>
+  </div>
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>2</sup></a></li>
+		
+			<li><a href="/categories/network/" title="network">network<sup>1</sup></a></li>
+		
+			<li><a href="/categories/openstack/" title="openstack">openstack<sup>6</sup></a></li>
+		
+			<li><a href="/categories/windows/" title="windows">windows<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="commentslist">
+  <p class="asidetitle">最新评论</p>
+  <ul class="ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-time="1" data-show-admin="1" data-excerpt-length="32" data-show-title="1"></ul>
+</div>
+<script type="text/javascript">
+if(typeof duoshuoQuery === 'undefined'){
+  var duoshuoQuery = {short_name:"anste"};
+  (function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	}
+	</script>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://blog.leafh.pw" target="_blank" title="Leaf Hsiao">Leaf's Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<section class="info">
+		<p> 天行健，君子以自强不息；地势坤，君子以厚德载物。 <br/>
+			Stay hungry, stay foolish</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/readortravel" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/elfzhao" target="_blank" title="twitter"></a>
+		
+		
+		
+		<a href="https://www.facebook.com/atlantis2012" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://cn.linkedin.com/in/jameschao2015" target="_blank" title="linkedin"></a>
+        
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/leaf-hsiao/catman" target="_blank" title="Catman">Catman</a> © 2015 
+		
+		<a href="http://www.anste.com" target="_blank" title="Anste">Anste</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="http://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,208-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      m = $('#main'),
+      a = $('#asidepart'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside'),
+      w  = $(window).width();
+  if ( w>1070 ) {
+  	m.addClass('moveMain');
+  	a.css('display', 'none').addClass('fadeIn');
+  	o.css('display', 'block');
+  };
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+  	if ( w>1070 ) {
+  	  ta.css('display', 'block').addClass('fadeIn');
+  	};
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,250-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"anste"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+
+
+  </body>
+</html>
