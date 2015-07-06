@@ -5,7 +5,7 @@
   <subtitle><![CDATA[A Next Step To Extreme]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.anste.com//"/>
-  <updated>2015-07-06T04:03:20.912Z</updated>
+  <updated>2015-07-06T04:52:31.453Z</updated>
   <id>http://www.anste.com//</id>
   
   <author>
@@ -20,15 +20,15 @@
     <link href="http://www.anste.com/2015/07/06/Ceph/"/>
     <id>http://www.anste.com/2015/07/06/Ceph/</id>
     <published>2015-07-06T03:42:18.000Z</published>
-    <updated>2015-07-06T04:03:20.912Z</updated>
-    <content type="html"><![CDATA[<p>转自：<a href="http://zhanguo1110.blog.51cto.com/5750817/1543032" target="_blank" rel="external">http://zhanguo1110.blog.51cto.com/5750817/1543032</a></p>
+    <updated>2015-07-06T04:52:31.453Z</updated>
+    <content type="html"><![CDATA[<p>转自<a href="http://zhanguo1110.blog.51cto.com/5750817/1543032" target="_blank" rel="external">51CTO zhuanguo1110的BLOG</a></p>
 <h1 id="一、集群">一、集群</h1><h2 id="1、启动一个ceph_进程">1、启动一个ceph 进程</h2><p>启动mon进程<br>service ceph start  mon.node1<br>启动msd进程<br>service ceph start mds.node1<br>启动osd进程<br> service ceph start osd.0</p>
 <h2 id="2、查看机器的监控状态">2、查看机器的监控状态</h2><p>[root@client ~]# ceph health<br>HEALTH_OK</p>
 <h2 id="3、查看ceph的实时运行状态">3、查看ceph的实时运行状态</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@client ~]# ceph -w&#10;    cluster be1756f2-54f7-4d8f-8790-820c82721f17&#10;     health HEALTH_OK&#10;     monmap e2: 3 mons at &#123;node1=10.240.240.211:6789/0,node2=10.240.240.212:6789/0,node3=10.240.240.213:6789/0&#125;, election epoch 294, quorum 0,1,2 node1,node2,node3&#10;     mdsmap e95: 1/1/1 up &#123;0=node2=up:active&#125;, 1 up:standby&#10;     osdmap e88: 3 osds: 3 up, 3 in&#10;      pgmap v1164: 448 pgs, 4 pools, 10003 MB data, 2520 objects&#10;            23617 MB used, 37792 MB / 61410 MB avail&#10;                 448 active+clean&#10;2014-06-30 00:48:28.756948 mon.0 [INF] pgmap v1163: 448 pgs: 448 active+clean; 10003 MB data, 23617 MB used, 37792 MB / 61410 MB avail</span><br></pre></td></tr></table></figure>
 <h2 id="4、检查信息状态信息">4、检查信息状态信息</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@client ~]# ceph -s&#10;    cluster be1756f2-54f7-4d8f-8790-820c82721f17&#10;     health HEALTH_OK&#10;     monmap e2: 3 mons at &#123;node1=10.240.240.211:6789/0,node2=10.240.240.212:6789/0,node3=10.240.240.213:6789/0&#125;, election epoch 294, quorum 0,1,2 node1,node2,node3&#10;     mdsmap e95: 1/1/1 up &#123;0=node2=up:active&#125;, 1 up:standby&#10;     osdmap e88: 3 osds: 3 up, 3 in&#10;      pgmap v1164: 448 pgs, 4 pools, 10003 MB data, 2520 objects&#10;            23617 MB used, 37792 MB / 61410 MB avail&#10;                 448 active+clean&#10;[root@client ~]#</span><br></pre></td></tr></table></figure>
 <h2 id="5、查看ceph存储空间">5、查看ceph存储空间</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@client ~]# ceph df&#10;GLOBAL:&#10;    SIZE       AVAIL      RAW USED     %RAW USED &#10;    61410M     37792M     23617M       38.46     &#10;POOLS:&#10;    NAME         ID     USED       %USED     OBJECTS &#10;    data         0      10000M     16.28     2500    &#10;    metadata     1      3354k      0         20      &#10;    rbd          2      0          0         0       &#10;    jiayuan      3      0          0         0       &#10;[root@client ~]#</span><br></pre></td></tr></table></figure>
 <h2 id="6、删除一个节点的所有的ceph数据包">6、删除一个节点的所有的ceph数据包</h2><p>[root@node1 ~]# ceph-deploy purge node1<br>[root@node1 ~]# ceph-deploy purgedata node1</p>
-<h2 id="7、ceph创建用户">7、ceph创建用户</h2><p>为ceph创建一个admin用户并为admin用户创建一个密钥，把密钥保存到/etc/ceph目录下：<br>ceph auth get-or-create client.admin mds ‘allow’ osd ‘allow <em>‘ mon ‘allow </em>‘ &gt; /etc/ceph/ceph.client.admin.keyring<br>或<br>ceph auth get-or-create client.admin mds ‘allow’ osd ‘allow <em>‘ mon ‘allow </em>‘ -o /etc/ceph/ceph.client.admin.keyring</p>
+<h2 id="7、创建用户">7、创建用户</h2><p>为ceph创建一个admin用户并为admin用户创建一个密钥，把密钥保存到/etc/ceph目录下：<br>ceph auth get-or-create client.admin mds ‘allow’ osd ‘allow <em>‘ mon ‘allow </em>‘ &gt; /etc/ceph/ceph.client.admin.keyring<br>或<br>ceph auth get-or-create client.admin mds ‘allow’ osd ‘allow <em>‘ mon ‘allow </em>‘ -o /etc/ceph/ceph.client.admin.keyring</p>
 <h2 id="8、osd创建key">8、osd创建key</h2><p>为osd.0创建一个用户并创建一个key<br>ceph auth get-or-create osd.0 mon ‘allow rwx’ osd ‘allow *’ -o /var/lib/ceph/osd/ceph-0/keyring</p>
 <h2 id="9、mds创建key">9、mds创建key</h2><p>为mds.node1创建一个用户并创建一个key<br>ceph auth get-or-create mds.node1 mon ‘allow rwx’ osd ‘allow <em>‘ mds ‘allow </em>‘ -o /var/lib/ceph/mds/ceph-node1/keyring</p>
 <h2 id="10、查看ceph集群中的认证用户及相关的key">10、查看ceph集群中的认证用户及相关的key</h2><p>ceph auth list</p>
