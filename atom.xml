@@ -5,7 +5,7 @@
   <subtitle><![CDATA[A Next Step To Extreme]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.anste.com//"/>
-  <updated>2015-07-06T04:52:31.453Z</updated>
+  <updated>2015-07-06T05:33:33.622Z</updated>
   <id>http://www.anste.com//</id>
   
   <author>
@@ -20,8 +20,8 @@
     <link href="http://www.anste.com/2015/07/06/Ceph/"/>
     <id>http://www.anste.com/2015/07/06/Ceph/</id>
     <published>2015-07-06T03:42:18.000Z</published>
-    <updated>2015-07-06T04:52:31.453Z</updated>
-    <content type="html"><![CDATA[<p>转自<a href="http://zhanguo1110.blog.51cto.com/5750817/1543032" target="_blank" rel="external">51CTO zhuanguo1110的BLOG</a></p>
+    <updated>2015-07-06T05:33:33.622Z</updated>
+    <content type="html"><![CDATA[<p>转自<a href="http://zhanguo1110.blog.51cto.com/5750817/1543032" target="_blank" rel="external">51CTO zhanguo1110的BLOG</a></p>
 <h1 id="一、集群">一、集群</h1><h2 id="1、启动一个ceph_进程">1、启动一个ceph 进程</h2><p>启动mon进程<br>service ceph start  mon.node1<br>启动msd进程<br>service ceph start mds.node1<br>启动osd进程<br> service ceph start osd.0</p>
 <h2 id="2、查看机器的监控状态">2、查看机器的监控状态</h2><p>[root@client ~]# ceph health<br>HEALTH_OK</p>
 <h2 id="3、查看ceph的实时运行状态">3、查看ceph的实时运行状态</h2>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@client ~]# ceph -w&#10;    cluster be1756f2-54f7-4d8f-8790-820c82721f17&#10;     health HEALTH_OK&#10;     monmap e2: 3 mons at &#123;node1=10.240.240.211:6789/0,node2=10.240.240.212:6789/0,node3=10.240.240.213:6789/0&#125;, election epoch 294, quorum 0,1,2 node1,node2,node3&#10;     mdsmap e95: 1/1/1 up &#123;0=node2=up:active&#125;, 1 up:standby&#10;     osdmap e88: 3 osds: 3 up, 3 in&#10;      pgmap v1164: 448 pgs, 4 pools, 10003 MB data, 2520 objects&#10;            23617 MB used, 37792 MB / 61410 MB avail&#10;                 448 active+clean&#10;2014-06-30 00:48:28.756948 mon.0 [INF] pgmap v1163: 448 pgs: 448 active+clean; 10003 MB data, 23617 MB used, 37792 MB / 61410 MB avail</span><br></pre></td></tr></table></figure>
