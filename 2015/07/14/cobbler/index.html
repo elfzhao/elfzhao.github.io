@@ -1,0 +1,429 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>通过cobbler自动化部署操作系统 | Anste</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Anste">
+    
+    <meta name="description" itemprop="description" content="通过cobbler自动化部署操作系统">
+    
+    
+    
+    <meta name="keywords" content="linux">
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="elfzhao" />
+    <meta name="twitter:title" content="通过cobbler自动化部署操作系统 | Anste" />
+      
+        <meta name="twitter:description" content="通过cobbler自动化部署操作系统" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Anste" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/catman.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/catman.png">
+    
+    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-28065593-1', 'anste.com');  
+ga('send', 'pageview');
+</script>
+
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?395b591d268906c0303cf35973bb61a3";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    <link href='http://fonts.useso.com/css?family=Tangerine:700' rel='stylesheet' type='text/css'>
+<link href='http://fonts.useso.com/css?family=Covered+By+Your+Grace' rel='stylesheet' type='text/css'>
+<link href='http://fonts.useso.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Anste" title="Anste"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Anste">Anste</a></h1>
+				<h2 class="blog-motto">A Next Step To Extreme</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">主页 | Home</a></li>
+					
+						<li><a href="/tags">标签页 | Tags</a></li>
+					
+						<li><a href="/categories">分类 | Categories</a></li>
+					
+						<li><a href="/archives">归档 | Archives</a></li>
+					
+						<li><a href="/about">关于 | About</a></li>
+					
+					<li>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/07/14/cobbler/" title="通过cobbler自动化部署操作系统" itemprop="url">通过cobbler自动化部署操作系统</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://www.anste.com" title="Anste">Anste</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-07-14T07:27:58.000Z" itemprop="datePublished">2015-07-14</time>
+    更新日期:<time datetime="2015-07-14T07:42:25.348Z" itemprop="dateModified">2015-07-14</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Cobbler概述"><span class="toc-number">1.</span> <span class="toc-text">Cobbler概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Cobbler部署"><span class="toc-number">2.</span> <span class="toc-text">Cobbler部署</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#实施环境"><span class="toc-number">2.1.</span> <span class="toc-text">实施环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cobbler安装"><span class="toc-number">2.2.</span> <span class="toc-text">Cobbler安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dhcpd、httpd安装"><span class="toc-number">2.3.</span> <span class="toc-text">Dhcpd、httpd安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cobbler配置"><span class="toc-number">2.4.</span> <span class="toc-text">Cobbler配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dhcp、rsync、tftp配置"><span class="toc-number">2.5.</span> <span class="toc-text">Dhcp、rsync、tftp配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Modules配置"><span class="toc-number">2.6.</span> <span class="toc-text">Modules配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kickstart配置"><span class="toc-number">2.7.</span> <span class="toc-text">Kickstart配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初始化cobbler"><span class="toc-number">2.8.</span> <span class="toc-text">初始化cobbler</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#日常操作说明"><span class="toc-number">3.</span> <span class="toc-text">日常操作说明</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#生成安装文件"><span class="toc-number">3.1.</span> <span class="toc-text">生成安装文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更改Profiles"><span class="toc-number">3.2.</span> <span class="toc-text">更改Profiles</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试"><span class="toc-number">3.3.</span> <span class="toc-text">测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#日常使用"><span class="toc-number">3.4.</span> <span class="toc-text">日常使用</span></a></li></ol></li></ol>
+		</div>
+		
+		<h1 id="Cobbler概述">Cobbler概述</h1><p>Cobbler是目前应用很广泛的运维工具，主要用来实现操作系统安装和更新，使用Python语言编写。通过部署Cobbler服务器可以方便的管理、安装、更新服务器集群。<br>项目主页：<a href="http://cobbler.github.chost/" target="_blank" rel="external">http://cobbler.github.chost/</a></p>
+<h1 id="Cobbler部署">Cobbler部署</h1><h2 id="实施环境">实施环境</h2><p>硬件环境<br>IP：192.168.10.81（生产网段）<br>CPU：Intel(R) Xeon(R) CPU           E5310  @ 1.60GHz<br>内存：16G<br>硬盘：400G</p>
+<p>软件环境<br>IP：192.168.10.81（生产网段）<br>操作系统：CentOS release 6.3 (Final)<br>内核版本：2.6.32-279.19.1.el6.x86_64<br>Python版本：2.6.6</p>
+<h2 id="Cobbler安装">Cobbler安装</h2><p>yum源配置<br>rpm -Uvh <a href="http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm" target="_blank" rel="external">http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm</a><br>增加fedora epel源<br>Cobbler安装<br>   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum install --enablerepo=epel-testing cobbler</span><br><span class="line">yum install --enablerepo=epel-testing cobbler-web</span><br><span class="line">yum install pykickstart</span><br><span class="line">yum install cman</span><br><span class="line">yum install debmirror</span><br></pre></td></tr></table></figure></p>
+<p>备注：—enablerepoepel-testing参数是安装最新测试版，如安装稳定版，可以去掉该参数。<br>安装cobbler测试版2.4.0-beta3.el6</p>
+<h2 id="Dhcpd、httpd安装">Dhcpd、httpd安装</h2>   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install dhcp</span><br><span class="line">yum install httpd</span><br></pre></td></tr></table></figure>
+<h2 id="Cobbler配置">Cobbler配置</h2><p>Setting文件配置<br>用 openssl 生成一串密码后加入到 cobbler 的配置文件（/etc/cobbler/settings）里，替换 default_password_crypted 字段：<br>   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># openssl passwd -1 -salt 'test.cn' 'test@test.cn'</span></span><br><span class="line">$</span><br><span class="line">$<span class="number">1</span>$test.cn$XpiS20ubWeAcd.9whT4NC.<span class="comment">#该密码为通过cobbler安装的系统root初始密码</span></span><br><span class="line">vi /etc/cobbler/settings</span><br><span class="line">        manage_dhcp: <span class="number">1</span></span><br><span class="line">        next_server: <span class="number">192.168</span>.10.81</span><br><span class="line">        server: <span class="number">192.168</span>.10.81</span><br><span class="line">default_password_crypted: <span class="string">"$1$test.cn$XpiS20ubWeAcd.9whT4NC."</span></span><br><span class="line">        保存</span><br></pre></td></tr></table></figure></p>
+<h2 id="Dhcp、rsync、tftp配置">Dhcp、rsync、tftp配置</h2>   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/xinetd.d/rsync</span><br><span class="line">service rsync</span><br><span class="line">&#123;</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">        disable = no</span><br><span class="line">.</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># vi /etc/xinetd.d/tftp</span></span><br><span class="line">s</span><br><span class="line">service tftp</span><br><span class="line">&#123;</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        disable = no</span><br><span class="line"></span><br><span class="line">        ...</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>cd /<br>mkdir tftpboot #生成tftp根目录<br>vi /etc/cobbler/dhcp.template<br>   <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">option pxe-system-type code 93 = unsigned integer 16;</span><br><span class="line">subnet 192.168.10.0 netmask 255.255.255.0 &#123; #dhcp名字、dhcp掩码</span><br><span class="line">     option routers             192.168.10.254;#dhcp分配的网关</span><br><span class="line">     option dhostain-name-servers 192.168.10.87,8.8.8.8;#DNS</span><br><span class="line">     option subnet-mask         255.255.255.0;# 掩码</span><br><span class="line">     default-lease-time         21600;#默认IP地址租期</span><br><span class="line">     max-lease-time             43200;#最大释放时间</span><br><span class="line">     next-server                $next_server;#tftp服务器IP</span><br><span class="line">     class "pxeclients" &#123;</span><br><span class="line">          match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";</span><br><span class="line">          if option pxe-system-type = 00:02 &#123;</span><br><span class="line">                  filename "ia64/elilo.efi";</span><br><span class="line">          &#125; else if option pxe-system-type = 00:06 &#123;</span><br><span class="line">                  filename "grub/grub-x86.efi";</span><br><span class="line">          &#125; else if option pxe-system-type = 00:07 &#123;</span><br><span class="line">                  filename "grub/grub-x86_64.efi";</span><br><span class="line">          &#125; else &#123;</span><br><span class="line">                  filename "pxelinux.0";</span><br><span class="line">          &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Modules配置">Modules配置</h2>   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">        vi /etc/cobbler/modules.conf</span><br><span class="line">        [authentication]</span><br><span class="line">module = authn_configfile</span><br></pre></td></tr></table></figure>
+<p>保存退出<br>htdigest /etc/cobbler/users.digest “Cobbler” cobbler #修改cobbler-web默认用户cobbler的密码，默认用户密码为cobbler/cobbler</p>
+<h2 id="Kickstart配置">Kickstart配置</h2>   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># this file intentionally left blank</span></span><br><span class="line"><span class="comment"># admins:  edit it as you like, or leave it blank for non-interactive install</span></span><br><span class="line"><span class="comment">#platform=x86, AMD64, or Intel EM64T</span></span><br><span class="line"><span class="comment">#version=DEVEL</span></span><br><span class="line"><span class="comment"># Firewall configuration</span></span><br><span class="line">firewall --disabled</span><br><span class="line"><span class="comment"># Install OS instead of upgrade</span></span><br><span class="line">install</span><br><span class="line"><span class="comment"># Use network installation </span></span><br><span class="line">url --url=$tree</span><br><span class="line"><span class="comment"># Network information</span></span><br><span class="line">$SNIPPET(<span class="string">'network_config'</span>)</span><br><span class="line"><span class="comment"># If any cobbler repo definitions were referenced in the kickstart profile, include them here.</span></span><br><span class="line">$yum_repo_stanza</span><br><span class="line"><span class="comment"># Root password</span></span><br><span class="line">rootpw --iscrypted $<span class="number">1</span>$xCdbrLgN$Vh3zosJoT/<span class="number">58</span>H3PMg/LbS0</span><br><span class="line"><span class="comment"># System authorization information</span></span><br><span class="line">auth  --useshadow  --passalgo=sha512</span><br><span class="line"><span class="comment"># Use text mode install</span></span><br><span class="line">text</span><br><span class="line">firstboot --disable</span><br><span class="line"><span class="comment"># System keyboard</span></span><br><span class="line">keyboard us</span><br><span class="line"><span class="comment"># System language</span></span><br><span class="line">lang en_US</span><br><span class="line"><span class="comment"># SELinux configuration</span></span><br><span class="line">selinux --disabled</span><br><span class="line">firewall --disabled</span><br><span class="line"><span class="comment"># Installation logging level</span></span><br><span class="line">logging --level=info</span><br><span class="line"><span class="comment"># Reboot after installation</span></span><br><span class="line">reboot</span><br><span class="line"><span class="comment"># System timezone</span></span><br><span class="line">timezone  Asia/Shanghai</span><br><span class="line"><span class="comment"># System bootloader configuration</span></span><br><span class="line">bootloader --location=mbr</span><br><span class="line"><span class="comment"># Clear the Master Boot Record</span></span><br><span class="line">zerhostbr</span><br><span class="line"><span class="comment"># Partition clearing information</span></span><br><span class="line">clearpart --all --initlabel </span><br><span class="line"><span class="comment"># Disk partitioning information</span></span><br><span class="line">autopart</span><br><span class="line">%packages</span><br><span class="line"><span class="decorator">@Development Tools</span></span><br><span class="line">wget</span><br><span class="line">telnet</span><br><span class="line">net-tools</span><br><span class="line">%end</span><br><span class="line"></span><br><span class="line">%pre</span><br><span class="line">$SNIPPET(<span class="string">'log_ks_pre'</span>)</span><br><span class="line">$SNIPPET(<span class="string">'kickstart_start'</span>)</span><br><span class="line">$SNIPPET(<span class="string">'pre_install_network_config'</span>)</span><br><span class="line">%end</span><br><span class="line"></span><br><span class="line">%post</span><br><span class="line">$SNIPPET(<span class="string">'log_ks_post'</span>)</span><br><span class="line">$SNIPPET(<span class="string">'post_install_kernel_options'</span>)</span><br><span class="line">$SNIPPET(<span class="string">'post_install_network_config'</span>)</span><br><span class="line">$SNIPPET(<span class="string">'func_register_if_enabled'</span>)</span><br><span class="line">$SNIPPET(<span class="string">'download_config_files'</span>)</span><br><span class="line"><span class="comment"># Start final steps</span></span><br><span class="line">$SNIPPET(<span class="string">'kickstart_done'</span>)</span><br><span class="line"><span class="comment"># End final steps</span></span><br><span class="line">%end</span><br><span class="line">%post</span><br><span class="line"><span class="comment">#init server</span></span><br><span class="line">wget --no-check-certificate https://cobbler.host.test.cn/cobbler/ks_mirror/init_server.sh -P /tmp/</span><br><span class="line">sh /tmp/init_server.sh</span><br><span class="line">%end</span><br></pre></td></tr></table></figure>
+<p>保存</p>
+<h2 id="初始化cobbler">初始化cobbler</h2>   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">        Service httpd start</span><br><span class="line">        Service cobblerd start</span><br><span class="line">        运行cobbler get-loaders获取常见loaders文件</span><br><span class="line">        cobbler sync 同步cobbler配置到dhcpd、tftpd、httpd</span><br><span class="line">        显示*** TASK ChostPLETE ***说明同步成功</span><br><span class="line">        Service dhcpd start</span><br><span class="line">        Service httpd restart</span><br><span class="line">        运行cobbler check查看提醒</span><br><span class="line"><span class="number">1</span> : chostment <span class="string">'dists'</span> on /etc/debmirror.conf <span class="keyword">for</span> proper debian support</span><br><span class="line"><span class="number">2</span> : chostment <span class="string">'arches'</span> on /etc/debmirror.conf <span class="keyword">for</span> proper debian support</span><br></pre></td></tr></table></figure>
+<p>按照提示进行处理：编辑/etc/debmirror.conf 注释掉<br>   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#@dists="sid";</span></span><br><span class="line"><span class="decorator">@sections="main,main/debian-installer,contrib,non-free";</span></span><br><span class="line"><span class="comment">#@arches="i386";</span></span><br></pre></td></tr></table></figure></p>
+<p>重新运行cobbler check检查一下<br>   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Service cobblerd restart</span><br><span class="line">Cobbler sync</span><br><span class="line">Cobbler check</span><br><span class="line">Chkconfig cobblerd on</span><br><span class="line">Chkconfig httpd on</span><br><span class="line">Chkconfig dhcpd on</span><br></pre></td></tr></table></figure></p>
+<p>提示：<br>No configuration problems found.  All systems go 说明一切正常。<br>使用浏览器访问<a href="https://192.168.10.81/cobbler" target="_blank" rel="external">https://192.168.10.81/cobbler</a>   显示当前cobbler镜像路径目录结构<br>   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">Index of /cobbler</span><br><span class="line">Name</span><br><span class="line">Last modified</span><br><span class="line">Size</span><br><span class="line">Description</span><br><span class="line">Parent Directory</span><br><span class="line"></span><br><span class="line">aux/</span><br><span class="line"><span class="number">10</span>-Jan-<span class="number">2013</span> <span class="number">15</span>:<span class="number">24</span></span><br><span class="line">images/</span><br><span class="line"><span class="number">12</span>-Dec-<span class="number">2012</span> <span class="number">19</span>:<span class="number">43</span></span><br><span class="line">ks_mirror/</span><br><span class="line"><span class="number">10</span>-Jan-<span class="number">2013</span> <span class="number">15</span>:<span class="number">24</span></span><br><span class="line">links/</span><br><span class="line"><span class="number">12</span>-Dec-<span class="number">2012</span> <span class="number">19</span>:<span class="number">43</span></span><br><span class="line">localmirror/</span><br><span class="line"><span class="number">12</span>-Dec-<span class="number">2012</span> <span class="number">19</span>:<span class="number">43</span></span><br><span class="line">pub/</span><br><span class="line"><span class="number">12</span>-Dec-<span class="number">2012</span> <span class="number">19</span>:<span class="number">43</span></span><br><span class="line">rendered/</span><br><span class="line"><span class="number">12</span>-Dec-<span class="number">2012</span> <span class="number">19</span>:<span class="number">43</span></span><br><span class="line">repo_mirror/</span><br><span class="line"><span class="number">12</span>-Dec-<span class="number">2012</span> <span class="number">19</span>:<span class="number">43</span></span><br><span class="line">svc/</span><br><span class="line"><span class="number">10</span>-Jan-<span class="number">2013</span> <span class="number">15</span>:<span class="number">24</span></span><br><span class="line">Apache/<span class="number">2.2</span>.15 (CentOS) Server at <span class="number">192.168</span>.10.81 Port <span class="number">80</span></span><br></pre></td></tr></table></figure></p>
+<p>访问<a href="http://192.168.10.81/cobbler_web" target="_blank" rel="external">http://192.168.10.81/cobbler_web</a>   自动跳转到https页面，输入用户cobbler 密码cobbler进入<br>备注：测试网段cobbler类似，只有IP不同</p>
+<h1 id="日常操作说明">日常操作说明</h1><h2 id="生成安装文件">生成安装文件</h2><p>将官方ISO镜像上传到服务器/tmp目录下<br>挂载镜像<br>mount -o loop -t iso9660 /tmp/CentOS-6.3-x86_64-bin-DVD1.iso /mnt/<br>然后访问<a href="https://192.168.10.81/cobbler_web" target="_blank" rel="external">https://192.168.10.81/cobbler_web</a><br>Import DVD<br>输入如下：<br>Prefix   CentOS 6.3<br>Arch   x86_64<br>Breed   Red Hat based<br>Path /mnt<br>然后Run<br>查看Events</p>
+<p>Start Time<br>Name<br>State<br>Log</p>
+<p>Thu Jan 10 16:35:01 2013<br>Media import<br>running<br>log</p>
+<p>等待完成</p>
+<h2 id="更改Profiles">更改Profiles</h2><p>导入完成后，可以在Distros下看到导入的CentOS 6.3<br>然后选择Profiles<br>选择新导入的CentOS 6.3  EDIT<br>将Kickstart项变更为：<br>/var/lib/cobbler/kickstarts/default.ks<br>Save<br>执行页面的Sync进行同步</p>
+<h2 id="测试">测试</h2><p>将需要安装操作系统服务器的网卡mac地址添加到/etc/cobbler/dhcp.template<br>host host1 { hardware ethernet 00:50:56:A1:00:32;}<br>然后cobbler sync<br>Service dhcpd restart<br>注意：请安装完毕后保持host字段mac地址为全0，避免其他服务器异常重启后自动安装操作系统。<br>将客户机重新启动，设置BIOS启动顺序为网卡、cd-rhost、硬盘，等待PXE请求。<br>备注：如果原客户机已经有centos操作系统，会提示选择从local还是网络启动，选择local直接进入原系统，选择CentOS_6.3_x86_64进入网络安装</p>
+<h2 id="日常使用">日常使用</h2><p>cobbler的使用，主要是集中在上面几个菜单里。这里简单解析一下。<br>Distros：这个其实就是发行版，类似Centos，ubuntu，suse。centos6.2和centos6.3，是不同的distros。假设我们导入一个centos6.3的iso，就是增加了一个Distros<br>Profiles：针对Distros的设置，一个distros，可以保护多个profiles，包括不同的kickstart文件。源的设置，都是在这里设置。<br>Systems：针对是每个节点，这里可以指定节点的ip地址，dns name，还有就是ipmi的用户名和密码，实现远程开机，关机。这是一个重点，日后对机器的操作，全部在sytem的菜单里操作。system里，会指定节点使用哪个profile。<br>Repos：这个主要是针对Redhat和Centos有效，可以管理源，并且这些源，可以在profile里添加。比较方便。需要注意的是，对于ubuntu的源，只能在kickstart 脚本里指定。<br>Images：这个我没用到，看说明主要是针对不能pxe的机器，采用iso启动。<br>Kicsstart Templates：这是核心，cobbler内置了几个ks文件，你如果导入一个centos，系统会默认关联一个ks文件，你不需要做任何设置，就可以把os自动装完。对于ubuntu，我们就需要单独创建一个preseed文件，这些文件可以通过web管理和修改。非常方便。<br>Snippets：这是cobbler的精华。一些常用的设置，写成一个模块，让ks文件调用。这样更加灵活。例如centos的网络固定IP地址的设置，就是通过这里实现。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/linux/">linux</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/linux/">linux</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a class="jiathis_button_twitter">Twitter</a>
+    <a class="jiathis_button_evernote">EverNote</a>
+    <a href="http://www.jiathis.com/share?uid=1501277" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+</div>
+<script type="text/javascript" >
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+     ralateuid:{"tsina":"readortravel"},hideMore:false}
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+elfzhao@hotmail.com" charset="utf-8"></script>      
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/07/06/Ceph/"  title="【转载】Ceph常用运维命令">
+ <strong>NEXT:</strong><br/> 
+ <span>【转载】Ceph常用运维命令
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread" data-thread-key="2015/07/14/cobbler/" data-title="通过cobbler自动化部署操作系统" data-url="http://www.anste.com/2015/07/14/cobbler/"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Cobbler概述"><span class="toc-number">1.</span> <span class="toc-text">Cobbler概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Cobbler部署"><span class="toc-number">2.</span> <span class="toc-text">Cobbler部署</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#实施环境"><span class="toc-number">2.1.</span> <span class="toc-text">实施环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cobbler安装"><span class="toc-number">2.2.</span> <span class="toc-text">Cobbler安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dhcpd、httpd安装"><span class="toc-number">2.3.</span> <span class="toc-text">Dhcpd、httpd安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cobbler配置"><span class="toc-number">2.4.</span> <span class="toc-text">Cobbler配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dhcp、rsync、tftp配置"><span class="toc-number">2.5.</span> <span class="toc-text">Dhcp、rsync、tftp配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Modules配置"><span class="toc-number">2.6.</span> <span class="toc-text">Modules配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kickstart配置"><span class="toc-number">2.7.</span> <span class="toc-text">Kickstart配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初始化cobbler"><span class="toc-number">2.8.</span> <span class="toc-text">初始化cobbler</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#日常操作说明"><span class="toc-number">3.</span> <span class="toc-text">日常操作说明</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#生成安装文件"><span class="toc-number">3.1.</span> <span class="toc-text">生成安装文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更改Profiles"><span class="toc-number">3.2.</span> <span class="toc-text">更改Profiles</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试"><span class="toc-number">3.3.</span> <span class="toc-text">测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#日常使用"><span class="toc-number">3.4.</span> <span class="toc-text">日常使用</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/ceph/" style="font-size: 10px;">ceph</a> <a href="/tags/cisco/" style="font-size: 10px;">cisco</a> <a href="/tags/fuel/" style="font-size: 10px;">fuel</a> <a href="/tags/haproxy/" style="font-size: 10px;">haproxy</a> <a href="/tags/juniper/" style="font-size: 10px;">juniper</a> <a href="/tags/juno/" style="font-size: 10px;">juno</a> <a href="/tags/linux/" style="font-size: 16.67px;">linux</a> <a href="/tags/lvs/" style="font-size: 10px;">lvs</a> <a href="/tags/openstack/" style="font-size: 20px;">openstack</a> <a href="/tags/ospf/" style="font-size: 10px;">ospf</a> <a href="/tags/puppet/" style="font-size: 10px;">puppet</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a> <a href="/tags/windows/" style="font-size: 13.33px;">windows</a>
+    </div>
+  </div>
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>2</sup></a></li>
+		
+			<li><a href="/categories/linux/" title="linux">linux<sup>1</sup></a></li>
+		
+			<li><a href="/categories/network/" title="network">network<sup>1</sup></a></li>
+		
+			<li><a href="/categories/openstack/" title="openstack">openstack<sup>6</sup></a></li>
+		
+			<li><a href="/categories/windows/" title="windows">windows<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="commentslist">
+  <p class="asidetitle">最新评论</p>
+  <ul class="ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-time="1" data-show-admin="1" data-excerpt-length="32" data-show-title="1"></ul>
+</div>
+<script type="text/javascript">
+if(typeof duoshuoQuery === 'undefined'){
+  var duoshuoQuery = {short_name:"anste"};
+  (function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	}
+	</script>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://blog.leafh.pw" target="_blank" title="Leaf Hsiao">Leaf's Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<section class="info">
+		<p> 天行健，君子以自强不息；地势坤，君子以厚德载物。 <br/>
+			Stay hungry, stay foolish</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/readortravel" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/elfzhao" target="_blank" title="twitter"></a>
+		
+		
+		
+		<a href="https://www.facebook.com/atlantis2012" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://cn.linkedin.com/in/jameschao2015" target="_blank" title="linkedin"></a>
+        
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/leaf-hsiao/catman" target="_blank" title="Catman">Catman</a> © 2015 
+		
+		<a href="http://www.anste.com" target="_blank" title="Anste">Anste</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="http://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,208-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      m = $('#main'),
+      a = $('#asidepart'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside'),
+      w  = $(window).width();
+  if ( w>1070 ) {
+  	m.addClass('moveMain');
+  	a.css('display', 'none').addClass('fadeIn');
+  	o.css('display', 'block');
+  };
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+  	if ( w>1070 ) {
+  	  ta.css('display', 'block').addClass('fadeIn');
+  	};
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,250-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"anste"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+
+
+  </body>
+</html>
